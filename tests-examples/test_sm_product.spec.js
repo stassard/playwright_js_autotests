@@ -28,7 +28,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.update_product()
     });
 
-    test('Delete Product Using 3 Dots Grid', async ({ page }) => {
+    test.only('Delete Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         await lp.authorization();
@@ -44,6 +44,14 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.delete_product_using_checkbox_grid()
     });
 
+    test("Delete Product Using Card", async ({ page }) => {
+        const lp = new LoginPage(page);
+        const pp = new ProductsPage(page)
+        await lp.authorization();
+        await pp.open_products_dict()
+        await pp.delete_product_using_card()
+    });
+
     test('Select All Delete Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
@@ -52,7 +60,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.select_all_delete_product()
     });
 
-    test.only('Restore Product Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         await lp.authorization();

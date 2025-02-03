@@ -202,15 +202,11 @@ exports.ProductsPage = class ProductsPage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
         await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
-        try {
-            await this.page.locator(bp.button_delete_item).click()
-        } catch (webError) {
-            console.log(webError);
-        }
+        await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_before), "Element is not deleted").toBeGreaterThan(Number(count_of_items_after))
+        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
@@ -220,15 +216,24 @@ exports.ProductsPage = class ProductsPage {
         await this.page.locator(bp.unselected_checkbox).click()
         const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
-        try {
-            await this.page.locator(bp.button_delete_item).click()
-        } catch (webError) {
-            console.log(webError);
-        }
+        await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+
+    }
+
+    async delete_product_using_card(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.last_item_name).click()
+        await this.page.locator(bp._3_dots_card).click()
+        await this.page.locator(bp.link_delete_in_3_dots_card).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
@@ -238,11 +243,7 @@ exports.ProductsPage = class ProductsPage {
         await this.page.locator(bp.select_all_checkbox).click()
         const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
-        try {
-            await this.page.locator(bp.button_delete_item).click()
-        } catch (webError) {
-            console.log(webError);
-        }
+        await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -265,6 +266,7 @@ exports.ProductsPage = class ProductsPage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         console.log(count_of_items_before)
         await this.page.locator(bp._3_dots_grid).click()
+        // --------------------------- Confirmation Removal Window is not Added --------------------------------------
         await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
