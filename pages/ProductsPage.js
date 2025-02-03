@@ -23,7 +23,7 @@ exports.ProductsPage = class ProductsPage {
         this.input_technology_card = "(//input[contains(@data-pc-name,'inputtext')])[7]"               // Technology input
         this.input_brand_card = "(//input[contains(@data-pc-name,'inputtext')])[8]"                    // Brand input
         this.unit_of_measure_card = "//div[contains(@data-pc-name,'select')]"                      // Unit of Measure selector
-        this.units_of_measure_selector_card = `(//li[contains(@role,'option')])[${[getRandomInt(1, 8)]}]`           // List of Unit of Measure
+        this.units_of_measure_selector_card = `(//li[contains(@role,'option')])[${[getRandomInt(1, 7)]}]`           // List of Unit of Measure
         this.input_unit_card = "//input[contains(@data-pc-name,'pcinput')]"                            // Unit input
 
         // Grid
@@ -88,16 +88,203 @@ exports.ProductsPage = class ProductsPage {
         const card_technology = await this.page.locator(this.input_technology_card).inputValue();
         const card_brand = await this.page.locator(this.input_brand_card).inputValue();
         const card_unit_of_measure = await this.page.locator(this.unit_of_measure_card).getAttribute("model-value-prop");
-        const card_unit = await this.page.locator(this.input_unit_card).inputValue();
-        console.log(card_name);
-        console.log(card_eanc);
-        console.log(card_eanp);
-        console.log(card_category);
-        console.log(card_technology);
-        console.log(card_brand);
-        console.log(card_unit_of_measure);
-        console.log(card_unit);
-        // await this.page.waitForTimeout(10000);
+        const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
+        await this.page.locator(bp.x_icon_card).click();
+
+        // Get Info From Grid
+        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
+        const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
+        const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
+        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
+        const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
+        const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+
+        // Check Matching of Grid and Card Info
+        await expect(card_name, "Name is not match").toEqual(grid_name)
+        await expect(card_eanc, "EANC is not match").toEqual(grid_eanc)
+        await expect(card_eanp, "EANP is not match").toEqual(grid_eanp)
+        await expect(card_category, "Category is not match").toEqual(grid_category)
+        await expect(card_technology, "Technology is not match").toEqual(grid_technology)
+        await expect(card_brand, "Brand is not match").toEqual(grid_brand)
+        await expect(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
+        await expect(card_unit, "Unit is not match").toEqual(grid_unit)
+    }
+
+    async read_product(){
+        // Find Any Product
+        const bp = new BasePage();
+        const any_id = await this.page.locator(bp.any_item_name).textContent();
+        await this.page.fill(bp.input_search_grid, any_id);
+        await this.page.keyboard.press("Enter");
+
+        let count = 0;
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+            await this.page.waitForTimeout(1000)
+            count++;
+            if (count === 10){
+                break;
+            }
+        }
+        // Get Info From Grid
+        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
+        const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
+        const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
+        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
+        const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
+        const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+
+        // Get Info From Card
+        await this.page.locator(bp.last_item_name).click();
+        const card_name = await this.page.locator(this.input_name_card).inputValue();
+        const card_eanc = await this.page.locator(this.input_EANC_card).inputValue();
+        const card_eanp = await this.page.locator(this.input_EANP_card).inputValue();
+        const card_category = await this.page.locator(this.input_category_card).inputValue();
+        const card_technology = await this.page.locator(this.input_technology_card).inputValue();
+        const card_brand = await this.page.locator(this.input_brand_card).inputValue();
+        const card_unit_of_measure = await this.page.locator(this.unit_of_measure_card).getAttribute("model-value-prop");
+        const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
+
+        // Check Matching of Grid and Card Info
+        await expect(card_name, "Name is not match").toEqual(grid_name)
+        await expect(card_eanc, "EANC is not match").toEqual(grid_eanc)
+        await expect(card_eanp, "EANP is not match").toEqual(grid_eanp)
+        await expect(card_category, "Category is not match").toEqual(grid_category)
+        await expect(card_technology, "Technology is not match").toEqual(grid_technology)
+        await expect(card_brand, "Brand is not match").toEqual(grid_brand)
+        await expect(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
+        await expect(card_unit, "Unit is not match").toEqual(grid_unit)
+    }
+
+    async update_product(){
+        // Get Last Product Info from Grid
+        const bp = new BasePage();
+        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
+        const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
+        const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
+        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
+        const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
+        const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+
+        // Update Last Product
+        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.mode_switcher).click();
+        await this.page.locator(this.input_name_card).clear();
+        await this.page.fill(this.input_name_card, random_prod_name);
+        await this.page.locator(this.input_EANC_card).clear();
+        await this.page.fill(this.input_EANC_card, random_eanc)
+        await this.page.locator(this.input_category_card).clear();
+        await this.page.fill(this.input_category_card, random_category)
+        await this.page.locator(this.input_brand_card).clear();
+        await this.page.fill(this.input_brand_card, random_brand)
+        await this.page.locator(this.unit_of_measure_card).click()
+        // const items = await this.page.locator("//li").all()
+        for (const item of await this.page.locator("//li").all()){
+            console.log(item);
+            let el = item.getAttribute("data-p-selected");
+            console.log(await el);
+            if (el !== true) {
+                this.page.locator(el).click()
+                break
+            }
+        }
+        await this.page.waitForTimeout(5000);
+    }
+
+
+    async delete_product_using_3_dots_grid(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp._3_dots_grid).click()
+        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
+        try {
+            await this.page.locator(bp.button_delete_item).click()
+        } catch (webError) {
+            console.log(webError);
+        }
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect(Number(count_of_items_before), "Element is not deleted").toBeGreaterThan(Number(count_of_items_after))
 
     }
+
+    async delete_product_using_checkbox_grid(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.unselected_checkbox).click()
+        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
+        await this.page.locator(bp.delete_button_upper_panel).click()
+        try {
+            await this.page.locator(bp.button_delete_item).click()
+        } catch (webError) {
+            console.log(webError);
+        }
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+
+    }
+
+    async select_all_delete_product(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.select_all_checkbox).click()
+        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
+        await this.page.locator(bp.delete_button_upper_panel).click()
+        try {
+            await this.page.locator(bp.button_delete_item).click()
+        } catch (webError) {
+            console.log(webError);
+        }
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+
+    }
+
+    async restore_product_using_3_dots_grid(){
+        const bp = new BasePage();
+        await this.page.locator(bp.deleted_tab_grid).click()
+
+        let count_1 = 0;
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
+                break;
+            }
+        }
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        console.log(count_of_items_before)
+        await this.page.locator(bp._3_dots_grid).click()
+        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        await this.page.locator(bp.deleted_tab_grid).click()
+
+        let count_2 = 0;
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+            await this.page.waitForTimeout(100)
+            count_2++;
+            if (count_2 === 10) {
+                break;
+            }
+        }
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+
+    }
+
+
 }
+
+
+

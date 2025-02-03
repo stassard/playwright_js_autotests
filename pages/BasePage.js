@@ -38,7 +38,7 @@ exports.BasePage = class BasePage {
         this.all_tab_grid = "(//div[contains(@class, 'h-8')])[1]" // All Tab
         // this.all_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='All']"  # Кнопка-вкладка All активна
         this.count_items_in_footer_grid = "(//span[@class='text-indigo-950'])[2]"  // Count of items in the footer
-        this.unselected_checkbox = "//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component']"  // Unselected checkbox
+        this.unselected_checkbox = `(//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]`  // Unselected checkbox
         // this.selected_checkbox = `(//div[contains(@class,'p-highlight')])${[Math.random() * 10]}`  # Выбранный чекбокс в гриде
         this.select_all_checkbox = "(//div[@class='p-checkbox p-component'])[1]"  // Select All checkbox
         this.delete_button_upper_panel = "//button[@aria-label='Delete']"  // Button Delete in the top panel
