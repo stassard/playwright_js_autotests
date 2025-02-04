@@ -28,7 +28,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.update_product()
     });
 
-    test.only('Delete Product Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         await lp.authorization();

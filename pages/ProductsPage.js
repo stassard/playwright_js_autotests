@@ -3,12 +3,12 @@ import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 // Fake Data
-const random_prod_name = faker.food.ethnicCategory() + faker.food.dish()
+const random_name = faker.food.ethnicCategory() + faker.food.dish()
 const random_eanc = faker.string.numeric({length: { min: 7, max: 10}})
 const random_eanp = faker.string.numeric({length: { min: 7, max: 10}})
-const random_category= faker.food.ethnicCategory()
-const random_technology= faker.food.fruit()
-const random_brand= faker.company.name()
+const random_category= faker.food.ethnicCategory() + String(getRandomInt(10000, 99999))
+const random_technology= faker.food.fruit() + String(getRandomInt(10000, 99999))
+const random_brand= faker.company.name() + String(getRandomInt(10000, 99999))
 const random_unit = String(getRandomInt(1, 15))
 
 exports.ProductsPage = class ProductsPage {
@@ -65,7 +65,7 @@ exports.ProductsPage = class ProductsPage {
         // Creating Product
         const bp = new BasePage();
         await this.page.locator(bp.button_create_new_card).click();
-        await this.page.fill(this.input_name_card, random_prod_name);
+        await this.page.fill(this.input_name_card, random_name);
         await this.page.fill(this.input_EANC_card, random_eanc);
         await this.page.fill(this.input_EANP_card, random_eanp);
         await this.page.fill(this.input_category_card, random_category);
@@ -102,14 +102,14 @@ exports.ProductsPage = class ProductsPage {
         const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
 
         // Check Matching of Grid and Card Info
-        await expect(card_name, "Name is not match").toEqual(grid_name)
-        await expect(card_eanc, "EANC is not match").toEqual(grid_eanc)
-        await expect(card_eanp, "EANP is not match").toEqual(grid_eanp)
-        await expect(card_category, "Category is not match").toEqual(grid_category)
-        await expect(card_technology, "Technology is not match").toEqual(grid_technology)
-        await expect(card_brand, "Brand is not match").toEqual(grid_brand)
-        await expect(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
-        await expect(card_unit, "Unit is not match").toEqual(grid_unit)
+        await expect.soft(card_name, "Name is not match").toEqual(grid_name)
+        await expect.soft(card_eanc, "EANC is not match").toEqual(grid_eanc)
+        await expect.soft(card_eanp, "EANP is not match").toEqual(grid_eanp)
+        await expect.soft(card_category, "Category is not match").toEqual(grid_category)
+        await expect.soft(card_technology, "Technology is not match").toEqual(grid_technology)
+        await expect.soft(card_brand, "Brand is not match").toEqual(grid_brand)
+        await expect.soft(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
+        await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
     }
 
     async read_product(){
@@ -149,51 +149,78 @@ exports.ProductsPage = class ProductsPage {
         const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
 
         // Check Matching of Grid and Card Info
-        await expect(card_name, "Name is not match").toEqual(grid_name)
-        await expect(card_eanc, "EANC is not match").toEqual(grid_eanc)
-        await expect(card_eanp, "EANP is not match").toEqual(grid_eanp)
-        await expect(card_category, "Category is not match").toEqual(grid_category)
-        await expect(card_technology, "Technology is not match").toEqual(grid_technology)
-        await expect(card_brand, "Brand is not match").toEqual(grid_brand)
-        await expect(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
-        await expect(card_unit, "Unit is not match").toEqual(grid_unit)
+        await expect.soft(card_name, "Name is not match").toEqual(grid_name)
+        await expect.soft(card_eanc, "EANC is not match").toEqual(grid_eanc)
+        await expect.soft(card_eanp, "EANP is not match").toEqual(grid_eanp)
+        await expect.soft(card_category, "Category is not match").toEqual(grid_category)
+        await expect.soft(card_technology, "Technology is not match").toEqual(grid_technology)
+        await expect.soft(card_brand, "Brand is not match").toEqual(grid_brand)
+        await expect.soft(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
+        await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
     }
 
     async update_product(){
-        // Get Last Product Info from Grid
+        // Get Last Product Info from Grid Before Update
         const bp = new BasePage();
-        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
-        const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
-        const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
-        const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
-        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
-        const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
-        const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
-        const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+        const name_before = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const eanc_before = await this.page.locator(this.last_eanc_in_grid).textContent();
+        const eanp_before = await this.page.locator(this.last_eanp_in_grid).textContent();
+        const category_before = await this.page.locator(this.last_category_in_grid).textContent();
+        const technology_before = await this.page.locator(this.last_technology_in_grid).textContent();
+        const brand_before = await this.page.locator(this.last_brand_in_grid).textContent();
+        const unit_of_measure_before = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        const unit_before = await this.page.locator(this.last_unit_in_grid).textContent();
 
         // Update Last Product
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_name_card).clear();
-        await this.page.fill(this.input_name_card, random_prod_name);
+        await this.page.fill(this.input_name_card, random_name);
         await this.page.locator(this.input_EANC_card).clear();
         await this.page.fill(this.input_EANC_card, random_eanc)
         await this.page.locator(this.input_category_card).clear();
         await this.page.fill(this.input_category_card, random_category)
+        await this.page.locator(this.input_technology_card).clear();
+        await this.page.fill(this.input_technology_card, random_category)
         await this.page.locator(this.input_brand_card).clear();
         await this.page.fill(this.input_brand_card, random_brand)
         await this.page.locator(this.unit_of_measure_card).click()
-        // const items = await this.page.locator("//li").all()
+
         for (const item of await this.page.locator("//li").all()){
-            console.log(item);
-            let el = item.getAttribute("data-p-selected");
-            console.log(await el);
-            if (el !== true) {
-                this.page.locator(el).click()
+            let el = item.getAttribute("aria-selected");
+            if (el === "false") {
+                await item.click()
                 break
             }
         }
-        await this.page.waitForTimeout(5000);
+        await this.page.locator(this.input_unit_card).clear();
+        await this.page.fill(this.input_unit_card, random_unit)
+        await this.page.locator(bp.button_save).click();
+
+        // Check Success Toast Message
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        // Get Last Product Info from Grid After Update
+        await this.page.locator(bp.x_icon).click()
+        await this.page.reload()
+        const name_after = await this.page.locator(this.last_prod_name_in_grid).textContent()
+        const eanc_after = await this.page.locator(this.last_eanc_in_grid).textContent();
+        const eanp_after = await this.page.locator(this.last_eanp_in_grid).textContent();
+        const category_after = await this.page.locator(this.last_category_in_grid).textContent();
+        const technology_after = await this.page.locator(this.last_technology_in_grid).textContent();
+        const brand_after = await this.page.locator(this.last_brand_in_grid).textContent();
+        const unit_of_measure_after = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        const unit_after = await this.page.locator(this.last_unit_in_grid).textContent();
+
+        // Check Update
+        await expect.soft(name_before, "Name is not chanched").not.toBe(name_after)
+        await expect.soft(eanc_before, "EANC is not chanched").not.toBe(eanc_after)
+        await expect.soft(eanp_before, "EANP is chanched").toBe(eanp_after)
+        await expect.soft(category_before, "Category is not chanched").not.toBe(category_after)
+        await expect.soft(technology_before, "Technology is not chanched").not.toBe(technology_after)
+        await expect.soft(brand_before, "Brand is not chanched").not.toBe(brand_after)
+        await expect.soft(unit_of_measure_before, "Unit Of Measure is not chanched").not.toBe(unit_of_measure_after)
+        await expect.soft(unit_before, "Unit is not chanched").toBe(unit_after)
     }
 
 
@@ -206,7 +233,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
@@ -220,7 +247,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
 
     }
 
@@ -230,10 +257,11 @@ exports.ProductsPage = class ProductsPage {
         await this.page.locator(bp.last_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
         await this.page.locator(bp.link_delete_in_3_dots_card).click()
+        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
@@ -247,7 +275,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+        await expect.soft(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
 
     }
 
@@ -266,7 +294,7 @@ exports.ProductsPage = class ProductsPage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         console.log(count_of_items_before)
         await this.page.locator(bp._3_dots_grid).click()
-        // --------------------------- Confirmation Removal Window is not Added --------------------------------------
+        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
         await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
@@ -281,7 +309,7 @@ exports.ProductsPage = class ProductsPage {
             }
         }
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
