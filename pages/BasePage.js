@@ -20,7 +20,6 @@ exports.BasePage = class BasePage {
         this.link_client_product_prices = "//a[text()='Client Product Prices']"  // Link Client Product Prices in the Side Menu
 
         // Creation Cards
-        this.button_create_new_card = " //button[@aria-label='Create new']"  // Button Create New
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
         this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
@@ -52,6 +51,7 @@ exports.BasePage = class BasePage {
         this.link_delete_restore_in_3_dots_grid = "(//div[contains(@class, 'prospace-dots-item')])[2]"  // Button Delete in the grid 3 dots
         this.any_item_name = `(//div[contains(@class, 'border-dotted')])[${[getRandomInt(1, 10)]}]`  // Grid Any Name of Items
         this.last_item_name = "(//div[contains(@class, 'border-dotted')])[1]"  // Grid Last Name of Items
+        this.button_create_new = " //button[@aria-label='Create new']"  // Button Create New
 
         // Filters
         this.button_apply_filters = "//button[contains(@aria-label,'Apply')]"  // Button Apply
@@ -59,6 +59,94 @@ exports.BasePage = class BasePage {
         this.button_clear_filters = "//button[contains(@aria-label, 'Clear')]"  // Button Clear in the All Filters
         this.x_icon_filters = "(//button[@type='icon-secondary'])[3]"  // X Icons in the All Filters
         this.x_icons_input_filters = "//div[@class='header']/div[contains(@class,'items-center')]"  // Individuals X Icons for every fields in the All Filters
+    }
+
+    async delete_using_3_dots_grid(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp._3_dots_grid).click()
+        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
+        await this.page.locator(bp.button_delete_item).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+
+    }
+
+    async delete_using_checkbox_grid(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.unselected_checkbox).click()
+        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
+        await this.page.locator(bp.delete_button_upper_panel).click()
+        await this.page.locator(bp.button_delete_item).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+
+    }
+
+    async delete_using_card(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.last_item_name).click()
+        await this.page.locator(bp._3_dots_card).click()
+        await this.page.locator(bp.link_delete_in_3_dots_card).click()
+        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+
+    }
+
+    async select_all_delete(){
+        const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.select_all_checkbox).click()
+        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
+        await this.page.locator(bp.delete_button_upper_panel).click()
+        await this.page.locator(bp.button_delete_item).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect.soft(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+
+    }
+
+    async restore_using_3_dots_grid(){
+        const bp = new BasePage();
+        await this.page.locator(bp.deleted_tab_grid).click()
+
+        let count_1 = 0;
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
+                break;
+            }
+        }
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp._3_dots_grid).click()
+        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
+        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        await this.page.reload()
+        await this.page.locator(bp.deleted_tab_grid).click()
+
+        let count_2 = 0;
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+            await this.page.waitForTimeout(100)
+            count_2++;
+            if (count_2 === 10) {
+                break;
+            }
+        }
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+
     }
 }
 

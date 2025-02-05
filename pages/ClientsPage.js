@@ -40,12 +40,12 @@ exports.ClientsPage = class ClientsPage {
         this.last_type_in_grid = "(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Type
         this.last_affiliation_in_grid = "(//span[text()='Affiliation']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Affiliation
         this.last_invoice_type_in_grid = "(//span[text()='Invoice Type']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Invoice Type
-        this.any_id_in_grid = "(//span[text()='ID']/following-sibling::div[contains(@class,'relative inline-block')])[{random.randint(2, 10)}]"  // Grid any ID
-        this.any_external_id_in_grid = "(//span[text()='External ID']/following-sibling::div[contains(@class,'relative inline-block')[{random.randint(2, 10)}]"  // Grid any External ID
-        this.any_parent_in_grid = "(//span[text()='Parent']/following-sibling::div[contains(@class,'relative inline-block')])[{random.randint(2, 10)}]"  // Grid any Parent
-        this.any_type_in_grid = "(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[{random.randint(2, 10)}]"  //Grid any Type
-        this.any_affiliation_in_grid = "(//span[text()='Affiliation']/following-sibling::div[contains(@class,'relative inline-block')])[{random.randint(2, 10)}]"  // Grid any Affiliation
-        this.any_invoice_type_in_grid = "(//span[text()='Invoice Type']/following-sibling::div[contains(@class,'relative inline-block')])[{random.randint(2, 10)}]"  // Grid any Invoice Type
+        this.any_id_in_grid = `(//span[text()='ID']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any ID
+        this.any_external_id_in_grid = `(//span[text()='External ID']/following-sibling::div[contains(@class,'relative inline-block')[${[getRandomInt(2, 10)]}]`  // Grid any External ID
+        this.any_parent_in_grid = `(//span[text()='Parent']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Parent
+        this.any_type_in_grid = `(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  //Grid any Type
+        this.any_affiliation_in_grid = `(//span[text()='Affiliation']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Affiliation
+        this.any_invoice_type_in_grid = `(//span[text()='Invoice Type']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Invoice Type
 
         // Created form
         this.x_icon_upload_file = "(//div/div/button[@type='icon-secondary'])[7]"  // X icon in the Upload File window
@@ -74,8 +74,9 @@ exports.ClientsPage = class ClientsPage {
     }
 
     async create_client(){
+        // Create New Client
         const bp = new BasePage()
-        await this.page.locator(bp.button_create_new_card).click()
+        await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_name_card, random_name)
         await this.page.fill(this.input_external_id_card, random_external_id)
         await this.page.fill(this.input_parent_card, random_parent)
@@ -168,7 +169,7 @@ exports.ClientsPage = class ClientsPage {
         const card_affiliation = await this.page.locator(this.selector_affiliation_card).getAttribute("model-value-prop");
 
 
-        // Check Matching of Grid and Card Info
+        // Check the Matching of Grid and Card Info
         await expect.soft(card_id, "ID is not match").toEqual(grid_id)
         await expect.soft(card_name, "Name is not match").toEqual(grid_name)
         await expect.soft(card_external_id, "External ID is not match").toEqual(grid_external_id)
@@ -290,95 +291,6 @@ exports.ClientsPage = class ClientsPage {
         // Check visibility of the second file
         const file_name_after = await this.page.locator(this.name_of_added_file).textContent()
         await expect.soft(file_name_after, "File Name is not match").toEqual("unnamed.png")
-
-    }
-
-    async delete_using_3_dots_grid(){
-        const bp = new BasePage();
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp._3_dots_grid).click()
-        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-
-    }
-
-    async delete_using_checkbox_grid(){
-        const bp = new BasePage();
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.unselected_checkbox).click()
-        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
-        await this.page.locator(bp.delete_button_upper_panel).click()
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
-
-    }
-
-    async delete_using_card(){
-        const bp = new BasePage();
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.last_item_name).click()
-        await this.page.locator(bp._3_dots_card).click()
-        await this.page.locator(bp.link_delete_in_3_dots_card).click()
-        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-
-    }
-
-    async select_all_delete(){
-        const bp = new BasePage();
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.select_all_checkbox).click()
-        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
-        await this.page.locator(bp.delete_button_upper_panel).click()
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
-
-    }
-
-    async restore_using_3_dots_grid(){
-        const bp = new BasePage();
-        await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        console.log(count_of_items_before)
-        await this.page.locator(bp._3_dots_grid).click()
-        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
-        await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(100)
-            count_2++;
-            if (count_2 === 10) {
-                break;
-            }
-        }
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
