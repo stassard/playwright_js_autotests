@@ -1,10 +1,6 @@
+import {faker} from "@faker-js/faker";
 const {expect} = require("@playwright/test");
 
-export function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 exports.BasePage = class BasePage {
 
     constructor(page) {
@@ -84,7 +80,7 @@ exports.BasePage = class BasePage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
+        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
 
     }
 
@@ -149,4 +145,33 @@ exports.BasePage = class BasePage {
 
     }
 }
+
+
+export function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const currDate = new Date();
+export const currentDate = currDate.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
+const future_start_date = faker.date.between({from: currentDate, to: '01-01-2035'});
+export const random_start_date = future_start_date.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
+const future_end_date = faker.date.between({from: '01-01-2030', to: '01-01-2035'});
+export const random_end_date = future_end_date.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
 

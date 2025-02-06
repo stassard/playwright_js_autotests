@@ -191,7 +191,7 @@ exports.ClientsPage = class ClientsPage {
         const affiliation_before = await this.page.locator(this.last_affiliation_in_grid).textContent();
         const invoice_type_before = await this.page.locator(this.last_invoice_type_in_grid).textContent();
 
-        // Update Last Product
+        // Update Last Client
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_name_card).clear();
@@ -227,7 +227,7 @@ exports.ClientsPage = class ClientsPage {
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
-        // Get Last Product Info from Grid After Update
+        // Get Last Client Info from Grid After Update
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
         const id_after = await this.page.locator(this.last_id_in_grid).textContent();

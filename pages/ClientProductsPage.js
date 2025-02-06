@@ -1,4 +1,4 @@
-import {BasePage, getRandomInt} from '../pages/BasePage';
+import {BasePage, getRandomInt} from './BasePage.js';
 import {expect, test} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 

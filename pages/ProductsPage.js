@@ -35,11 +35,11 @@ exports.ProductsPage = class ProductsPage {
         this.last_brand_in_grid = "(//span[text()='Brand']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                   // Grid last Brand
         this.last_unit_in_grid = "(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last Unit
         this.last_unit_of_measure_in_grid = "(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[1]"      // Grid last Unit of Measure
-        this.any_category_in_grid = `(//span[text()='Category']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(1, 10)]}]`     //Grid any Category
-        this.any_brand_in_grid = `(//span[text()='Brand']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(1, 10)]}]`           // Grid any Brand
-        this.any_unit_of_measure_in_grid = `(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(1, 10)]}]`  // Grid any Unit of Measure
-        this.any_unit_in_grid = `(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(1, 10)]}]`             // Grid any Unit
-        this.any_technology_in_grid = `(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(1, 10)]}]`     // Grid any Technology
+        this.any_category_in_grid = `(//span[text()='Category']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     //Grid any Category
+        this.any_brand_in_grid = `(//span[text()='Brand']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`           // Grid any Brand
+        this.any_unit_of_measure_in_grid = `(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Unit of Measure
+        this.any_unit_in_grid = `(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`             // Grid any Unit
+        this.any_technology_in_grid = `(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     // Grid any Technology
 
         // Created form
         // this.value_of_unit_of_measure_card = "//span[contains(@class,'p-dropdown-label')]/span"   // Значение поля Unit of Measure
@@ -222,97 +222,6 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(unit_of_measure_before, "Unit Of Measure is not changed").not.toBe(unit_of_measure_after)
         await expect.soft(unit_before, "Unit is not changed").not.toBe(unit_after)
     }
-
-
-    // async delete_product_using_3_dots_grid(){
-    //     const bp = new BasePage();
-    //     const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await this.page.locator(bp._3_dots_grid).click()
-    //     await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
-    //     await this.page.locator(bp.button_delete_item).click()
-    //     await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-    //     await this.page.reload()
-    //     const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-    //
-    // }
-    //
-    // async delete_product_using_checkbox_grid(){
-    //     const bp = new BasePage();
-    //     const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await this.page.locator(bp.unselected_checkbox).click()
-    //     const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
-    //     await this.page.locator(bp.delete_button_upper_panel).click()
-    //     await this.page.locator(bp.button_delete_item).click()
-    //     await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-    //     await this.page.reload()
-    //     const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
-    //
-    // }
-    //
-    // async delete_product_using_card(){
-    //     const bp = new BasePage();
-    //     const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await this.page.locator(bp.last_item_name).click()
-    //     await this.page.locator(bp._3_dots_card).click()
-    //     await this.page.locator(bp.link_delete_in_3_dots_card).click()
-    //     // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
-    //     await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-    //     await this.page.reload()
-    //     const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-    //
-    // }
-    //
-    // async select_all_delete_product(){
-    //     const bp = new BasePage();
-    //     const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await this.page.locator(bp.select_all_checkbox).click()
-    //     const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
-    //     await this.page.locator(bp.delete_button_upper_panel).click()
-    //     await this.page.locator(bp.button_delete_item).click()
-    //     await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-    //     await this.page.reload()
-    //     const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await expect.soft(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
-    //
-    // }
-    //
-    // async restore_product_using_3_dots_grid(){
-    //     const bp = new BasePage();
-    //     await this.page.locator(bp.deleted_tab_grid).click()
-    //
-    //     let count_1 = 0;
-    //     while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-    //         await this.page.waitForTimeout(1000)
-    //         count_1++;
-    //         if (count_1 === 10) {
-    //             break;
-    //         }
-    //     }
-    //     const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await this.page.locator(bp._3_dots_grid).click()
-    //     // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
-    //     await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
-    //     await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-    //     await this.page.reload()
-    //     await this.page.locator(bp.deleted_tab_grid).click()
-    //
-    //     let count_2 = 0;
-    //     while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-    //         await this.page.waitForTimeout(100)
-    //         count_2++;
-    //         if (count_2 === 10) {
-    //             break;
-    //         }
-    //     }
-    //     const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-    //     await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-    //
-    // }
-
-
 }
 
 
