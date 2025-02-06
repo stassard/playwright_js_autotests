@@ -140,10 +140,10 @@ exports.ClientsPage = class ClientsPage {
         await this.page.keyboard.press("Enter");
 
         let count = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
             await this.page.waitForTimeout(1000)
             count++;
-            if (count === 10){
+            if (count === 50){
                 break;
             }
         }

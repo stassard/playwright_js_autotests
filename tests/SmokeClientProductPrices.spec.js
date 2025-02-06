@@ -40,7 +40,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
         await bp.delete_using_3_dots_grid()
     });
 
-    test.only('Delete Client Product Prices Using Checkbox Grid', async ({ page }) => {
+    test('Delete Client Product Prices Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         const bp = new BasePage(page)

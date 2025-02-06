@@ -15,6 +15,7 @@ exports.BasePage = class BasePage {
         this.link_client_products = "//a[text()='Client Products']"   // Link Client Products in the Side Menu
         this.link_client_product_prices = "//a[text()='Client Product Prices']"  // Link Client Product Prices in the Side Menu
         this.link_brands = "//a[text()='Brands']"  // Link Brands in the Side Menu
+        this.link_baselines = "//a[text()='Baselines']"  // Link Baselines in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
