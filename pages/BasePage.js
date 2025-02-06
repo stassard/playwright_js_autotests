@@ -14,6 +14,7 @@ exports.BasePage = class BasePage {
         this.link_clients = "//a[text()='Clients']"  // Link Clients in the Side Menu
         this.link_client_products = "//a[text()='Client Products']"   // Link Client Products in the Side Menu
         this.link_client_product_prices = "//a[text()='Client Product Prices']"  // Link Client Product Prices in the Side Menu
+        this.link_brands = "//a[text()='Brands']"  // Link Brands in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
@@ -74,7 +75,6 @@ exports.BasePage = class BasePage {
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.unselected_checkbox).click()
-        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
         await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
@@ -90,7 +90,7 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.last_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
         await this.page.locator(bp.link_delete_in_3_dots_card).click()
-        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
+        // TODO: Confirmation Removal/Restore Window will be Added
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -126,7 +126,7 @@ exports.BasePage = class BasePage {
         }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
-        // --------------------------- Confirmation Removal/Restore Window is not Added --------------------------------------
+        // TODO: Confirmation Removal/Restore Window will be Added
         await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()

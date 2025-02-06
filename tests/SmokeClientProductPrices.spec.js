@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { BasePage } from "../pages/BasePage";
-import { ClientProductPricesPage } from "../pages/ClientProductPrices";
+import { ClientProductPricesPage } from "../pages/ClientProductPricesPage";
 
 
 test.describe("Smoke Suite for Client Product Prices Page", () => {
-    test('Create Client Product Prices', async ({page}) => {
+    test('Create Client Product Price', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         await lp.authorization();
         await cppp.open_client_product_prices_dict()
-        await cppp.create_client_product_prices()
+        await cppp.create_client_product_price()
     });
 
     test('Read Client Product Prices', async ({page}) => {

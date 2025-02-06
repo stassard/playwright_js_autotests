@@ -2,8 +2,6 @@ import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date}
 import {expect, test} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
-// const rand_date = faker.date.between({from: String(currentDate), to: String(random_future_date)})
-
 
 exports.ClientProductPricesPage = class ClientProductPricesPage {
 
@@ -15,7 +13,6 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
         this.input_price_card = "(//input[contains(@data-pc-name,'pcinput')])[1]"  // Price input
         this.input_start_date_card = "(//input[contains(@data-pc-name,'pcinput')])[2]"  // Start Date input
         this.input_end_date_card = "(//input[contains(@data-pc-name,'pcinput')])[3]"  // End Date input
-        // this.placeholders = "//span[contains(@class,'p-placeholder')]"        // Плейсхолдеры в селекторах
 
         // Grid
         this.last_client_product_id_in_grid = "(//span[text()='Client Product ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]" // Grid last Cient Product ID
@@ -42,8 +39,8 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Client Product Prices")
     }
 
-    async create_client_product_prices(){
-        // Create New Client Product Prices
+    async create_client_product_price(){
+        // Create New Client Product Price
         const bp = new BasePage();
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_product_id_card).click()
