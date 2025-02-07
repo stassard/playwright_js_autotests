@@ -6,7 +6,7 @@ import { BrandPage } from "../pages/BrandsPage";
 
 test.describe("Smoke Suite for Brands Page", () => {
 
-    // Требуется сид для справочника для корректной работы
+    // Требуется сид c большим количеством данных,для корректного тестирования
     // TODO: Remove .skip after added seed
     test('Create Brand', async ({page}) => {
         const lp = new LoginPage(page);
