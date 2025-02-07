@@ -46,6 +46,7 @@ exports.ClientProductsPage = class ClientProductsPage {
     async create_client_products(){
         // Create New Client Products
         const bp = new BasePage()
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
         await this.page.locator(this.list_client_id_card).click()
@@ -69,6 +70,7 @@ exports.ClientProductsPage = class ClientProductsPage {
         const grid_product_id = await this.page.locator(this.last_product_in_grid).textContent();
         const grid_client_name = await this.page.locator(this.last_client_name_in_grid).textContent();
         const grid_product_sku_name = await this.page.locator(this.last_product_sku_name_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Get ID of the Chosen Client in the Clients Dictionary
         await this.page.locator(bp.side_button_modules).click()
@@ -113,6 +115,7 @@ exports.ClientProductsPage = class ClientProductsPage {
         await expect.soft(card_product_name, "Product Name is not match").toBe(grid_product_sku_name)
         await expect.soft(String(grid_client_id), "Client ID is not match").toBe(expected_client_id)
         await expect.soft(String(grid_product_id), "Product ID is not match").toBe(expected_product_id)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
 
     }
 

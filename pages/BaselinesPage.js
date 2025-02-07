@@ -55,6 +55,7 @@ exports.BaselinesPage = class BaselinesPage {
     async create_baseline(){
         // Create New Baseline
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_card).click()
         await this.page.locator(this.list_client_card).click()
@@ -86,6 +87,7 @@ exports.BaselinesPage = class BaselinesPage {
         const grid_qty = await this.page.locator(this.last_qty_in_grid).textContent();
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
         const grid_end_date = await this.page.locator(this.last_end_date_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_client, "Client is not match").toBe(grid_client)
@@ -93,6 +95,7 @@ exports.BaselinesPage = class BaselinesPage {
         await expect.soft(card_qty, "Qty is not match").toBe(grid_qty)
         await expect.soft(card_start_date, "Start Date is not match").toBe(grid_start_date)
         await expect.soft(card_end_date, "End Date is not match").toBe(grid_end_date)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_baseline(){

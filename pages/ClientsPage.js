@@ -76,6 +76,7 @@ exports.ClientsPage = class ClientsPage {
     async create_client(){
         // Create New Client
         const bp = new BasePage()
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_name_card, random_name)
         await this.page.fill(this.input_external_id_card, random_external_id)
@@ -93,6 +94,8 @@ exports.ClientsPage = class ClientsPage {
 
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        await this.page.reload()
 
         // Get Info From Card
         await this.page.locator(bp.last_item_name).click();
@@ -117,6 +120,7 @@ exports.ClientsPage = class ClientsPage {
         const grid_type = await this.page.locator(this.last_type_in_grid).textContent();
         const grid_affiliation = await this.page.locator(this.last_affiliation_in_grid).textContent();
         const grid_invoice_type = await this.page.locator(this.last_invoice_type_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
 
         // Check Matching of Grid and Card Info
@@ -130,6 +134,7 @@ exports.ClientsPage = class ClientsPage {
         await expect.soft(card_dispatch_start_day, "Dispatch Start Before Day is not match").toEqual(String(random_start_day))
         await expect.soft(card_dispatch_end_day, "Dispatch End Before Day is not match").toEqual(String(random_end_day))
         await expect.soft(card_file_name, "File Name is not match").toEqual("магнит.jpg")
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_client(){

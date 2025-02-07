@@ -64,6 +64,7 @@ exports.ProductsPage = class ProductsPage {
     async create_product(){
         // Creating Product
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click();
         await this.page.fill(this.input_name_card, random_name);
         await this.page.fill(this.input_EANC_card, random_eanc);
@@ -78,6 +79,8 @@ exports.ProductsPage = class ProductsPage {
 
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        await this.page.reload()
 
         // Get Info From Card
         await this.page.locator(bp.last_item_name).click();
@@ -100,6 +103,7 @@ exports.ProductsPage = class ProductsPage {
         const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
         const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
         const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_name, "Name is not match").toEqual(grid_name)
@@ -110,6 +114,8 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(card_brand, "Brand is not match").toEqual(grid_brand)
         await expect.soft(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
         await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+
     }
 
     async read_product(){

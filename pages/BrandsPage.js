@@ -31,6 +31,7 @@ exports.BrandPage = class BrandPage {
     async create_brand(){
         // Create New Brand
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_brand_code_card, String(faker.number.int(1000)))
         await this.page.fill(this.input_segment_code_card, String(faker.number.int(1000)))
@@ -52,11 +53,13 @@ exports.BrandPage = class BrandPage {
         const grid_brand_code = await this.page.locator(bp.last_item_name).textContent();
         const grid_segment_code = await this.page.locator(this.last_segment_code_in_grid).textContent();
         const grid_segment_name = await this.page.locator(this.last_segment_name_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_brand_code, "Brand Code is not match").toBe(grid_brand_code)
         await expect.soft(card_segment_code, "Segment Code is not match").toBe(grid_segment_code)
         await expect.soft(card_segment_name, "Segment Name is not match").toBe(grid_segment_name)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_brand(){

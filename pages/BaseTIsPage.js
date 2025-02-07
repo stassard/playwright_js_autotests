@@ -42,6 +42,7 @@ exports.BaseTisPage = class BaseTisPage {
     async create_basetis(){
         // Create New BaseTis
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
         await this.page.locator(this.list_client_id_card).click()
@@ -73,6 +74,7 @@ exports.BaseTisPage = class BaseTisPage {
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
         const grid_end_date = await this.page.locator(this.last_end_date_in_grid).textContent();
         const grid_baseti = await this.page.locator(this.last_baseti_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
 
         // Check Matching of Grid and Card Info
@@ -81,6 +83,7 @@ exports.BaseTisPage = class BaseTisPage {
         await expect.soft(card_start_date, "Start Date is not match").toBe(grid_start_date)
         await expect.soft(card_end_date, "End Date is not match").toBe(grid_end_date)
         await expect.soft(card_baseti, "BaseTi is not match").toBe(grid_baseti)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_baseti(){

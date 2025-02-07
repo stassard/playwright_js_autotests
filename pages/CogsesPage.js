@@ -43,6 +43,7 @@ exports.CogsesPage = class CogsesPage {
     async create_cogs(){
         // Create New Cogs
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_product_card).click()
         await this.page.locator(this.list_product_card).click()
@@ -70,6 +71,7 @@ exports.CogsesPage = class CogsesPage {
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
         const grid_end_date = await this.page.locator(this.last_end_date_in_grid).textContent();
         const grid_cogs = await this.page.locator(this.last_cogs_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
 
         // Check Matching of Grid and Card Info
@@ -77,6 +79,7 @@ exports.CogsesPage = class CogsesPage {
         await expect.soft(card_start_date, "Start Date is not match").toBe(grid_start_date)
         await expect.soft(card_end_date, "End Date is not match").toBe(grid_end_date)
         await expect.soft(card_cogs, "Cogs is not match").toBe(grid_cogs)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_cogs(){

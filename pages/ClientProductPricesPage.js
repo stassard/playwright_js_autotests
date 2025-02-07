@@ -42,6 +42,7 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
     async create_client_product_price(){
         // Create New Client Product Price
         const bp = new BasePage();
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_product_id_card).click()
         await this.page.locator(this.list_client_product_id_card).click()
@@ -69,12 +70,14 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
         const grid_price = await this.page.locator(this.last_price_in_grid).textContent();
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
         const grid_end_date = await this.page.locator(this.last_end_date_in_grid).textContent();
+        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_client_product_id, "Client Product ID is not match").toBe(grid_client_product_id)
         await expect.soft(card_price, "Price is not match").toBe(grid_price)
         await expect.soft(card_start_date, "Start Date is not match").toBe(grid_start_date)
         await expect.soft(card_end_date, "End Date is not match").toBe(grid_end_date)
+        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
     async read_client_product_prices(){

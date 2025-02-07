@@ -18,6 +18,8 @@ exports.BasePage = class BasePage {
         this.link_baselines = "//a[text()='Baselines']"  // Link Baselines in the Side Menu
         this.link_cogses = "//a[text()='Cogses']"  // Link Cogses in the Side Menu
         this.link_basetis = "//a[text()='BaseTis']"  // Link BaseTis in the Side Menu
+        // TODO: Change link of Marketing Budgets after it will be change
+        this.link_marketing_budgets = "//a[text()='Budget Items']"  // Link Marketing Budgets in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
@@ -66,6 +68,7 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
         await this.page.locator(bp.link_delete_restore_in_3_dots_grid).click()
+        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
         await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
@@ -79,6 +82,7 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.unselected_checkbox).click()
         await this.page.locator(bp.delete_button_upper_panel).click()
+        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
         await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
@@ -107,6 +111,7 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.select_all_checkbox).click()
         const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
+        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
         await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
