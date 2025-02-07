@@ -39,6 +39,10 @@ exports.BaselinesPage = class BaselinesPage {
         this.any_start_date_in_grid = `(//span[text()='StartDate']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Start Date
         this.any_end_date_in_grid = `(//span[text()='EndDate']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any End Date
 
+        // Created form
+        this.x_icon_inside_start_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[1]"   // X icon in the Start Date input
+        this.x_icon_inside_end_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
+
     }
 
     async open_baselines_dict(){
@@ -101,10 +105,10 @@ exports.BaselinesPage = class BaselinesPage {
         await this.page.keyboard.press("Enter");
 
         let count = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
             await this.page.waitForTimeout(1000)
             count++;
-            if (count === 10){
+            if (count === 50){
                 break;
             }
         }
@@ -183,6 +187,66 @@ exports.BaselinesPage = class BaselinesPage {
         await expect.soft(grid_qty, "Qty per day [Grid and Card] is not match").toBe(card_qty)
         await expect.soft(grid_start_date, "Start Date is not match").toBe(card_start_date)
         await expect.soft(grid_end_date, "End Date is not match").toBe(card_end_date)
+
+    }
+
+    async update_baseline(){
+        // Get Last Baseline Info from Grid Before Update
+        const bp = new BasePage()
+        const id_before = await this.page.locator(bp.last_item_name).textContent();
+        const ean_pc_before = await this.page.locator(this.last_ean_pc_in_grid).textContent();
+        const product_id_before = await this.page.locator(this.last_product_id_in_grid).textContent();
+        const client_id_before = await this.page.locator(this.last_client_id_in_grid).textContent();
+        const client_external_id_before = await this.page.locator(this.last_client_external_id_in_grid).textContent();
+        const client_before = await this.page.locator(this.last_client_name_in_grid).textContent();
+        const product_before = await this.page.locator(this.last_product_sku_name_in_grid).textContent();
+        const qty_before = await this.page.locator(this.last_qty_in_grid).textContent();
+        const start_date_before = await this.page.locator(this.last_start_date_in_grid).textContent();
+        const end_date_before = await this.page.locator(this.last_end_date_in_grid).textContent();
+
+        await this.page.locator(bp.last_item_name).click();
+
+        // Update Last Baseline
+        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.mode_switcher).click();
+        await this.page.locator(this.input_qty).clear();
+        await this.page.fill(this.input_qty, String(faker.number.int({min: 100, max: 999})));
+        await this.page.locator(this.x_icon_inside_start_date_input).click();
+        await this.page.fill(this.input_start_date_card, random_start_date)
+        await this.page.keyboard.press("Enter");
+        await this.page.locator(this.x_icon_inside_end_date_input).click();
+        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.keyboard.press("Enter");
+        await this.page.locator(bp.button_save).click();
+
+        // Check Success Toast Message
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        await this.page.locator(bp.x_icon).click();
+
+        // Get Last Baseline Info from Grid After Update
+        const id_after = await this.page.locator(bp.last_item_name).textContent();
+        const ean_pc_after = await this.page.locator(this.last_ean_pc_in_grid).textContent();
+        const product_id_after = await this.page.locator(this.last_product_id_in_grid).textContent();
+        const client_id_after = await this.page.locator(this.last_client_id_in_grid).textContent();
+        const client_external_id_after = await this.page.locator(this.last_client_external_id_in_grid).textContent();
+        const client_after = await this.page.locator(this.last_client_name_in_grid).textContent();
+        const product_after = await this.page.locator(this.last_product_sku_name_in_grid).textContent();
+        const qty_after = await this.page.locator(this.last_qty_in_grid).textContent();
+        const start_date_after = await this.page.locator(this.last_start_date_in_grid).textContent();
+        const end_date_after = await this.page.locator(this.last_end_date_in_grid).textContent();
+
+        // Check Matching of Grid and Card Info
+        await expect.soft(id_before, "Baseline ID is changed").toBe(id_after)
+        await expect.soft(product_before, "Product SKU Name is changed").toBe(product_after)
+        await expect.soft(ean_pc_before, "EAN Pc is changed").toBe(ean_pc_after)
+        await expect.soft(product_id_before, "Product ID is changed").toBe(product_id_after)
+        await expect.soft(client_id_before, "Client ID is changed").toBe(client_id_after)
+        await expect.soft(client_external_id_before, "Client External ID is changed").toBe(client_external_id_after)
+        await expect.soft(client_before, "Client Name is changed").toBe(client_after)
+        await expect.soft(qty_before, "Qty per day is not changed").not.toBe(qty_after)
+        await expect.soft(start_date_before, "Start Date is not changed").not.toBe(start_date_after)
+        await expect.soft(end_date_before, "End Date is not changed").not.toBe(end_date_after)
 
     }
 }

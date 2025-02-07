@@ -168,7 +168,7 @@ export const random_start_date = future_start_date.toLocaleDateString('ru-RU', {
     day: '2-digit',
 });
 
-const future_end_date = faker.date.between({from: '01-01-2030', to: '01-01-2035'});
+const future_end_date = faker.date.between({from: '01-01-2035', to: '01-01-2040'});
 export const random_end_date = future_end_date.toLocaleDateString('ru-RU', {
     year: 'numeric',
     month: '2-digit',

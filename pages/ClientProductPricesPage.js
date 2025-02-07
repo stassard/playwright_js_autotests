@@ -26,8 +26,8 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
 
 
         // Created form
-        this.x_icon_inside_start_date_input = "(//div[contains(@class,'absolute')]/div[contains(@class,'flex')])[1]"   // X icon in the Start Date input
-        this.x_icon_inside_end_date_input = "(//div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
+        this.x_icon_inside_start_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[1]"   // X icon in the Start Date input
+        this.x_icon_inside_end_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
     }
 
 
