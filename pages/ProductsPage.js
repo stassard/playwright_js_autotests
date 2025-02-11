@@ -130,7 +130,9 @@ exports.ProductsPage = class ProductsPage {
             await this.page.waitForTimeout(1000)
             count++;
             if (count === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
         // Get Info From Grid

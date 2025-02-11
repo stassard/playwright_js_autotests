@@ -15,7 +15,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
         await cogsesPage.create_cogs()
     });
 
-    test('Read Cogs', async ({page}) => {
+    test.only('Read Cogs', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
@@ -33,7 +33,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)

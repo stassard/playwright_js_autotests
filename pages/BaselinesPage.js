@@ -112,7 +112,9 @@ exports.BaselinesPage = class BaselinesPage {
             await this.page.waitForTimeout(1000)
             count++;
             if (count === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
         // Get Info From Grid
@@ -150,7 +152,9 @@ exports.BaselinesPage = class BaselinesPage {
             await this.page.waitForTimeout(1000)
             count_1++;
             if (count_1 === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
 
@@ -171,7 +175,9 @@ exports.BaselinesPage = class BaselinesPage {
             await this.page.waitForTimeout(1000)
             count_2++;
             if (count_2 === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
 

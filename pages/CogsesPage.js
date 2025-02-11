@@ -2,6 +2,7 @@ import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date}
 import {expect, test} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 import {ProductsPage} from "./ProductsPage";
+import playwright from "playwright";
 
 
 exports.CogsesPage = class CogsesPage {
@@ -95,7 +96,9 @@ exports.CogsesPage = class CogsesPage {
             await this.page.waitForTimeout(1000)
             count++;
             if (count === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
         // Get Info From Grid
@@ -127,7 +130,9 @@ exports.CogsesPage = class CogsesPage {
             await this.page.waitForTimeout(1000)
             count_2++;
             if (count_2 === 50){
-                break;
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
             }
         }
 

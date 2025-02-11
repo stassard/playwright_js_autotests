@@ -33,7 +33,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)

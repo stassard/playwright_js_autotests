@@ -30,7 +30,7 @@ test.describe("Smoke Suite for Product Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Product Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const bp = new BasePage(page)
@@ -65,7 +65,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.open_products_dict()
         await bp.select_all_delete()
     });
-
+    
     test('Restore Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
