@@ -10,8 +10,6 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         this.input_name_card = "(//input[contains(@data-pc-name,'inputtext')])[3]"  // Name input
         this.selector_default_pnl_line_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Default P&L line
         this.list_default_pnl_line_card = `//li[@aria-posinset='${[getRandomInt(1, 1)]}']`  // List of Default P&L line
-        this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[4]" // X icon in the created card
-        this._3_dots_card = "(//div/div/button[@type='icon-secondary'])[2]" // 3 dots in the card
 
         // Grid
         this.last_default_pnl_line_in_grid = "(//span[text()='Default P&L line']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Default P&L line
@@ -47,7 +45,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await this.page.locator(bp.last_item_name).click();
         const card_name = await this.page.locator(this.input_name_card).inputValue();
         const card_default_pnl_line = await this.page.locator(this.selector_default_pnl_line_card).getAttribute("model-value-prop");
-        await this.page.locator(this.x_icon_card).click();
+        await this.page.locator(bp.x_icon).click();
 
 
         // Get Info From Grid
@@ -125,38 +123,4 @@ exports.BudgetTypesPage = class BudgetTypesPage {
 
     }
 
-    async restore_budget_type_using_card(){
-        const bp = new BasePage();
-        await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.last_item_name).click()
-        await this.page.locator(this._3_dots_card).click()
-        await this.page.locator(bp.link_restore_in_3_dots).click()
-        await expect.soft(this.page.locator(bp.button_restore_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_restore_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(100)
-            count_2++;
-            if (count_2 === 10) {
-                break;
-            }
-        }
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-
-    }
 }

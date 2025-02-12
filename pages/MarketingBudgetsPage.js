@@ -34,10 +34,8 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         this.input_comment_card = "//textarea[@type='text']" // Comment input
         this.status_card = "//div[@data-test='prospace-header']/div[@data-test='header-left']/div[2]/div/div/span" // Status in the Card
         this.header_allocation_type_card = "//div[@data-test='prospace-header']/div[@data-test='header-left']/div[2]/div/div[2]" // Header Allocation Type in the Card
-        this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the created card
         this.tab_promos = "(//button[@type='button'])[2]" // Tab Promos in the Marketing Budget
         this.button_add_promo = "//button[@aria-label='Add promo']" // Tab Add Promo
-        this._3_dots_card = "(//div/div/button[@type='icon-secondary'])[2]"  // 3 dots in the card
 
 
         // Grid
@@ -135,7 +133,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
-        await this.page.locator(this.x_icon_card).click();
+        await this.page.locator(bp.x_icon).click();
         await this.page.reload()
 
         // Get Info From Grid
@@ -184,7 +182,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             if (error instanceof playwright.errors.TimeoutError)
                 await expect.soft(card_file_name_after, "File was not saved").not.toBeUndefined()
         } finally {
-            await this.page.locator(this.x_icon_card).click();
+            await this.page.locator(bp.x_icon).click();
 
             // Check The Matching Of Card Info Before And After Saving
             await expect.soft(card_name_before, "Marketing Budget Name is not match [Card Before Saving - Card After Saving]").toBe(card_name_after)
@@ -284,7 +282,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
-        await this.page.locator(this.x_icon_card).click();
+        await this.page.locator(bp.x_icon).click();
         await this.page.reload()
 
         // Get Info From Grid
@@ -333,7 +331,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             if (error instanceof playwright.errors.TimeoutError)
                 await expect.soft(card_file_name_after, "File was not saved").not.toBeUndefined()
         } finally {
-            await this.page.locator(this.x_icon_card).click();
+            await this.page.locator(bp.x_icon).click();
 
             // Check The Matching Of Card Info Before And After Saving
             await expect.soft(card_name_before, "Marketing Budget Name is not match [Card Before Saving - Card After Saving]").toBe(card_name_after)
@@ -439,17 +437,4 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await expect.soft(card_allocation_header, "Allocation type is not match [Card - Grid]").toBe(card_allocation_type)
 }
 
-    async delete_marketing_budget_using_card(){
-        const bp = new BasePage();
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.last_item_name).click()
-        await this.page.locator(this._3_dots_card).click()
-        await this.page.locator(bp.link_delete_in_3_dots).click()
-        // TODO: Confirmation Removal/Restore Window will be Added
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-        await this.page.reload()
-        const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
-
-    }
 }

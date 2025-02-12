@@ -1,6 +1,7 @@
 import {faker} from "@faker-js/faker";
 import playwright from "playwright";
 const {expect} = require("@playwright/test");
+// import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
 
 exports.BasePage = class BasePage {
 
@@ -23,22 +24,23 @@ exports.BasePage = class BasePage {
         this.link_marketing_budgets = "//a[text()='Budget Items']"  // Link Marketing Budgets in the Side Menu
         this.link_events = "//a[text()='Events']"  // Link Events in the Side Menu
         this.link_budget_types = "//a[text()='Budget types']"  // Link Budget Types in the Side Menu
+        this.link_technologies = "//a[text()='Technologies']"  // Link Technologies in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
-        this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
+        // this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
         this.dropdown = "//li[contains(@class,'p-dropdown-item')]" // Dropdown
         this.button_add_events = "//div[@class='collection-editor']/button"  // Button Add events
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
         this.button_select_events_card = "//button[contains(@aria-label, 'Select')]" // Button Select events
 
         // Created Cards
-        this.mode_switcher = "//input[@role='switch']"  // Mode Switcher
+        this.mode_switcher = "//div[@data-test='header-right']/div/div/div/input[@role='switch']"  // Mode Switcher
         this.button_save = "//button[@aria-label='Save']"  // Button Save
-        this._3_dots_card = "(//div/div/button[@type='icon-secondary'])[3]"  // 3 dots in the card
+        this._3_dots_card = "(//div[@data-test='prospace-header']/div[@data-test='header-right']/div/button[@type='icon-secondary'])[1]"  // 3 dots in the card
         this.item_id = "//div[contains(@class, 'item-id')]"  // Item ID in the card
-        this.x_icon = "(//div/div/button[@type='icon-secondary'])[6]"  // X icon in the created card
+        this.x_icon = "(//div[@data-test='prospace-header']/div[@data-test='header-right']/div/button[@type='icon-secondary'])[3]"  // X icon in the created card
         this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
 
         // Grid

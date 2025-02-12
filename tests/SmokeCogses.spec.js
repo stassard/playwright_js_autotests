@@ -15,7 +15,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
         await cogsesPage.create_cogs()
     });
 
-    test.only('Read Cogs', async ({page}) => {
+    test('Read Cogs', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)

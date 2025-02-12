@@ -55,7 +55,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         const bp = new BasePage(page)
         await lp.authorization();
         await marketingBudgetPage.open_marketing_budgets_dict()
-        await marketingBudgetPage.delete_marketing_budget_using_card()
+        await bp.delete_using_card()
     });
 
     test('Select All Delete Marketing Budget', async ({ page }) => {

@@ -92,7 +92,7 @@ exports.ProductsPage = class ProductsPage {
         const card_brand = await this.page.locator(this.input_brand_card).inputValue();
         const card_unit_of_measure = await this.page.locator(this.unit_of_measure_card).getAttribute("model-value-prop");
         const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
-        await this.page.locator(bp.x_icon_card).click();
+        await this.page.locator(bp.x_icon).click();
 
         // Get Info From Grid
         const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();

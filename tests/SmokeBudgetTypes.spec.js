@@ -92,6 +92,6 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         const bp = new BasePage(page)
         await lp.authorization();
         await budgetTypesPage.open_budget_types_dict()
-        await budgetTypesPage.restore_budget_type_using_card()
+        await bp.restore_using_card()
     });
 });

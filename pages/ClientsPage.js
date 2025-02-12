@@ -109,7 +109,7 @@ exports.ClientsPage = class ClientsPage {
         const card_dispatch_start_day = await this.page.locator(this.input_dispatch_start_before_day).inputValue();
         const card_dispatch_end_day = await this.page.locator(this.input_dispatch_end_before_day).inputValue()
         const card_file_name = await this.page.locator(this.name_of_added_file).textContent()
-        await this.page.locator(bp.x_icon_card).click();
+        await this.page.locator(bp.x_icon).click();
 
 
         // Get Info From Grid
