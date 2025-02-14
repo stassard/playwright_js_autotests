@@ -26,6 +26,7 @@ exports.BasePage = class BasePage {
         this.link_technologies = "//a[text()='Technologies']"  // Link Technologies in the Side Menu
         this.link_product_groups = "//a[text()='Product groups']"  // Link Product Groups in the Side Menu
         this.link_plus = "//a[text()='PLUs']"  // Link PLUs in the Side Menu
+        this.link_sfa_types = "//a[text()='SFA types']"  // Link SFA types in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create

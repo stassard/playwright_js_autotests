@@ -5,6 +5,8 @@ import { BasePage } from "../pages/BasePage";
 
 
 test.describe("Smoke Suite for PLUs Page", () => {
+
+    // Требуется сид c большим количеством данных,для корректного тестирования
     test('Create PLU', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
