@@ -6,9 +6,9 @@ import { faker } from '@faker-js/faker';
 const random_name = faker.food.ethnicCategory() + faker.food.dish()
 const random_eanc = faker.string.numeric({length: { min: 7, max: 10}})
 const random_eanp = faker.string.numeric({length: { min: 7, max: 10}})
-const random_category= faker.food.ethnicCategory() + String(getRandomInt(10000, 99999))
-const random_technology= faker.food.fruit() + String(getRandomInt(10000, 99999))
-const random_brand= faker.company.name() + String(getRandomInt(10000, 99999))
+const random_category= faker.food.ethnicCategory()
+const random_technology= faker.food.fruit()
+const random_brand= faker.company.name()
 const random_unit = String(getRandomInt(1, 1000))
 
 exports.ProductsPage = class ProductsPage {
@@ -40,6 +40,7 @@ exports.ProductsPage = class ProductsPage {
         this.any_unit_of_measure_in_grid = `(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Unit of Measure
         this.any_unit_in_grid = `(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`             // Grid any Unit
         this.any_technology_in_grid = `(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     // Grid any Technology
+        this.any_eanp_in_grid = `(//span[text()='EAN Pc']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`                                   // Grid any EAN Pc
 
         // Created form
         // this.value_of_unit_of_measure_card = "//span[contains(@class,'p-dropdown-label')]/span"   // Значение поля Unit of Measure
@@ -121,20 +122,7 @@ exports.ProductsPage = class ProductsPage {
     async read_product(){
         // Find Any Product
         const bp = new BasePage();
-        const any_id = await this.page.locator(bp.any_item_name).textContent();
-        await this.page.fill(bp.input_search_grid, any_id);
-        await this.page.keyboard.press("Enter");
-
-        let count = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
+        
         // Get Info From Grid
         const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
         const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();

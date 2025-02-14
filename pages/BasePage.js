@@ -1,7 +1,6 @@
 import {faker} from "@faker-js/faker";
 import playwright from "playwright";
 const {expect} = require("@playwright/test");
-// import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
 
 exports.BasePage = class BasePage {
 
@@ -14,26 +13,28 @@ exports.BasePage = class BasePage {
         this.side_button_modules = "(//div[contains(@data-test,'prospace-sidebar-item')])[2]" // Side Menu
         this.link_products = "//a[text()='Products']"  // Link Products in the Side Menu
         this.link_clients = "//a[text()='Clients']"  // Link Clients in the Side Menu
-        this.link_client_products = "//a[text()='Client Products']"   // Link Client Products in the Side Menu
-        this.link_client_product_prices = "//a[text()='Client Product Prices']"  // Link Client Product Prices in the Side Menu
+        this.link_client_products = "//a[text()='Client products']"   // Link Client Products in the Side Menu
+        this.link_client_product_prices = "//a[text()='Price lists']"  // Link Client Product Prices in the Side Menu
         this.link_brands = "//a[text()='Brands']"  // Link Brands in the Side Menu
         this.link_baselines = "//a[text()='Baselines']"  // Link Baselines in the Side Menu
-        this.link_cogses = "//a[text()='Cogses']"  // Link Cogses in the Side Menu
-        this.link_basetis = "//a[text()='BaseTis']"  // Link BaseTis in the Side Menu
+        this.link_cogses = "//a[text()='COGS']"  // Link Cogses in the Side Menu
+        this.link_basetis = "//a[text()='Trade terms']"  // Link BaseTis in the Side Menu
         // TODO: Change link of Marketing Budgets after it will be change
-        this.link_marketing_budgets = "//a[text()='Budget Items']"  // Link Marketing Budgets in the Side Menu
+        this.link_marketing_budgets = "//a[text()='Marketing budgets']"  // Link Marketing Budgets in the Side Menu
         this.link_events = "//a[text()='Events']"  // Link Events in the Side Menu
         this.link_budget_types = "//a[text()='Budget types']"  // Link Budget Types in the Side Menu
         this.link_technologies = "//a[text()='Technologies']"  // Link Technologies in the Side Menu
+        this.link_product_groups = "//a[text()='Product groups']"  // Link Product Groups in the Side Menu
+        this.link_plus = "//a[text()='PLUs']"  // Link PLUs in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
         // this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
-        this.dropdown = "//li[contains(@class,'p-dropdown-item')]" // Dropdown
+        this.dropdown = "//li[contains  (@class,'p-dropdown-item')]" // Dropdown
         this.button_add_events = "//div[@class='collection-editor']/button"  // Button Add events
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
-        this.button_select_events_card = "//button[contains(@aria-label, 'Select')]" // Button Select events
+        this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
 
         // Created Cards
         this.mode_switcher = "//div[@data-test='header-right']/div/div/div/input[@role='switch']"  // Mode Switcher
@@ -42,6 +43,7 @@ exports.BasePage = class BasePage {
         this.item_id = "//div[contains(@class, 'item-id')]"  // Item ID in the card
         this.x_icon = "(//div[@data-test='prospace-header']/div[@data-test='header-right']/div/button[@type='icon-secondary'])[3]"  // X icon in the created card
         this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
+        this.input_name_card = "//div[@data-test='header-left']//input[contains(@data-pc-name,'inputtext')]" // Name of the Element in the Card
 
         // Grid
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
@@ -53,13 +55,15 @@ exports.BasePage = class BasePage {
         this.last_item_name = "(//div[contains(@class, 'border-dotted')])[1]"  // Grid Last Name of Items
         this.button_create_new = " //button[@aria-label='Create new']"  // Button Create New
         this.input_search_grid = "//input[contains(@data-pc-name,'inputtext')]"  // Grid Search field
-        this.deleted_tab_grid = "(//div[contains(@class, 'h-8')])[2]"  // Deleted Tab
+        this.deleted_tab_grid = "(//span[contains(text(), 'Deleted')]//ancestor::div[contains(@class, 'h-8')])"  // Deleted Tab
+        this.auto_tab_grid = "(//span[contains(text(), 'Auto')]//ancestor::div[contains(@class, 'h-8')])"  // Auto Tab
+        this.manual_tab_grid = "(//span[contains(text(), 'Manual')]//ancestor::div[contains(@class, 'h-8')])"  // Manual Tab
         // this.deleted_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='Deleted']"  // Deleted
-        this.all_tab_grid = "(//div[contains(@class, 'h-8')])[1]" // All Tab
+        this.all_tab_grid = "(//span[contains(text(), 'All')]//ancestor::div[contains(@class, 'h-8')])" // All Tab
         // this.all_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='All']"  # Кнопка-вкладка All активна
         this.count_items_in_footer_grid = "(//span[@class='text-indigo-950'])[2]"  // Count of items in the footer
         this.unselected_checkbox_grid = `(//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]`  // Unselected checkbox
-        this.checkbox_events = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')])[${[getRandomInt(1, 6)]}]`  // Checkboxes in the events popover
+        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 6)]}]`  // Checkboxes in the popovers
         // this.selected_checkbox = `(//div[contains(@class,'p-highlight')])${[Math.random() * 10]}`  # Выбранный чекбокс в гриде
         this.select_all_checkbox = "(//div[@class='p-checkbox p-component'])[1]"  // Select All checkbox
         this.delete_button_upper_panel = "//button[@aria-label='Delete']"  // Button Delete in the top panel
@@ -110,7 +114,8 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.last_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
-        // TODO: Confirmation Removal/Restore Window will be Added
+        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
+        await this.page.locator(bp.button_delete_item).click()
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -147,7 +152,6 @@ exports.BasePage = class BasePage {
         }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
-        // TODO: Confirmation Removal/Restore Window will be Added
         await this.page.locator(bp.link_restore_in_3_dots).click()
         await expect.soft(this.page.locator(bp.button_restore_item), "Confirmation window is not appeared").toBeVisible();
         await this.page.locator(bp.button_restore_item).click()
@@ -252,7 +256,7 @@ export const currentDate = currDate.toLocaleDateString('ru-RU', {
     day: '2-digit',
 });
 
-const future_start_date = faker.date.between({from: currentDate, to: '01-01-2035'});
+const future_start_date = faker.date.between({from: new Date(), to: '01-01-2035'});
 export const random_start_date = future_start_date.toLocaleDateString('ru-RU', {
     year: 'numeric',
     month: '2-digit',

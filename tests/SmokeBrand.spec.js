@@ -16,7 +16,7 @@ test.describe("Smoke Suite for Brands Page", () => {
         await brandPage.create_brand()
     });
 
-    test.skip('Read Brand', async ({page}) => {
+    test('Read Brand', async ({page}) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
         await lp.authorization();

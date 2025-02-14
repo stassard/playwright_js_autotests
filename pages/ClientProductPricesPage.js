@@ -36,7 +36,7 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_client_product_prices).click()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Client Product Prices")
+        await expect(this.page.locator(bp.head_of_page)).toHaveText("Price lists")
     }
 
     async create_client_product_price(){

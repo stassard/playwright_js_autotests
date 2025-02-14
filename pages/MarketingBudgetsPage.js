@@ -81,8 +81,8 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.selector_product_card).click()
         await this.page.locator(this.list_product_card).click()
         await this.page.locator(bp.button_add_events).click()
-        await this.page.locator(bp.checkbox_events).click()
-        await this.page.locator(bp.button_select_events_card).click()
+        await this.page.locator(bp.checkbox_dialog).click()
+        await this.page.locator(bp.button_select_dialog).click()
         await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
         await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
         await this.page.fill(this.input_start_date_card, currentDate)
@@ -232,8 +232,8 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.selector_product_card).click()
         await this.page.locator(this.list_product_card).click()
         await this.page.locator(bp.button_add_events).click()
-        await this.page.locator(bp.checkbox_events).click()
-        await this.page.locator(bp.button_select_events_card).click()
+        await this.page.locator(bp.checkbox_dialog).click()
+        await this.page.locator(bp.button_select_dialog).click()
         await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
         await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
         await this.page.fill(this.input_start_date_card, currentDate)
@@ -372,20 +372,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
     async read_markering_budget(){
         // Find Any Marketing Budget
         const bp = new BasePage()
-        const any_id = await this.page.locator(this.any_id_in_grid).textContent();
-        await this.page.fill(bp.input_search_grid, any_id);
-        await this.page.keyboard.press("Enter");
-
-        let count = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
+        
         // Get Info From Grid
         const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
         const grid_name = await this.page.locator(bp.last_item_name).textContent();

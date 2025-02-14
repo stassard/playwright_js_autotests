@@ -65,20 +65,6 @@ exports.BrandPage = class BrandPage {
     async read_brand(){
         // Find Any Brand
         const bp = new BasePage()
-        const any_id = await this.page.locator(bp.any_item_name).textContent();
-        await this.page.fill(bp.input_search_grid, any_id);
-        await this.page.keyboard.press("Enter");
-
-        let count = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
 
         // Get Info From Grid
         const grid_brand_code = await this.page.locator(bp.last_item_name).textContent();

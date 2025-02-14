@@ -16,7 +16,7 @@ test.describe("Smoke Suite for Technologies Page", () => {
         await technologiesPage.create_technology()
     });
 
-    test.skip('Read Technology', async ({page}) => {
+    test('Read Technology', async ({page}) => {
         const lp = new LoginPage(page);
         const technologiesPage = new TechnologiesPage(page)
         await lp.authorization();
