@@ -27,13 +27,15 @@ exports.BasePage = class BasePage {
         this.link_product_groups = "//a[text()='Product groups']"  // Link Product Groups in the Side Menu
         this.link_plus = "//a[text()='PLUs']"  // Link PLUs in the Side Menu
         this.link_sfa_types = "//a[text()='SFA types']"  // Link SFA types in the Side Menu
+        this.link_users = "//a[text()='Users']"  // Link Users in the Side Menu
+        this.link_rules = "//a[text()='Rules']"  // Link Rules in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
         // this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
         this.dropdown = "//li[contains  (@class,'p-dropdown-item')]" // Dropdown
-        this.button_add_events = "//div[@class='collection-editor']/button"  // Button Add events
+        this.button_add = "//div[@class='collection-editor']/button"  // Button Add events
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
 
@@ -45,6 +47,7 @@ exports.BasePage = class BasePage {
         this.x_icon = "(//div[@data-test='prospace-header']/div[@data-test='header-right']/div/button[@type='icon-secondary'])[3]"  // X icon in the created card
         this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
         this.input_name_card = "//div[@data-test='header-left']//input[contains(@data-pc-name,'inputtext')]" // Name of the Element in the Card
+        this.pen_icon_card = "(//div[@data-test='prospace-header']//button[@type='icon-secondary'])[1]" // Pen Icon in the Card
 
         // Grid
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window

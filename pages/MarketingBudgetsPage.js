@@ -80,7 +80,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.list_client_card).click()
         await this.page.locator(this.selector_product_card).click()
         await this.page.locator(this.list_product_card).click()
-        await this.page.locator(bp.button_add_events).click()
+        await this.page.locator(bp.button_add).click()
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
         await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
@@ -231,7 +231,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.list_client_card).click()
         await this.page.locator(this.selector_product_card).click()
         await this.page.locator(this.list_product_card).click()
-        await this.page.locator(bp.button_add_events).click()
+        await this.page.locator(bp.button_add).click()
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
         await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
@@ -372,7 +372,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
     async read_markering_budget(){
         // Find Any Marketing Budget
         const bp = new BasePage()
-        
+
         // Get Info From Grid
         const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
         const grid_name = await this.page.locator(bp.last_item_name).textContent();
