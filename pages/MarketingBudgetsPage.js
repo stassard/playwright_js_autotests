@@ -1,8 +1,6 @@
 import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
 import {expect, test} from "@playwright/test";
 import { faker } from '@faker-js/faker';
-import {ClientsPage} from "./ClientsPage";
-import {ProductsPage} from "./ProductsPage";
 const playwright = require('playwright');
 
 
@@ -31,7 +29,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         this.manual_allocation_type_card = `//li[@aria-label='Manual']` // Manual Allocation Type
         this.auto_allocation_type_card = `//li[@aria-label='Auto']` // Auto Allocation Type
         this.button_upload_file_card = "//input[@type='file']"  // Button Upload File
-        this.input_comment_card = "//textarea[@type='text']" // Comment input
         this.status_card = "//div[@data-test='prospace-header']/div[@data-test='header-left']/div[2]/div/div/span" // Status in the Card
         this.header_allocation_type_card = "//div[@data-test='prospace-header']/div[@data-test='header-left']/div[2]/div/div[2]" // Header Allocation Type in the Card
         this.tab_promos = "(//button[@type='button'])[2]" // Tab Promos in the Marketing Budget
@@ -96,7 +93,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.selector_allocation_type_card).click()
         await this.page.locator(this.manual_allocation_type_card).click()
         await this.page.locator(this.button_upload_file_card).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\магнит.jpg')
-        await this.page.fill(this.input_comment_card, faker.lorem.sentence({min: 10, max: 20}))
+        await this.page.fill(bp.text_input_card, faker.lorem.sentence({min: 10, max: 20}))
 
         // Get Info From Card Before Creation
         const card_name_before = await this.page.locator(this.input_budget_name_card).inputValue();
@@ -112,7 +109,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_pnl_line_before = await this.page.locator(this.selector_pnl_line_card).getAttribute("model-value-prop");
         const card_allocation_type_before = await this.page.locator(this.selector_allocation_type_card).getAttribute("model-value-prop");
         const card_file_name_before = await this.page.locator(bp.name_of_added_file).textContent()
-        const card_comment_before = await this.page.locator(this.input_comment_card).inputValue()
+        const card_comment_before = await this.page.locator(bp.text_input_card).inputValue()
         await this.page.locator(bp.button_create_card).click()
 
         // Check Success Toast Message
@@ -173,7 +170,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_status_after = await this.page.locator(this.status_card).textContent();
         const card_allocation_header_after = await this.page.locator(this.header_allocation_type_card).textContent()
         await this.page.locator(bp.mode_switcher).click();
-        const card_comment_after = await this.page.locator(this.input_comment_card).inputValue();
+        const card_comment_after = await this.page.locator(bp.text_input_card).inputValue();
         try {
             const card_file_name_after = await this.page.locator(bp.name_of_added_file).textContent({timeout: 5000})
             await expect.soft(card_file_name_before, "File Name is not match [Card Before Saving - Card After Saving]").toBe(card_file_name_after)
@@ -247,7 +244,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.locator(this.selector_allocation_type_card).click()
         await this.page.locator(this.auto_allocation_type_card).click()
         await this.page.locator(this.button_upload_file_card).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\магнит.jpg')
-        await this.page.fill(this.input_comment_card, faker.lorem.sentence({min: 10, max: 20}))
+        await this.page.fill(bp.text_input_card, faker.lorem.sentence({min: 10, max: 20}))
 
         // Get Info From Card Before Creation
         const card_name_before = await this.page.locator(this.input_budget_name_card).inputValue();
@@ -264,7 +261,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_pnl_line_before = await this.page.locator(this.selector_pnl_line_card).getAttribute("model-value-prop");
         const card_allocation_type_before = await this.page.locator(this.selector_allocation_type_card).getAttribute("model-value-prop");
         const card_file_name_before = await this.page.locator(bp.name_of_added_file).textContent()
-        const card_comment_before = await this.page.locator(this.input_comment_card).inputValue()
+        const card_comment_before = await this.page.locator(bp.text_input_card).inputValue()
         await this.page.locator(bp.button_create_card).click()
 
         // Check Success Toast Message
@@ -322,7 +319,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_status_after = await this.page.locator(this.status_card).textContent();
         const card_allocation_header_after = await this.page.locator(this.header_allocation_type_card).textContent()
         await this.page.locator(bp.mode_switcher).click();
-        const card_comment_after = await this.page.locator(this.input_comment_card).inputValue();
+        const card_comment_after = await this.page.locator(bp.text_input_card).inputValue();
         try {
             const card_file_name_after = await this.page.locator(bp.name_of_added_file).textContent({timeout: 5000})
             await expect.soft(card_file_name_before, "File Name is not match [Card Before Saving - Card After Saving]").toBe(card_file_name_after)

@@ -1,8 +1,6 @@
 import {BasePage, getRandomInt } from './BasePage.js';
 import {expect, test} from "@playwright/test";
 import { faker } from '@faker-js/faker';
-import { ProductsPage } from "../pages/ProductsPage";
-
 
 exports.RulesPage = class RulesPage {
 

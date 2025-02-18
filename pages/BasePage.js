@@ -1,5 +1,4 @@
 import {faker} from "@faker-js/faker";
-import playwright from "playwright";
 const {expect} = require("@playwright/test");
 
 exports.BasePage = class BasePage {
@@ -29,15 +28,25 @@ exports.BasePage = class BasePage {
         this.link_sfa_types = "//a[text()='SFA types']"  // Link SFA types in the Side Menu
         this.link_users = "//a[text()='Users']"  // Link Users in the Side Menu
         this.link_rules = "//a[text()='Rules']"  // Link Rules in the Side Menu
+        this.link_roles = "//a[text()='Roles']"  // Link Roles in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
-        // this.x_icon_card = "(//div/div/button[@type='icon-secondary'])[5]"  // X icon in the creation card
-        this.dropdown = "//li[contains  (@class,'p-dropdown-item')]" // Dropdown
         this.button_add = "//div[@class='collection-editor']/button"  // Button Add events
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
+
+        // Dialog
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
+        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 6)]}]`  // Checkboxes in the popovers
+
+        // Bottom Panel
+        this.bottom_panel = "//div[@class='panel']"  // Bottom panel
+        this.counter_bottom_panel = "//div[@class='bottom-panel']//span[@class='prospace-counter-box']" // Counter in the Bottom Panel
+        this.button_add_bottom_panel = "//button[@aria-label='Add']" // Button Add in the Bottom Panel
+        this.button_delete_bottom_panel = "//div[@class='bottom-panel']//button[@aria-label='Delete']" // Button Delete in the Bottom Panel
+        this.unselected_checkbox_bottom_panel = `((//tbody[@class=\"p-datatable-tbody\"])[2]//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]` // Unselected checkbox in the Bottom Panel
+        this.counter_checked_checkboxes_bottom_panel = `//div[@class='bottom-panel']//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']` // Counter checked checkboxes in the Bottom Panel
 
         // Created Cards
         this.mode_switcher = "//div[@data-test='header-right']/div/div/div/input[@role='switch']"  // Mode Switcher
@@ -48,6 +57,7 @@ exports.BasePage = class BasePage {
         this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
         this.input_name_card = "//div[@data-test='header-left']//input[contains(@data-pc-name,'inputtext')]" // Name of the Element in the Card
         this.pen_icon_card = "(//div[@data-test='prospace-header']//button[@type='icon-secondary'])[1]" // Pen Icon in the Card
+        this.text_input_card = "//div[@data-test='block-main']//textarea[@type='text']" // Text input in the Card
 
         // Grid
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
@@ -62,17 +72,16 @@ exports.BasePage = class BasePage {
         this.deleted_tab_grid = "(//span[contains(text(), 'Deleted')]//ancestor::div[contains(@class, 'h-8')])"  // Deleted Tab
         this.auto_tab_grid = "(//span[contains(text(), 'Auto')]//ancestor::div[contains(@class, 'h-8')])"  // Auto Tab
         this.manual_tab_grid = "(//span[contains(text(), 'Manual')]//ancestor::div[contains(@class, 'h-8')])"  // Manual Tab
-        // this.deleted_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='Deleted']"  // Deleted
+        // this.deleted_tab_grid_is_active = "//div[contains (@class, 'active')]/span[text()='Deleted']"  // Deleted
         this.all_tab_grid = "(//span[contains(text(), 'All')]//ancestor::div[contains(@class, 'h-8')])" // All Tab
         // this.all_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='All']"  # Кнопка-вкладка All активна
         this.count_items_in_footer_grid = "(//span[@class='text-indigo-950'])[2]"  // Count of items in the footer
         this.unselected_checkbox_grid = `(//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]`  // Unselected checkbox
-        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 6)]}]`  // Checkboxes in the popovers
         // this.selected_checkbox = `(//div[contains(@class,'p-highlight')])${[Math.random() * 10]}`  # Выбранный чекбокс в гриде
         this.select_all_checkbox = "(//div[@class='p-checkbox p-component'])[1]"  // Select All checkbox
         this.delete_button_upper_panel = "//button[@aria-label='Delete']"  // Button Delete in the top panel
         this.restore_button_upper_panel = "//button[@aria-label='Restore']"  // Button Restore in the top panel
-        this.counter_upper_panel = "//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']"  // Counter in the top panel
+        this.counter_checked_checkboxes_upper_panel = "//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']"  // Counter checked checkboxes in the top panel
         this.button_all_fiters = "//div[contains(@class, 'all-filters')]"  // Button All filters
         this.counter_all_filters = "//div[contains(@class,'all-filters')]/span[@class='prospace-counter-box']"  // Counter in the All Filters
 
@@ -131,7 +140,7 @@ exports.BasePage = class BasePage {
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.select_all_checkbox).click()
-        const count_deleted_items = await this.page.locator(bp.counter_upper_panel).textContent()
+        const count_deleted_items = await this.page.locator(bp.counter_checked_checkboxes_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
         await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
         await this.page.locator(bp.button_delete_item).click()

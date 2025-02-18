@@ -21,9 +21,6 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         this.list_eanpc_option_card = "//li[@aria-label='EAN Pc']" // List EAN Pc Option
         this.list_brand_option_card = "//li[@aria-label='Brand']" // List EAN Pc Option
         this.input_value_card = "//div[@data-test='prospace-form-block']/div//input[contains(@data-pc-name,'inputtext')]" // Value input
-        this.product_counter_card = "//div[@class='bottom-panel']//span[@class='prospace-counter-box']" // Product's counter
-        this.product_panel_card = "//div[@class='panel']" // Product's panel
-        this.button_add_card = "//button[@aria-label='Add']" // Button Add
 
         // Grid
         this.last_type_in_grid = "(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[1]"   // Grid last Type
@@ -88,7 +85,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await this.page.locator(bp.mode_switcher).click()
         const card_description = await this.page.locator(this.input_description_card).inputValue()
         const card_name = await this.page.locator(bp.input_name_card).inputValue()
-        const card_count_products = await this.page.locator(this.product_counter_card).textContent()
+        const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
 
         // Check The Matching of Grid and Card Info
         await expect.soft(card_name, "Product Group Name is not match").toBe(grid_name)
@@ -110,8 +107,8 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await this.page.locator(this.button_manual_dialog).click()
         await this.page.locator(bp.button_create_card).click()
         await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}))
-        await this.page.locator(this.product_panel_card).click()
-        await this.page.locator(this.button_add_card).click()
+        await this.page.locator(bp.bottom_panel).click()
+        await this.page.locator(bp.button_add_bottom_panel).click()
 
         let count = 0
         while (count !== 4) {
@@ -139,7 +136,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await this.page.locator(bp.mode_switcher).click()
         const card_description = await this.page.locator(this.input_description_card).inputValue()
         const card_name = await this.page.locator(bp.input_name_card).inputValue()
-        const card_count_products = await this.page.locator(this.product_counter_card).textContent()
+        const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
 
         // Check The Matching of Grid and Card Info
         await expect.soft(card_name, "Product Group Name is not match").toBe(grid_name)
@@ -164,7 +161,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await this.page.locator(bp.mode_switcher).click();
         const card_name = await this.page.locator(bp.input_name_card).inputValue();
         const card_description = await this.page.locator(this.input_description_card).inputValue();
-        const card_count_products = await this.page.locator(this.product_counter_card).textContent();
+        const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent();
 
         // Check the Matching of Grid and Card Info
         await expect.soft(card_name, "Product Groups Name is not match").toBe(grid_name)
@@ -265,8 +262,8 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await this.page.fill(bp.input_name_card, faker.location.city() + " UPD");
         await this.page.locator(this.input_description_card).clear();
         await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}));
-        await this.page.locator(this.product_panel_card).click()
-        await this.page.locator(this.button_add_card).click()
+        await this.page.locator(bp.bottom_panel).click()
+        await this.page.locator(bp.button_add_bottom_panel).click()
 
         let count = 0
         while (count !== 2) {
