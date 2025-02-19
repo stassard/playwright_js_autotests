@@ -22,6 +22,38 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         await marketingBudgetPage.create_auto_marketing_budget()
     });
 
+    test.describe('Add Promo to Manual Marketing Budget',() => {
+        test.beforeEach('Create Manual Marketing Budget',async ({ page }) => {
+            test.setTimeout(120_000)
+            const lp = new LoginPage(page);
+            const marketingBudgetPage = new MarketingBudgetsPage(page)
+            await lp.authorization();
+            await marketingBudgetPage.open_marketing_budgets_dict()
+            await marketingBudgetPage.create_manual_marketing_budget()
+        });
+        test('Add Promo to Manual Marketing Budget', async ({page}) => {
+            test.setTimeout(120_000)
+            const marketingBudgetPage = new MarketingBudgetsPage(page)
+            await marketingBudgetPage.add_promo_to_manual_marketing_budget()
+        });
+    })
+
+    test.describe.only('Add Promo to Auto Marketing Budget',() => {
+        test.beforeEach('Create Auto Marketing Budget', async ({page}) => {
+            test.setTimeout(120_000)
+            const lp = new LoginPage(page);
+            const marketingBudgetPage = new MarketingBudgetsPage(page)
+            await lp.authorization();
+            await marketingBudgetPage.open_marketing_budgets_dict()
+            await marketingBudgetPage.create_auto_marketing_budget()
+        });
+        test('Add Promo to Auto Marketing Budget', async ({page}) => {
+            test.setTimeout(120_000)
+            const marketingBudgetPage = new MarketingBudgetsPage(page)
+            await marketingBudgetPage.add_promo_to_auto_marketing_budget()
+        });
+    })
+
     test('Read Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);

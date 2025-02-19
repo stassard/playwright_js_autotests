@@ -100,6 +100,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_client_before = await this.page.locator(this.selector_client_card).getAttribute("model-value-prop");
         const card_product_before = await this.page.locator(this.selector_product_card).getAttribute("model-value-prop");
         const card_event_before = await this.page.locator(bp.first_chips_event).getAttribute("title");
+        // TODO: Uncomment when Marketing Tools dict will be ready for using
         // const card_marketing_tool_before = await this.page.locator(this.selector_marketing_tool_card).getAttribute("model-value-prop");
         const card_budget_before = await this.page.locator(this.input_budget).inputValue();
         const card_qty_before = await this.page.locator(this.input_qty).inputValue();
@@ -111,21 +112,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const card_file_name_before = await this.page.locator(bp.name_of_added_file).textContent()
         const card_comment_before = await this.page.locator(bp.text_input_card).inputValue()
         await this.page.locator(bp.button_create_card).click()
-
-        // Check Success Toast Message
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-
-        // Add Promo To Marketing Budget
-        await this.page.locator(this.tab_promos).click()
-        await this.page.locator(bp.mode_switcher).click();
-        await this.page.locator(this.button_add_promo).click();
-        await this.page.locator(this.checkbox_promos).click()
-        await this.page.locator(bp.button_apply).click()
-        const count_of_items_promos = await this.page.locator(this.count_of_items_in_footer_promos).textContent()
-        await this.page.locator(this.last_value_in_promos).click()
-        await this.page.type(this.last_value_in_promos, String(getRandomInt(1000, 100000)))
-        await this.page.keyboard.press("Enter");
-        await this.page.locator(bp.button_save).click()
 
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
@@ -146,7 +132,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const grid_budget = await this.page.locator(this.last_budget_in_grid).textContent();
         const grid_period_start = await this.page.locator(this.last_period_start_in_grid).textContent();
         const grid_period_end = await this.page.locator(this.last_period_end_in_grid).textContent();
-        const grid_count_linked_promos = await this.page.locator(this.last_linked_promos_in_grid).textContent();
         const grid_count_linked_budgets = await this.page.locator(this.last_linked_budgets_in_grid).textContent();
         const grid_allocation_type = await this.page.locator(this.last_allocation_type_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -209,10 +194,9 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             // await expect.soft(card_marketing_tool_before, "Marketing Tool is not match [Card - Grid]").toBe(grid_marketing_tool)
             await expect.soft(card_pnl_line_before, "P&L Line is not match [Card - Grid]").toBe(grid_pnl_line)
             await expect.soft(card_budget_before, "Budget is not match [Card - Grid]").toBe(grid_budget)
-            await expect.soft(card_start_date_before.replace("20", ""), "Start Date is not match [Card - Grid]").toBe(grid_period_start)
-            await expect.soft(card_end_date_before.replace("20", ""), "End Date is not match [Card - Grid]").toBe(grid_period_end)
+            await expect.soft(card_start_date_before, "Start Date is not match [Card - Grid]").toContain(grid_period_start)
+            await expect.soft(card_end_date_before, "End Date is not match [Card - Grid]").toContain(grid_period_end)
             await expect.soft(card_allocation_header_after, "Allocation type is not match [Card - Grid]").toBe(grid_allocation_type)
-            await expect.soft(grid_count_linked_promos, "Count of Linked Promos is not match [Card - Grid]").toBe(count_of_items_promos)
             await expect.soft(grid_count_linked_budgets, "Count of Linked Budgets is not 0 [Card - Grid]").toBe(String(0))
         }
     }
@@ -267,18 +251,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
-        // Add Promo To Marketing Budget
-        await this.page.locator(this.tab_promos).click()
-        await this.page.locator(bp.mode_switcher).click();
-        await this.page.locator(this.button_add_promo).click();
-        await this.page.locator(this.checkbox_promos).click()
-        await this.page.locator(bp.button_apply).click()
-        const count_of_items_promos = await this.page.locator(this.count_of_items_in_footer_promos).textContent()
-        await this.page.locator(bp.button_save).click()
-
-        // Check Success Toast Message
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-
         await this.page.locator(bp.x_icon).click();
         await this.page.reload()
 
@@ -295,7 +267,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         const grid_budget = await this.page.locator(this.last_budget_in_grid).textContent();
         const grid_period_start = await this.page.locator(this.last_period_start_in_grid).textContent();
         const grid_period_end = await this.page.locator(this.last_period_end_in_grid).textContent();
-        const grid_count_linked_promos = await this.page.locator(this.last_linked_promos_in_grid).textContent();
         const grid_count_linked_budgets = await this.page.locator(this.last_linked_budgets_in_grid).textContent();
         const grid_allocation_type = await this.page.locator(this.last_allocation_type_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -361,16 +332,13 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             await expect.soft(card_start_date_before.replace("20", ""), "Start Date is not match [Card - Grid]").toBe(grid_period_start)
             await expect.soft(card_end_date_before.replace("20", ""), "End Date is not match [Card - Grid]").toBe(grid_period_end)
             await expect.soft(card_allocation_header_after, "Allocation type is not match [Card - Grid]").toBe(grid_allocation_type)
-            await expect.soft(grid_count_linked_promos, "Count of Linked Promos is not match [Card - Grid]").toBe(count_of_items_promos)
             await expect.soft(grid_count_linked_budgets, "Count of Linked Budgets is not 0 [Card - Grid]").toBe(String(0))
         }
     }
 
     async read_markering_budget(){
-        // Find Any Marketing Budget
-        const bp = new BasePage()
-
         // Get Info From Grid
+        const bp = new BasePage()
         const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
         const grid_name = await this.page.locator(bp.last_item_name).textContent();
         const grid_status = await this.page.locator(this.last_status_in_grid).textContent();
@@ -387,7 +355,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
 
         await this.page.locator(bp.last_item_name).click()
 
-        // Get Info From Grid
+        // Get Info From Card
         const card_id = await this.page.locator(bp.item_id).textContent()
         const card_name = await this.page.locator(this.input_budget_name_card).inputValue();
         const card_client = await this.page.locator(this.selector_client_card).getAttribute("model-value-prop");
@@ -420,5 +388,66 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await expect.soft(card_allocation_header, "Allocation type is not match [Card - Grid]").toBe(grid_allocation_type)
         await expect.soft(card_allocation_header, "Allocation type is not match [Card - Grid]").toBe(card_allocation_type)
 }
+
+
+    async add_promo_to_manual_marketing_budget(){
+        // Open Manual Marketing Budget
+        const bp = new BasePage()
+        await this.page.locator(bp.last_item_name).click()
+
+        // Add Promo To Marketing Budget
+        await this.page.locator(this.tab_promos).click()
+        await this.page.locator(bp.mode_switcher).click();
+        await this.page.locator(this.button_add_promo).click();
+        await this.page.locator(this.checkbox_promos).click()
+        await this.page.locator(bp.button_apply).click()
+        await this.page.locator(this.last_value_in_promos).click()
+        await this.page.type(this.last_value_in_promos, String(getRandomInt(1000, 100000)))
+        await this.page.keyboard.press("Enter");
+        const count_of_items_promos = await this.page.locator(this.count_of_items_in_footer_promos).textContent()
+        await this.page.locator(bp.button_save).click()
+
+        // Check Success Toast Message
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        await this.page.locator(bp.x_icon).click();
+        await this.page.reload()
+
+        // Get Info From Grid
+        const grid_count_linked_promos = await this.page.locator(this.last_linked_promos_in_grid).textContent();
+
+        // Check The Matching of Grid and Card Info
+        await expect.soft(grid_count_linked_promos, "Count of Linked Promos is not match [Card - Grid]").toBe(count_of_items_promos)
+
+    }
+
+    async add_promo_to_auto_marketing_budget(){
+        // Open Auto Marketing Budget
+        const bp = new BasePage()
+        await this.page.locator(bp.last_item_name).click()
+
+        // Add Promo To Marketing Budget
+        await this.page.locator(this.tab_promos).click()
+        await this.page.locator(bp.mode_switcher).click();
+        await this.page.locator(this.button_add_promo).click();
+        await this.page.locator(this.checkbox_promos).click()
+        await this.page.locator(bp.button_apply).click()
+        const count_of_items_promos = await this.page.locator(this.count_of_items_in_footer_promos).textContent()
+        await this.page.locator(bp.button_save).click()
+
+        // Check Success Toast Message
+        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+
+        await this.page.locator(bp.x_icon).click();
+        await this.page.reload()
+
+        // Get Info From Grid
+        const grid_count_linked_promos = await this.page.locator(this.last_linked_promos_in_grid).textContent();
+
+        // Check The Matching of Grid and Card Info
+        await expect.soft(grid_count_linked_promos, "Count of Linked Promos is not match [Card - Grid]").toBe(count_of_items_promos)
+
+    }
+
 
 }

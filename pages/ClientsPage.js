@@ -29,11 +29,8 @@ exports.ClientsPage = class ClientsPage {
         this.list_of_affiliations_card = `//li[@aria-posinset='${[getRandomInt(1, 2)]}']`  // Affiliations list
         this.international_affiliation_selector = "//li[@aria-posinset='1']"  // Affiliation Type - International
         this.local_affiliation_selector = "//li[@aria-posinset='2']"  // Affiliation Type - Local
-        this.button_upload_file = "//input[@type='file']"  // Button Upload File
-        this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
 
         // Grid
-        // this.last_client_name_in_grid = "(//span[text()='Name']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Name
         this.last_id_in_grid = "(//span[text()='ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last ID
         this.last_external_id_in_grid = "(//span[text()='External ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last External ID
         this.last_parent_in_grid = "(//span[text()='Parent']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Parent
@@ -88,7 +85,7 @@ exports.ClientsPage = class ClientsPage {
         await this.page.locator(this.list_of_affiliations_card).click()
         await this.page.fill(this.input_dispatch_start_before_day, random_start_day)
         await this.page.fill(this.input_dispatch_end_before_day, random_end_day)
-        await this.page.locator(this.button_upload_file).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\магнит.jpg')
+        await this.page.locator(bp.button_upload_file).setInputFiles('./uploadFiles/магнит.jpg')
         await this.page.locator(bp.button_create_card).click()
 
 
@@ -108,7 +105,7 @@ exports.ClientsPage = class ClientsPage {
         const card_affiliation = await this.page.locator(this.selector_affiliation_card).getAttribute("model-value-prop");
         const card_dispatch_start_day = await this.page.locator(this.input_dispatch_start_before_day).inputValue();
         const card_dispatch_end_day = await this.page.locator(this.input_dispatch_end_before_day).inputValue()
-        const card_file_name = await this.page.locator(this.name_of_added_file).textContent()
+        const card_file_name = await this.page.locator(bp.name_of_added_file).textContent()
         await this.page.locator(bp.x_icon).click();
 
 
@@ -250,12 +247,12 @@ exports.ClientsPage = class ClientsPage {
 
         if (await this.page.locator(this.x_icon_upload_file).isVisible() === true) {
             await this.page.locator(this.x_icon_upload_file).click();
-            await this.page.locator(this.button_upload_file).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\магнит.jpg')
+            await this.page.locator(bp.button_upload_file).setInputFiles('./uploadFiles/магнит.jpg')
         }
         else {
-            await this.page.locator(this.button_upload_file).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\магнит.jpg')
+            await this.page.locator(bp.button_upload_file).setInputFiles('./uploadFiles/магнит.jpg')
         }
-        const file_name_before = await this.page.locator(this.name_of_added_file).first().textContent()
+        const file_name_before = await this.page.locator(bp.name_of_added_file).first().textContent()
         await this.page.locator(bp.button_save).click();
 
         // Check Success Toast Message
@@ -271,7 +268,7 @@ exports.ClientsPage = class ClientsPage {
 
         // Upload second file
         await this.page.locator(this.x_icon_upload_file).click();
-        await this.page.locator(this.button_upload_file).setInputFiles('D:\\ProSpace JS Playwright\\uploadFiles\\unnamed.png')
+        await this.page.locator(bp.button_upload_file).setInputFiles('./uploadFiles/unnamed.png')
         await this.page.locator(bp.button_save).click();
 
         // Check Success Toast Message
@@ -282,7 +279,7 @@ exports.ClientsPage = class ClientsPage {
         await this.page.locator(bp.last_item_name).click();
 
         // Check visibility of the second file
-        const file_name_after = await this.page.locator(this.name_of_added_file).textContent()
+        const file_name_after = await this.page.locator(bp.name_of_added_file).textContent()
         await expect.soft(file_name_after, "File Name is not match").toEqual("unnamed.png")
 
     }

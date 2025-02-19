@@ -18,7 +18,6 @@ exports.BasePage = class BasePage {
         this.link_baselines = "//a[text()='Baselines']"  // Link Baselines in the Side Menu
         this.link_cogses = "//a[text()='COGS']"  // Link Cogses in the Side Menu
         this.link_basetis = "//a[text()='Trade terms']"  // Link BaseTis in the Side Menu
-        // TODO: Change link of Marketing Budgets after it will be change
         this.link_marketing_budgets = "//a[text()='Marketing budgets']"  // Link Marketing Budgets in the Side Menu
         this.link_events = "//a[text()='Events']"  // Link Events in the Side Menu
         this.link_budget_types = "//a[text()='Budget types']"  // Link Budget Types in the Side Menu
@@ -29,16 +28,19 @@ exports.BasePage = class BasePage {
         this.link_users = "//a[text()='Users']"  // Link Users in the Side Menu
         this.link_rules = "//a[text()='Rules']"  // Link Rules in the Side Menu
         this.link_roles = "//a[text()='Roles']"  // Link Roles in the Side Menu
+        this.link_promo_portfolio = "//a[text()='Promo Portfolio']"  // Link Promo Portfolio in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
         this.link_delete_in_3_dots_card = "//div[contains(@class,'prospace-dots-item')]"  // Button Delete in the card 3 dots
         this.button_add = "//div[@class='collection-editor']/button"  // Button Add events
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
+        this.x_icon_chips_event = "(//div[contains(@class,'remove')])[1]"  // First X Icon Chips Event
+        this.button_upload_file = "//input[@type='file']"  // Button Upload File
 
         // Dialog
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
-        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 6)]}]`  // Checkboxes in the popovers
+        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 19)]}]`  // Checkboxes in the popovers
 
         // Bottom Panel
         this.bottom_panel = "//div[@class='panel']"  // Bottom panel
@@ -59,7 +61,7 @@ exports.BasePage = class BasePage {
         this.pen_icon_card = "(//div[@data-test='prospace-header']//button[@type='icon-secondary'])[1]" // Pen Icon in the Card
         this.text_input_card = "//div[@data-test='block-main']//textarea[@type='text']" // Text input in the Card
 
-        // Grid
+        // Grid Dictionary
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
         this.button_restore_item = "//button[contains(@aria-label,'Restore item')]"  // Button Restore Item in the Modal Window
         this._3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[${[getRandomInt(1, 10)]}]`  // Grid 3 dots
@@ -84,6 +86,9 @@ exports.BasePage = class BasePage {
         this.counter_checked_checkboxes_upper_panel = "//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']"  // Counter checked checkboxes in the top panel
         this.button_all_fiters = "//div[contains(@class, 'all-filters')]"  // Button All filters
         this.counter_all_filters = "//div[contains(@class,'all-filters')]/span[@class='prospace-counter-box']"  // Counter in the All Filters
+
+        // Grid Promo
+        this.button_new_promo = "//button[@aria-label='New Promo']"  // Button New Promo
 
         // Filters
         this.button_apply = "//button[contains(@aria-label,'Apply')]"  // Button Apply
@@ -278,6 +283,28 @@ export const random_start_date = future_start_date.toLocaleDateString('ru-RU', {
 
 const future_end_date = faker.date.between({from: '01-01-2035', to: '01-01-2040'});
 export const random_end_date = future_end_date.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
+const esd = faker.date.between({from: '01-01-2027', to: '06-06-2027'});
+export const execution_start_date = esd.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
+const efd = faker.date.between({from: '07-07-2027', to: '12-12-2028'});
+export const execution_finish_date = efd.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+});
+
+
+const ded = faker.date.between({from: '01-01-2026', to: '12-12-2026'});
+export const dispatch_finish_date = ded.toLocaleDateString('ru-RU', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',

@@ -45,7 +45,7 @@ test.describe("Smoke Suite for Roles Page", () => {
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-3435
-    test.only('Delete Role Using Checkbox Grid', async ({ page }) => {
+    test('Delete Role Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
@@ -54,7 +54,7 @@ test.describe("Smoke Suite for Roles Page", () => {
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete Role Using Card", async ({ page }) => {
+    test.only("Delete Role Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)

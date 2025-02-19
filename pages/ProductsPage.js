@@ -27,7 +27,6 @@ exports.ProductsPage = class ProductsPage {
         this.input_unit_card = "//input[contains(@data-pc-name,'pcinput')]"                            // Unit input
 
         // Grid
-        this.last_prod_name_in_grid = "(//div[contains(@class,'border-b-purple-400')])[1]"               // Grid last Item
         this.last_eanc_in_grid = "(//span[text()='EAN Case']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last EAN Case
         this.last_eanp_in_grid = "(//span[text()='EAN Pc']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last EAN Pc
         this.last_category_in_grid = "(//span[text()='Category']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                // Grid last Category
@@ -96,7 +95,7 @@ exports.ProductsPage = class ProductsPage {
         await this.page.locator(bp.x_icon).click();
 
         // Get Info From Grid
-        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const grid_name = await this.page.locator(bp.last_item_name).textContent();
         const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
         const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
         const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
@@ -124,7 +123,7 @@ exports.ProductsPage = class ProductsPage {
         const bp = new BasePage();
         
         // Get Info From Grid
-        const grid_name = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const grid_name = await this.page.locator(bp.last_item_name).textContent();
         const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
         const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
         const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
@@ -158,7 +157,7 @@ exports.ProductsPage = class ProductsPage {
     async update_product(){
         // Get Last Product Info from Grid Before Update
         const bp = new BasePage();
-        const name_before = await this.page.locator(this.last_prod_name_in_grid).textContent();
+        const name_before = await this.page.locator(bp.last_item_name).textContent();
         const eanc_before = await this.page.locator(this.last_eanc_in_grid).textContent();
         const eanp_before = await this.page.locator(this.last_eanp_in_grid).textContent();
         const category_before = await this.page.locator(this.last_category_in_grid).textContent();
@@ -199,7 +198,7 @@ exports.ProductsPage = class ProductsPage {
         // Get Last Product Info from Grid After Update
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
-        const name_after = await this.page.locator(this.last_prod_name_in_grid).textContent()
+        const name_after = await this.page.locator(bp.last_item_name).textContent()
         const eanc_after = await this.page.locator(this.last_eanc_in_grid).textContent();
         const eanp_after = await this.page.locator(this.last_eanp_in_grid).textContent();
         const category_after = await this.page.locator(this.last_category_in_grid).textContent();
