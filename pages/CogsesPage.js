@@ -50,7 +50,7 @@ exports.CogsesPage = class CogsesPage {
         await this.page.locator(this.list_product_card).click()
         await this.page.fill(this.input_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.fill(this.input_cogs_card, String(faker.number.int({min: 100, max: 999})))
 
@@ -152,10 +152,10 @@ exports.CogsesPage = class CogsesPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.x_icon_inside_start_date_input).click();
-        await this.page.fill(this.input_start_date_card, random_start_date)
+        await this.page.fill(this.input_start_date_card, random_start_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.x_icon_inside_end_date_input).click();
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.input_cogs_card).clear();
         await this.page.fill(this.input_cogs_card, String(faker.number.int({min: 100, max: 999})));

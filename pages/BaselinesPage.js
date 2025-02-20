@@ -64,7 +64,7 @@ exports.BaselinesPage = class BaselinesPage {
         await this.page.fill(this.input_qty, String(faker.number.int({min: 100, max: 999})))
         await this.page.fill(this.input_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
 
         // Get Info From Card
@@ -207,10 +207,10 @@ exports.BaselinesPage = class BaselinesPage {
         await this.page.locator(this.input_qty).clear();
         await this.page.fill(this.input_qty, String(faker.number.int({min: 100, max: 999})));
         await this.page.locator(this.x_icon_inside_start_date_input).click();
-        await this.page.fill(this.input_start_date_card, random_start_date)
+        await this.page.fill(this.input_start_date_card, random_start_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.x_icon_inside_end_date_input).click();
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(bp.button_save).click();
 

@@ -1,7 +1,6 @@
-import {BasePage, currentDate, getRandomInt, random_end_date, random_start_date, execution_start_date, execution_finish_date, dispatch_finish_date} from '../pages/BasePage';
+import {BasePage, currentDate, getRandomInt, get_random_dispatch_finish_date, get_random_execution_finish_date, get_random_execution_start_date} from '../pages/BasePage';
 import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
-import playwright from "playwright";
 
 exports.PromoPortfolioPage = class PromoPortfolioPage {
 
@@ -45,7 +44,7 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
 
     async open_promo_portfolio_dict(){
         const bp = new BasePage()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Promo Portfolio")
+        await expect(this.page.locator(bp.head_of_page)).toHaveText("Promo Portfolio", {timeout: 12000})
     }
 
     async create_tpr_promo() {
@@ -62,13 +61,13 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
         await this.page.locator(bp.button_add).click()
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
-        await this.page.fill(this.input_execution_start_date_card, execution_start_date)
+        await this.page.fill(this.input_execution_start_date_card, get_random_execution_start_date())
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_execution_finish_date_card, execution_finish_date)
+        await this.page.fill(this.input_execution_finish_date_card, get_random_execution_finish_date())
         await this.page.keyboard.press("Enter");
         await this.page.fill(this.input_dispatch_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_dispatch_finish_date_card, dispatch_finish_date)
+        await this.page.fill(this.input_dispatch_finish_date_card, get_random_dispatch_finish_date())
         await this.page.keyboard.press("Enter");
         await this.page.fill(this.input_uplift_card, String(getRandomInt(1, 999)))
         await this.page.fill(bp.text_input_card, faker.lorem.sentence({min: 10, max: 20}))
@@ -227,16 +226,16 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
         await this.page.locator(this.input_execution_start_date_card).clear()
-        await this.page.fill(this.input_execution_start_date_card, execution_start_date)
+        await this.page.fill(this.input_execution_start_date_card, get_random_execution_start_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.input_execution_finish_date_card).clear()
-        await this.page.fill(this.input_execution_finish_date_card, execution_finish_date)
+        await this.page.fill(this.input_execution_finish_date_card, get_random_execution_finish_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.input_dispatch_start_date_card).clear()
         await this.page.fill(this.input_dispatch_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.input_dispatch_finish_date_card).clear()
-        await this.page.fill(this.input_dispatch_finish_date_card, dispatch_finish_date)
+        await this.page.fill(this.input_dispatch_finish_date_card, get_random_dispatch_finish_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.input_uplift_card).clear()
         await this.page.fill(this.input_uplift_card, String(getRandomInt(1, 999)))

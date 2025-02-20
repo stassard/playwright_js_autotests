@@ -1,4 +1,6 @@
 import {faker} from "@faker-js/faker";
+import exp from "node:constants";
+import playwright from "playwright";
 const {expect} = require("@playwright/test");
 
 exports.BasePage = class BasePage {
@@ -103,9 +105,14 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
-        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_delete_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
@@ -117,9 +124,14 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.unselected_checkbox_grid).click()
         await this.page.locator(bp.delete_button_upper_panel).click()
-        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_delete_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
@@ -132,9 +144,14 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.last_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
-        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_delete_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
@@ -147,9 +164,14 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.select_all_checkbox).click()
         const count_deleted_items = await this.page.locator(bp.counter_checked_checkboxes_upper_panel).textContent()
         await this.page.locator(bp.delete_button_upper_panel).click()
-        await expect.soft(this.page.locator(bp.button_delete_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_delete_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_delete_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Elements are not deleted").toEqual(Number(count_of_items_before) - Number(count_deleted_items))
@@ -171,9 +193,14 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp._3_dots_grid).click()
         await this.page.locator(bp.link_restore_in_3_dots).click()
-        await expect.soft(this.page.locator(bp.button_restore_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_restore_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_restore_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
 
@@ -205,9 +232,14 @@ exports.BasePage = class BasePage {
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.unselected_checkbox_grid).click()
         await this.page.locator(bp.restore_button_upper_panel).click()
-        await expect.soft(this.page.locator(bp.button_restore_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_restore_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_restore_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
 
@@ -240,9 +272,14 @@ exports.BasePage = class BasePage {
         await this.page.locator(bp.last_item_name).click()
         await this.page.locator(this._3_dots_card).click()
         await this.page.locator(bp.link_restore_in_3_dots).click()
-        await expect.soft(this.page.locator(bp.button_restore_item), "Confirmation window is not appeared").toBeVisible();
-        await this.page.locator(bp.button_restore_item).click()
-        await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
+            await this.page.locator(bp.button_restore_item).click()
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+        } else {
+            await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
+            let confirm = undefined;
+            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+        }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
 
@@ -274,40 +311,52 @@ export const currentDate = currDate.toLocaleDateString('ru-RU', {
     day: '2-digit',
 });
 
-const future_start_date = faker.date.between({from: new Date(), to: '01-01-2035'});
-export const random_start_date = future_start_date.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-});
-
-const future_end_date = faker.date.between({from: '01-01-2035', to: '01-01-2040'});
-export const random_end_date = future_end_date.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-});
-
-const esd = faker.date.between({from: '01-01-2027', to: '06-06-2027'});
-export const execution_start_date = esd.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-});
-
-const efd = faker.date.between({from: '07-07-2027', to: '12-12-2028'});
-export const execution_finish_date = efd.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-});
+export function random_start_date(){
+    const future_start_date = faker.date.between({from: new Date(), to: '01-01-2035'});
+    return future_start_date.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+}
 
 
-const ded = faker.date.between({from: '01-01-2026', to: '12-12-2026'});
-export const dispatch_finish_date = ded.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-});
+export function random_end_date() {
+    const future_end_date = faker.date.between({from: '01-01-2035', to: '01-01-2040'});
+    return  future_end_date.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+}
+
+export function get_random_execution_start_date(){
+    const esd = faker.date.between({from: '01-01-2027', to: '06-06-2027'});
+    return esd.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+}
+
+export function get_random_execution_finish_date(){
+    const efd = faker.date.between({from: '07-07-2027', to: '12-12-2028'});
+    return efd.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+}
+
+
+export function get_random_dispatch_finish_date(){
+    const ded = faker.date.between({from: '01-01-2026', to: '12-12-2026'});
+    return ded.toLocaleDateString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+}
+
 
 

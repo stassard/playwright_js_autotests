@@ -84,7 +84,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
         await this.page.fill(this.input_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.selector_budget_type_card).click()
         await this.page.locator(this.list_budget_type_card).click()
@@ -219,7 +219,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
         await this.page.fill(this.input_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.selector_budget_type_card).click()
         await this.page.locator(this.list_budget_type_card).click()

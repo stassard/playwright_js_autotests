@@ -43,7 +43,7 @@ exports.EventsPage = class EventsPage {
         await this.page.locator(this.list_color_id_card).click()
         await this.page.fill(this.input_start_date_card, currentDate)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
 
         // Get Info From Card
@@ -121,10 +121,10 @@ exports.EventsPage = class EventsPage {
             }
         }
         await this.page.locator(this.x_icon_inside_start_date_input).click();
-        await this.page.fill(this.input_start_date_card, random_start_date)
+        await this.page.fill(this.input_start_date_card, random_start_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.x_icon_inside_end_date_input).click();
-        await this.page.fill(this.input_end_date_card, random_end_date)
+        await this.page.fill(this.input_end_date_card, random_end_date())
         await this.page.keyboard.press("Enter");
         await this.page.locator(bp.button_save).click();
 
