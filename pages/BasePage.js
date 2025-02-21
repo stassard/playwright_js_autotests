@@ -1,6 +1,4 @@
 import {faker} from "@faker-js/faker";
-import exp from "node:constants";
-import playwright from "playwright";
 const {expect} = require("@playwright/test");
 
 exports.BasePage = class BasePage {
@@ -42,7 +40,7 @@ exports.BasePage = class BasePage {
 
         // Dialog
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
-        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 19)]}]`  // Checkboxes in the popovers
+        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 5)]}]`  // Checkboxes in the popovers
 
         // Bottom Panel
         this.bottom_panel = "//div[@class='panel']"  // Bottom panel
@@ -66,7 +64,7 @@ exports.BasePage = class BasePage {
         // Grid Dictionary
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
         this.button_restore_item = "//button[contains(@aria-label,'Restore item')]"  // Button Restore Item in the Modal Window
-        this._3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[${[getRandomInt(1, 10)]}]`  // Grid 3 dots
+        this._3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[1]`  // Grid 3 dots
         this.link_delete_in_3_dots = "(//li[contains(@aria-label, 'Delete')])"  // Button Delete in the grid 3 dots
         this.link_restore_in_3_dots = "(//li[contains(@aria-label, 'Restore')])"  // Button Restore in the grid 3 dots
         this.any_item_name = `(//div[contains(@class, 'border-dotted')])[${[getRandomInt(1, 10)]}]`  // Grid Any Name of Items

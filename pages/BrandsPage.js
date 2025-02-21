@@ -1,5 +1,5 @@
 import {BasePage, getRandomInt } from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 
@@ -21,14 +21,14 @@ exports.BrandPage = class BrandPage {
         this.any_segment_name_in_grid = `(//span[text()='Segment name']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Segment name
     }
 
-    async open_brands_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_brands).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Brands")
     }
 
-    async create_brand(){
+    async create_element(){
         // Create New Brand
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -62,7 +62,7 @@ exports.BrandPage = class BrandPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_brand(){
+    async read_element(){
         // Find Any Brand
         const bp = new BasePage()
 
@@ -86,7 +86,7 @@ exports.BrandPage = class BrandPage {
 
     }
 
-    async update_brand(){
+    async update_element(){
         // Get Last Brand Info from Grid Before Update
         const bp = new BasePage()
         const brand_code_before = await this.page.locator(bp.last_item_name).textContent();

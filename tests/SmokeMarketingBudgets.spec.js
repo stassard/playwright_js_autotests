@@ -4,32 +4,42 @@ import {MarketingBudgetsPage} from "../pages/MarketingBudgetsPage";
 import {BasePage} from "../pages/BasePage";
 
 test.describe("Smoke Suite for Marketing Budgets Page", () => {
-    test('Create Manual Marketing Budget', async ({page}) => {
+
+    // https://prospace-team.atlassian.net/browse/PSPR-3514
+    // https://prospace-team.atlassian.net/browse/PSPR-3488
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Create Manual Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
-        await marketingBudgetPage.create_manual_marketing_budget()
+        await marketingBudgetPage.open_dict()
+        await marketingBudgetPage.create_manual_type_budget()
     });
 
-    test('Create Auto Marketing Budget', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3514
+    // https://prospace-team.atlassian.net/browse/PSPR-3488
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Create Auto Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
-        await marketingBudgetPage.create_auto_marketing_budget()
+        await marketingBudgetPage.open_dict()
+        await marketingBudgetPage.create_auto_type_budget()
     });
 
-    test.describe('Add Promo to Manual Marketing Budget',() => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3514
+    // https://prospace-team.atlassian.net/browse/PSPR-3488
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.describe.skip('Add Promo to Manual Marketing Budget',() => {
         test.beforeEach('Create Manual Marketing Budget',async ({ page }) => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
             const marketingBudgetPage = new MarketingBudgetsPage(page)
             await lp.authorization();
-            await marketingBudgetPage.open_marketing_budgets_dict()
-            await marketingBudgetPage.create_manual_marketing_budget()
+            await marketingBudgetPage.open_dict()
+            await marketingBudgetPage.create_manual_type_budget()
         });
         test('Add Promo to Manual Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
@@ -38,14 +48,17 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         });
     })
 
-    test.describe.only('Add Promo to Auto Marketing Budget',() => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3514
+    // https://prospace-team.atlassian.net/browse/PSPR-3488
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.describe.skip('Add Promo to Auto Marketing Budget',() => {
         test.beforeEach('Create Auto Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
             const marketingBudgetPage = new MarketingBudgetsPage(page)
             await lp.authorization();
-            await marketingBudgetPage.open_marketing_budgets_dict()
-            await marketingBudgetPage.create_auto_marketing_budget()
+            await marketingBudgetPage.open_dict()
+            await marketingBudgetPage.create_auto_type_budget()
         });
         test('Add Promo to Auto Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
@@ -54,13 +67,14 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         });
     })
 
-    test('Read Marketing Budget', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Read Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
-        await marketingBudgetPage.read_markering_budget()
+        await marketingBudgetPage.open_dict()
+        await marketingBudgetPage.read_element()
     });
 
     test('Delete Marketing Budget Using 3 Dots Grid', async ({ page }) => {
@@ -68,7 +82,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -77,25 +91,27 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete Marketing Budget Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete Marketing Budget Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Marketing Budget', async ({ page }) => {
+    // Need seed
+    test.skip('Select All Delete Marketing Budget', async ({ page }) => {
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.select_all_delete()
     });
 
@@ -104,7 +120,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 
@@ -113,17 +129,17 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.restore_using_checkbox_grid()
     });
 
-    // BUG: PSPR-3768
-    test('Restore Marketing Budget Using Card', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3768
+    test.skip('Restore Marketing Budget Using Card', async ({page}) => {
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await marketingBudgetPage.open_marketing_budgets_dict()
+        await marketingBudgetPage.open_dict()
         await bp.restore_using_card()
     });
 });

@@ -10,8 +10,8 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         this.page = page;
         // Initiation dialog
         this.input_name_dialog = "//div[@class='prospace-modal-wrapper']/div/div//input[contains(@data-pc-name,'inputtext')]"  // Name input
-        this.button_auto_dialog = "//div[@aria-label='Auto']"  // Button Auto
-        this.button_manual_dialog = "//div[@aria-label='Manual']"  // Button Manual
+        this.button_auto_dialog = "//div[@class='p-dialog-content']//button[1]"  // Button Auto
+        this.button_manual_dialog = "//div[@class='p-dialog-content']//button[2]"  // Button Manual
 
         // Creation form
         this.button_add_new_condition_card = "//button[@aria-label='Add new condition']"  // Button Add New Condition
@@ -32,7 +32,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         this.any_segment_name_in_grid = `(//span[text()='Products']/following-sibling::div/span)[${[getRandomInt(2, 20)]}]`  // Grid any Products
     }
 
-    async open_product_groups_dict() {
+    async open_dict() {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_product_groups).click()
@@ -147,7 +147,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
 
     }
 
-    async read_product_group(){
+    async read_element(){
         // Find Any Product Group
         const bp = new BasePage()
 

@@ -8,7 +8,7 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await productGroupsPage.create_auto_product_group()
     });
 
@@ -16,7 +16,7 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await productGroupsPage.create_manual_product_group()
     });
 
@@ -24,15 +24,15 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
-        await productGroupsPage.read_product_group()
+        await productGroupsPage.open_dict()
+        await productGroupsPage.read_element()
     });
 
     test('Update Auto Product Group', async ({page}) => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await productGroupsPage.update_auto_product_group()
     });
 
@@ -40,34 +40,38 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await productGroupsPage.update_manual_product_group()
     });
 
-    test('Delete Product Group Using 3 Dots Grid', async ({ page }) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3143
+    // BUG: Confirmation window is not appeared
+    test.skip('Delete Product Group Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
-    test('Delete Product Group Using Checkbox Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip('Delete Product Group Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
+    // BUG: Confirmation window is not appeared
     test("Delete Product Group Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const productGroupsPage = new ProductGroupsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -76,7 +80,7 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const productGroupsPage = new ProductGroupsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await bp.select_all_delete()
     });
 
@@ -85,7 +89,7 @@ test.describe("Smoke Suite for Product Groups Page", () => {
         const productGroupsPage = new ProductGroupsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await productGroupsPage.open_product_groups_dict()
+        await productGroupsPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

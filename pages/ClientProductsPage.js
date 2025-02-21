@@ -1,15 +1,5 @@
 import {BasePage, getRandomInt} from './BasePage.js';
-import {expect, test} from "@playwright/test";
-import { faker } from '@faker-js/faker';
-
-// Fake Data
-const random_name = faker.commerce.department() + String(getRandomInt(10000, 99999))
-const random_external_id = faker.string.numeric({length: { min: 7, max: 10}})
-const random_parent= faker.food.adjective() + String(getRandomInt(10000, 99999))
-const random_type= faker.food.fruit() + String(getRandomInt(10000, 99999))
-const random_start_day= String(getRandomInt(20, 40))
-const random_end_day= String(getRandomInt(1, 19))
-
+import {expect} from "@playwright/test";
 
 exports.ClientProductsPage = class ClientProductsPage {
     constructor(page) {
@@ -24,7 +14,7 @@ exports.ClientProductsPage = class ClientProductsPage {
         // Grid
         this.last_client_id_in_grid = "(//span[text()='Client ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]"    // Grid last Cient ID
         this.last_client_name_in_grid = "(//span[text()='Client name']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Client Name
-        this.last_product_in_grid = "(//span[text()='Product']/following-sibling::div[contains(@class,'relative inline-block')])[1]"     // Grid last Product
+        this.last_product_in_grid = "(//span[text()='Product ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]"     // Grid last Product
         this.last_product_sku_name_in_grid = "(//span[text()='Product SKU Name']/following-sibling::div[contains(@class,'relative inline-block')])[1]"   // Grid last Product SKU Name
         this.any_client_id_in_grid = `(//span[text()='Client ID']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     // Grid any Client ID
         this.any_client_name_in_grid = `(//span[text()='Client name']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Client Name
@@ -36,14 +26,14 @@ exports.ClientProductsPage = class ClientProductsPage {
         this.input_product_filters = "(//input[contains(@data-pc-name,'inputtext')])[3]"    // Product input
     }
 
-    async open_client_products_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_client_products).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Client Products")
     }
 
-    async create_client_products(){
+    async create_element(){
         // Create New Client Products
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -122,7 +112,7 @@ exports.ClientProductsPage = class ClientProductsPage {
 
     }
 
-    async read_client_products(){
+    async read_element(){
         // Find Any Client
         const bp = new BasePage()
 

@@ -1,5 +1,5 @@
 import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 import {ClientsPage} from "./ClientsPage";
 import {ProductsPage} from "./ProductsPage";
@@ -32,14 +32,14 @@ exports.BaseTisPage = class BaseTisPage {
         this.x_icon_inside_end_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
     }
 
-    async open_basetis_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_basetis).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Trade terms")
     }
 
-    async create_basetis(){
+    async create_element(){
         // Create New BaseTis
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -86,7 +86,7 @@ exports.BaseTisPage = class BaseTisPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_baseti(){
+    async read_element(){
         // Find Any BaseTi
         const bp = new BasePage()
         const cp = new ClientsPage()
@@ -170,7 +170,7 @@ exports.BaseTisPage = class BaseTisPage {
 
     }
 
-    async update_baseti(){
+    async update_element(){
         // Get Last BaseTi Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();

@@ -27,14 +27,14 @@ exports.TechnologiesPage = class TechnologiesPage {
         this.any_sub_brand_code_in_grid = `(//span[text()='Sub Brand Code']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Sub Brand Code
     }
 
-    async open_technologies_dict() {
+    async open_dict() {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_technologies).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Technologies")
     }
 
-    async create_technology() {
+    async create_element() {
         // Create New Technology
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -66,7 +66,7 @@ exports.TechnologiesPage = class TechnologiesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_technology(){
+    async read_element(){
         // Find Any Technology
         const bp = new BasePage()
 
@@ -87,7 +87,7 @@ exports.TechnologiesPage = class TechnologiesPage {
 
     }
 
-    async update_technology(){
+    async update_element(){
         // Get Last Technology Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();

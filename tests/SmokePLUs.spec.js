@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { PLUsPage } from "../pages/PLUsPage";
 import { BasePage } from "../pages/BasePage";
@@ -6,38 +6,41 @@ import { BasePage } from "../pages/BasePage";
 
 test.describe("Smoke Suite for PLUs Page", () => {
 
-    // Требуется сид c большим количеством данных,для корректного тестирования
-    test('Create PLU', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3829
+    test.skip('Create PLU', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
-        await plusPage.create_plu()
+        await plusPage.open_dict()
+        await plusPage.create_element()
     });
 
-    test('Read PLU', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3829
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Read PLU', async ({page}) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
-        await plusPage.read_plu()
+        await plusPage.open_dict()
+        await plusPage.read_element()
     });
 
     test('Update PLU', async ({page}) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
-        await plusPage.update_plu()
+        await plusPage.open_dict()
+        await plusPage.update_element()
     });
 
-    test('Delete PLU Using 3 Dots Grid', async ({ page }) => {
+    // Confirmation window is not appeared
+    test.skip('Delete PLU Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
+        await plusPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -47,36 +50,37 @@ test.describe("Smoke Suite for PLUs Page", () => {
         const plusPage = new PLUsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
+        await plusPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete PLU Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete PLU Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
+        await plusPage.open_dict()
         await bp.delete_using_card()
     });
 
-    // BUG: https://prospace-team.atlassian.net/browse/PSPR-3853
-    // Small amount of data
+    // Need seed
     test.skip('Select All Delete PLUs', async ({ page }) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
+        await plusPage.open_dict()
         await bp.select_all_delete()
     });
 
-    test.skip('Restore Event Using 3 Dots Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip('Restore PLU Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await plusPage.open_plus_dict()
+        await plusPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

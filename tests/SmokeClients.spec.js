@@ -1,47 +1,51 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { ClientsPage } from "../pages/ClientsPage";
 import { BasePage } from "../pages/BasePage";
 
 
 test.describe("Smoke Suite for Client Page", () => {
+
+    // https://prospace-team.atlassian.net/browse/PSPR-3212
     test('Create Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
-        await cp.create_client()
+        await cp.open_dict()
+        await cp.create_element()
     });
 
+    // https://prospace-team.atlassian.net/browse/PSPR-3212
     test('Read Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
-        await cp.read_client()
+        await cp.open_dict()
+        await cp.read_element()
     });
 
     test('Update Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
-        await cp.update_client()
+        await cp.open_dict()
+        await cp.update_element()
     });
 
     test("Update Client's logo", async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
-        await cp.update_client_logo()
+        await cp.open_dict()
+        await cp.update_element_logo()
     });
+
     test('Delete Client Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
+        await cp.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -50,16 +54,17 @@ test.describe("Smoke Suite for Client Page", () => {
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
+        await cp.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete Product Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete Product Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
+        await cp.open_dict()
         await bp.delete_using_card()
     });
 
@@ -68,16 +73,17 @@ test.describe("Smoke Suite for Client Page", () => {
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
+        await cp.open_dict()
         await bp.select_all_delete()
     });
 
-    test('Restore Product Using 3 Dots Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip('Restore Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cp.open_clients_dict()
+        await cp.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

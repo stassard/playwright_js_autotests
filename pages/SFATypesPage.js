@@ -1,5 +1,5 @@
-import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {BasePage, getRandomInt} from './BasePage.js';
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 
@@ -17,14 +17,14 @@ exports.SFATypesPage = class SFATypesPage {
 
     }
 
-    async open_sfa_types_dict() {
+    async open_dict() {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_sfa_types).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("SFA types")
     }
 
-    async create_sfa_type() {
+    async create_element() {
         // Create New SFA Type
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -50,7 +50,7 @@ exports.SFATypesPage = class SFATypesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
     }
 
-    async read_sfa_type(){
+    async read_element(){
         const bp = new BasePage()
 
         // Get Info From Grid
@@ -68,7 +68,7 @@ exports.SFATypesPage = class SFATypesPage {
         await expect.soft(grid_sfa_type, "SFA type is not match").toBe(card_sfa_type)
     }
 
-    async update_sfa_type(){
+    async update_element(){
         // Get Last SFA Type Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();

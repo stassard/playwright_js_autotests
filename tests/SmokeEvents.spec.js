@@ -10,24 +10,24 @@ test.describe("Smoke Suite for Events Page", () => {
         const lp = new LoginPage(page);
         const eventsPage = new EventsPage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
-        await eventsPage.create_event()
+        await eventsPage.open_dict()
+        await eventsPage.create_element()
     });
 
     test('Read Event', async ({page}) => {
         const lp = new LoginPage(page);
         const eventsPage = new EventsPage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
-        await eventsPage.read_event()
+        await eventsPage.open_dict()
+        await eventsPage.read_element()
     });
 
     test('Update Event', async ({page}) => {
         const lp = new LoginPage(page);
         const eventsPage = new EventsPage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
-        await eventsPage.update_event()
+        await eventsPage.open_dict()
+        await eventsPage.update_element()
     });
 
     test('Delete Event Using 3 Dots Grid', async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe("Smoke Suite for Events Page", () => {
         const eventsPage = new EventsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
+        await eventsPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -44,7 +44,7 @@ test.describe("Smoke Suite for Events Page", () => {
         const eventsPage = new EventsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
+        await eventsPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
@@ -53,7 +53,7 @@ test.describe("Smoke Suite for Events Page", () => {
         const eventsPage = new EventsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
+        await eventsPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -63,16 +63,16 @@ test.describe("Smoke Suite for Events Page", () => {
         const eventsPage = new EventsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
+        await eventsPage.open_dict()
         await bp.select_all_delete()
     });
 
-    test.skip('Restore Event Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Event Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const eventsPage = new EventsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await eventsPage.open_events_dict()
+        await eventsPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

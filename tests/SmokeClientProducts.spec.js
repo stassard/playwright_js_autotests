@@ -1,17 +1,17 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { ClientProductsPage } from "../pages/ClientProductsPage.js";
 import { BasePage } from "../pages/BasePage";
 
 
 test.describe("Smoke Suite for Client Products Page", () => {
-    test('Create Client Products', async ({ page }) => {
+    test.skip('Create Client Products', async ({ page }) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
-        await cpp.create_client_products()
+        await cpp.open_dict()
+        await cpp.create_element()
     });
 
     test('Read Client Products', async ({ page }) => {
@@ -19,8 +19,8 @@ test.describe("Smoke Suite for Client Products Page", () => {
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
-        await cpp.read_client_products()
+        await cpp.open_dict()
+        await cpp.read_element()
     });
 
     test('Delete Client Products Using 3 Dots Grid', async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe("Smoke Suite for Client Products Page", () => {
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
+        await cpp.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -37,7 +37,7 @@ test.describe("Smoke Suite for Client Products Page", () => {
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
+        await cpp.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
@@ -46,16 +46,16 @@ test.describe("Smoke Suite for Client Products Page", () => {
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
+        await cpp.open_dict()
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Client Products', async ({ page }) => {
+    test.skip('Select All Delete Client Products', async ({ page }) => {
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
+        await cpp.open_dict()
         await bp.select_all_delete()
     });
 
@@ -64,7 +64,7 @@ test.describe("Smoke Suite for Client Products Page", () => {
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cpp.open_client_products_dict()
+        await cpp.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

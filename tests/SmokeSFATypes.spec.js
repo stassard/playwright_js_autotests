@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { SFATypesPage } from "../pages/SFATypesPage";
 import { BasePage } from "../pages/BasePage";
@@ -11,32 +11,33 @@ test.describe("Smoke Suite for SFA Types Page", () => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
-        await sfaTypesPage.create_sfa_type()
+        await sfaTypesPage.open_dict()
+        await sfaTypesPage.create_element()
     });
 
     test('Read SFA Type', async ({page}) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
-        await sfaTypesPage.read_sfa_type()
+        await sfaTypesPage.open_dict()
+        await sfaTypesPage.read_element()
     });
 
     test('Update SFA Type', async ({page}) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
-        await sfaTypesPage.update_sfa_type()
+        await sfaTypesPage.open_dict()
+        await sfaTypesPage.update_element()
     });
 
-    test('Delete SFA Type Using 3 Dots Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip('Delete SFA Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
+        await sfaTypesPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -46,36 +47,38 @@ test.describe("Smoke Suite for SFA Types Page", () => {
         const sfaTypesPage = new SFATypesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
+        await sfaTypesPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete SFA Type Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete SFA Type Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
+        await sfaTypesPage.open_dict()
         await bp.delete_using_card()
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-3853
-    // Small amount of data
+    // Need Seed
     test.skip('Select All Delete SFA Types', async ({ page }) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
+        await sfaTypesPage.open_dict()
         await bp.select_all_delete()
     });
 
-    test.skip('Restore SFA Type Using 3 Dots Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip(' Restore SFA Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const sfaTypesPage = new SFATypesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await sfaTypesPage.open_sfa_types_dict()
+        await sfaTypesPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

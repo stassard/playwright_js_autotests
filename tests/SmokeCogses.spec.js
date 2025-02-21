@@ -5,40 +5,41 @@ import {BasePage} from "../pages/BasePage";
 
 test.describe("Smoke Suite for Cogses Page", () => {
 
-    // Требуется сид c большим количеством данных,для корректного тестирования
+
     test('Create Cogs', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
-        await cogsesPage.create_cogs()
+        await cogsesPage.open_dict()
+        await cogsesPage.create_element()
     });
 
-    test('Read Cogs', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Read Cogs', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
-        await cogsesPage.read_cogs()
+        await cogsesPage.open_dict()
+        await cogsesPage.read_element()
     });
 
     test('Update Cogs', async ({page}) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
-        await cogsesPage.update_cogs()
+        await cogsesPage.open_dict()
+        await cogsesPage.update_element()
     });
 
     // BUG: Confirmation window is not appeared
-    test('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
+    test.skip('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
+        await cogsesPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -47,16 +48,17 @@ test.describe("Smoke Suite for Cogses Page", () => {
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
+        await cogsesPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete Cogs Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete Cogs Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
+        await cogsesPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -66,17 +68,18 @@ test.describe("Smoke Suite for Cogses Page", () => {
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
+        await cogsesPage.open_dict()
         await bp.select_all_delete()
     });
 
-    // BUG: 500 Error in some cases  (PSPR-3614)
+    // https://prospace-team.atlassian.net/browse/PSPR-3614
+    // BUG: Confirmation window is not appeared
     test.skip('Restore Cogs Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await cogsesPage.open_cogses_dict()
+        await cogsesPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

@@ -1,7 +1,7 @@
-import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
+import {BasePage, currentDate, random_end_date, random_start_date, getRandomInt} from './BasePage.js';
 import { ClientsPage } from "../pages/ClientsPage";
 import { ProductsPage } from "../pages/ProductsPage";
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 
@@ -45,14 +45,14 @@ exports.BaselinesPage = class BaselinesPage {
 
     }
 
-    async open_baselines_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_baselines).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Baselines")
     }
 
-    async create_baseline(){
+    async create_element(){
         // Create New Baseline
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -98,7 +98,7 @@ exports.BaselinesPage = class BaselinesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_baseline(){
+    async read_element(){
         // Find Any Baseline
         const bp = new BasePage()
         const cp = new ClientsPage()
@@ -153,7 +153,7 @@ exports.BaselinesPage = class BaselinesPage {
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_products).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        await this.page.fill(bp.input_search_grid, grid_product_id);
+        await this.page.fill(bp.input_search_grid, grid_product);
         await this.page.keyboard.press("Enter");
 
         let count_2 = 0;
@@ -185,7 +185,7 @@ exports.BaselinesPage = class BaselinesPage {
 
     }
 
-    async update_baseline(){
+    async update_element(){
         // Get Last Baseline Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();

@@ -1,5 +1,5 @@
-import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {BasePage, getRandomInt} from './BasePage.js';
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 exports.BudgetTypesPage = class BudgetTypesPage {
@@ -17,7 +17,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         this.any_default_pnl_line_in_grid = `(//span[text()='Default P&L line']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 5)]}]`  // Grid any Default P&L line
     }
 
-    async open_budget_types_dict() {
+    async open_dict() {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_budget_types).click()
@@ -25,7 +25,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
     }
 
 
-    async create_budget_type(){
+    async create_element(){
         // Create New Budget Type
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -33,20 +33,17 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await this.page.fill(this.input_name_card, faker.location.city() + " Budget type")
         await this.page.locator(this.selector_default_pnl_line_card).click()
         await this.page.locator(this.list_default_pnl_line_card).click()
-        await this.page.locator(bp.button_create_card).click()
 
+        // Get Info From Card
+        const card_name = await this.page.locator(this.input_name_card).inputValue();
+        const card_default_pnl_line = await this.page.locator(this.selector_default_pnl_line_card).getAttribute("model-value-prop");
+
+        await this.page.locator(bp.button_create_card).click()
 
         // Check Success Toast Message
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
         await this.page.reload()
-
-        // Get Info From Card
-        await this.page.locator(bp.last_item_name).click();
-        const card_name = await this.page.locator(this.input_name_card).inputValue();
-        const card_default_pnl_line = await this.page.locator(this.selector_default_pnl_line_card).getAttribute("model-value-prop");
-        await this.page.locator(bp.x_icon).click();
-
 
         // Get Info From Grid
         const grid_name = await this.page.locator(bp.last_item_name).textContent();
@@ -60,7 +57,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_budget_type(){
+    async read_element(){
         // Find Any Budget Type
         const bp = new BasePage()
         
@@ -80,7 +77,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await expect.soft(card_default_pnl_line, "Default P&L Line is not match").toBe(grid_default_pnl_line)
 
 }
-    async update_budget_type(){
+    async update_element(){
         // Get Last Budget Type Info from Grid Before Update
         const bp = new BasePage()
         const name_before = await this.page.locator(bp.last_item_name).textContent();
@@ -98,7 +95,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
         // TODO: X icon Locator changes after saving
-        await this.page.locator("(//div/div/button[@type='icon-secondary'])[5]").click();
+        await this.page.locator(bp.x_icon).click();
 
         // Get Last Budget Type Info from Grid After Update
         const name_after = await this.page.locator(bp.last_item_name).textContent();

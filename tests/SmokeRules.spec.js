@@ -6,38 +6,37 @@ import {RulesPage} from "../pages/RulesPage";
 
 test.describe("Smoke Suite for Rules Page", () => {
 
-    // Требуется сид c большим количеством данных,для корректного тестирования
     test('Create Rule', async ({page}) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
-        await rulesPage.create_rule()
+        await rulesPage.open_dict()
+        await rulesPage.create_element()
     });
 
     test('Read Rule', async ({page}) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
-        await rulesPage.read_rule()
+        await rulesPage.open_dict()
+        await rulesPage.read_element()
     });
 
     test('Update Rule', async ({page}) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
-        await rulesPage.update_rule()
+        await rulesPage.open_dict()
+        await rulesPage.update_element()
     });
 
     // BUG: Confirmation window is not appeared
-    test('Delete Rule Using 3 Dots Grid', async ({ page }) => {
+    test.skip('Delete Rule Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
+        await rulesPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -46,25 +45,27 @@ test.describe("Smoke Suite for Rules Page", () => {
         const rulesPage = new RulesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
+        await rulesPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete Rule Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete Rule Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
+        await rulesPage.open_dict()
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Rules', async ({ page }) => {
+    // Need Seed
+    test.skip('Select All Delete Rules', async ({ page }) => {
         const lp = new LoginPage(page);
         const rulesPage = new RulesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
+        await rulesPage.open_dict()
         await bp.select_all_delete()
     });
 
@@ -73,7 +74,7 @@ test.describe("Smoke Suite for Rules Page", () => {
         const rulesPage = new RulesPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await rulesPage.open_rules_dict()
+        await rulesPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

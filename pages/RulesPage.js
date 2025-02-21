@@ -1,5 +1,5 @@
 import {BasePage, getRandomInt } from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 exports.RulesPage = class RulesPage {
@@ -28,14 +28,14 @@ exports.RulesPage = class RulesPage {
         this.any_id_in_grid = `(//span[text()='ID']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any ID
     }
 
-    async open_rules_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_rules).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Rules")
     }
 
-    async create_rule() {
+    async create_element() {
         // Create New Rule
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -74,7 +74,7 @@ exports.RulesPage = class RulesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
     }
 
-    async read_rule(){
+    async read_element(){
         const bp = new BasePage()
         // Get Info From Grid
         const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
@@ -94,7 +94,7 @@ exports.RulesPage = class RulesPage {
         await expect.soft(card_action_type, "Action Type is not match").toBe(grid_action_type)
     }
 
-    async update_rule(){
+    async update_element(){
         // Get Last Rule Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(this.last_id_in_grid).textContent();

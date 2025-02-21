@@ -1,8 +1,7 @@
 import {BasePage, getRandomInt, currentDate, random_end_date, random_start_date} from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 import {ProductsPage} from "./ProductsPage";
-import playwright from "playwright";
 
 
 exports.CogsesPage = class CogsesPage {
@@ -34,14 +33,14 @@ exports.CogsesPage = class CogsesPage {
         this.x_icon_inside_end_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
     }
 
-    async open_cogses_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_cogses).click()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Cogses")
+        await expect(this.page.locator(bp.head_of_page)).toHaveText("COGS")
     }
 
-    async create_cogs(){
+    async create_element(){
         // Create New Cogs
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -83,7 +82,7 @@ exports.CogsesPage = class CogsesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_cogs(){
+    async read_element(){
         // Find Any Cogs
         const bp = new BasePage()
         const pp = new ProductsPage()
@@ -109,7 +108,7 @@ exports.CogsesPage = class CogsesPage {
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_products).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        await this.page.fill(bp.input_search_grid, grid_product_id);
+        await this.page.fill(bp.input_search_grid, grid_sku_name);
         await this.page.keyboard.press("Enter");
 
         let count_2 = 0;
@@ -136,7 +135,7 @@ exports.CogsesPage = class CogsesPage {
 
     }
 
-    async update_cogs(){
+    async update_element(){
         // Get Last Cogs Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();

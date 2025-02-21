@@ -2,15 +2,6 @@ import {BasePage, getRandomInt} from '../pages/BasePage';
 import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
-// Fake Data
-const random_name = faker.food.ethnicCategory() + faker.food.dish()
-const random_eanc = faker.string.numeric({length: { min: 7, max: 10}})
-const random_eanp = faker.string.numeric({length: { min: 7, max: 10}})
-const random_category= faker.food.ethnicCategory()
-const random_technology= faker.food.fruit()
-const random_brand= faker.company.name()
-const random_unit = String(getRandomInt(1, 1000))
-
 exports.ProductsPage = class ProductsPage {
 
     constructor(page) {
@@ -52,29 +43,38 @@ exports.ProductsPage = class ProductsPage {
         this.input_unit_of_measure_filters = "(//input[contains(@data-pc-name,'inputtext')])[6]"          // Input Unit of Measure
         this.input_unit_from_filters = "(//input[@data-pc-name='pcinput'])[1]"                            // Input Unit(From)
         this.input_unit_to_filters = "(//input[@data-pc-name='pcinput'])[2]"                              // Input Unit(To)
+
+        // Fake Data
+        this.random_name = faker.food.ethnicCategory() + faker.food.dish()
+        this.random_eanc = faker.string.numeric({length: { min: 7, max: 10}})
+        this.random_eanp = faker.string.numeric({length: { min: 7, max: 10}})
+        this.random_category= faker.food.ethnicCategory()
+        this.random_technology= faker.food.fruit()
+        this.random_brand= faker.company.name()
+        this.random_unit = String(getRandomInt(1, 1000))
     }
 
-    async open_products_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_products).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
     }
 
-    async create_product(){
+    async create_element(){
         // Creating Product
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click();
-        await this.page.fill(this.input_name_card, random_name);
-        await this.page.fill(this.input_EANC_card, random_eanc);
-        await this.page.fill(this.input_EANP_card, random_eanp);
-        await this.page.fill(this.input_category_card, random_category);
-        await this.page.fill(this.input_technology_card, random_technology);
-        await this.page.fill(this.input_brand_card, random_brand);
+        await this.page.fill(this.input_name_card, this.random_name);
+        await this.page.fill(this.input_EANC_card, this.random_eanc);
+        await this.page.fill(this.input_EANP_card, this.random_eanp);
+        await this.page.fill(this.input_category_card, this.random_category);
+        await this.page.fill(this.input_technology_card, this.random_technology);
+        await this.page.fill(this.input_brand_card, this.random_brand);
         await this.page.locator(this.unit_of_measure_card).click();
         await this.page.locator(this.units_of_measure_selector_card).click();
-        await this.page.fill(this.input_unit_card, random_unit);
+        await this.page.fill(this.input_unit_card, this.random_unit);
         await this.page.locator(bp.button_create_card).click();
 
         // Check Success Toast Message
@@ -118,7 +118,7 @@ exports.ProductsPage = class ProductsPage {
 
     }
 
-    async read_product(){
+    async read_element(){
         // Find Any Product
         const bp = new BasePage();
         
@@ -154,7 +154,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
     }
 
-    async update_product(){
+    async update_element(){
         // Get Last Product Info from Grid Before Update
         const bp = new BasePage();
         const name_before = await this.page.locator(bp.last_item_name).textContent();

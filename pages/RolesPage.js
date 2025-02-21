@@ -1,5 +1,5 @@
 import {BasePage, getRandomInt } from './BasePage.js';
-import {expect, test} from "@playwright/test";
+import {expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 
 
@@ -27,14 +27,14 @@ exports.RolesPage = class RolesPage {
         this.dialog_container = "(//div[@data-scrollselectors='.p-datatable-wrapper'])[2]"
     }
 
-    async open_roles_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_roles).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Roles")
     }
 
-    async create_role() {
+    async create_element() {
         // Create New Role
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -73,7 +73,7 @@ exports.RolesPage = class RolesPage {
         await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
     }
 
-    async read_role(){
+    async read_element(){
         const bp = new BasePage()
         // Get Info From Grid
         // const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
@@ -97,7 +97,7 @@ exports.RolesPage = class RolesPage {
         await expect.soft(card_roles_count, "Count of roles is not match").toBe(grid_roles_count)
     }
 
-    async update_role(){
+    async update_element(){
         // Get Last Rule Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(this.last_id_in_grid).textContent();

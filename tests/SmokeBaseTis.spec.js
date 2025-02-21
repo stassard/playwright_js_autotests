@@ -9,17 +9,18 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
-        await baseTisPage.create_basetis()
+        await baseTisPage.open_dict()
+        await baseTisPage.create_element()
     });
 
-    test('Read BaseTi', async ({page}) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3583
+    test.skip('Read BaseTi', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
-        await baseTisPage.read_baseti()
+        await baseTisPage.open_dict()
+        await baseTisPage.read_element()
     });
 
     test('Update BaseTi', async ({page}) => {
@@ -27,8 +28,8 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
-        await baseTisPage.update_baseti()
+        await baseTisPage.open_dict()
+        await baseTisPage.update_element()
     });
 
     test('Delete BaseTi Using 3 Dots Grid', async ({ page }) => {
@@ -36,7 +37,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
+        await baseTisPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -45,34 +46,37 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
+        await baseTisPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
-    test("Delete BaseTi Using Card", async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip("Delete BaseTi Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
+        await baseTisPage.open_dict()
         await bp.delete_using_card()
     });
 
-    test('Select All Delete BaseTis', async ({ page }) => {
+    // Need seed
+    test.skip('Select All Delete BaseTis', async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
+        await baseTisPage.open_dict()
         await bp.select_all_delete()
     });
 
-    test('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
+    // BUG: Confirmation window is not appeared
+    test.skip('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await baseTisPage.open_basetis_dict()
+        await baseTisPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { BasePage } from "../pages/BasePage";
 import {PromoPortfolioPage} from "../pages/PromoPortfolioPage";
@@ -10,7 +10,7 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await promoPortfolioPage.create_tpr_promo()
     });
 
@@ -19,8 +19,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
-        await promoPortfolioPage.read_promo()
+        await promoPortfolioPage.open_dict()
+        await promoPortfolioPage.read_element()
     });
 
     test('Update Promo', async ({page}) => {
@@ -28,27 +28,27 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
-        await promoPortfolioPage.update_promo()
+        await promoPortfolioPage.open_dict()
+        await promoPortfolioPage.update_element()
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-2424
-    test.skip('Delete Promo Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Promo Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-2424
-    test.skip('Delete Promo Using Checkbox Grid', async ({ page }) => {
+    test('Delete Promo Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
@@ -59,7 +59,7 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -69,17 +69,17 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await bp.select_all_delete()
     });
 
     // Inconsistent data (restore button)
-    test.skip('Restore Promo Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Promo Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
         await lp.authorization();
-        await promoPortfolioPage.open_promo_portfolio_dict()
+        await promoPortfolioPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });

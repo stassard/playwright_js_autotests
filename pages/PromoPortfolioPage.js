@@ -42,7 +42,7 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
 
     }
 
-    async open_promo_portfolio_dict(){
+    async open_dict(){
         const bp = new BasePage()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Promo Portfolio", {timeout: 12000})
     }
@@ -153,7 +153,7 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
         await expect.soft(grid_updated_date, "Updated Date is not match [Grid]").toContain(currentDate)
     }
 
-    async read_promo() {
+    async read_element() {
         // Get Info From Grid
         const bp = new BasePage()
         const grid_id = await this.page.locator(this.last_id_in_grid).textContent();
@@ -195,7 +195,7 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
     }
 
 
-    async update_promo() {
+    async update_element() {
         // Get Last Promo Info from Grid Before Update
         const bp = new BasePage()
         const grid_id_before = await this.page.locator(this.last_id_in_grid).textContent();

@@ -26,14 +26,14 @@ exports.EventsPage = class EventsPage {
         this.x_icon_inside_end_date_input = "(//span[contains(@data-pc-name,'datepicker')]/following-sibling::div[contains(@class,'absolute')]/div[contains(@class,'flex')])[2]"     // X icon in the End Date input
     }
 
-    async open_events_dict() {
+    async open_dict() {
         const bp = new BasePage()
         await this.page.locator(bp.side_button_modules).click()
         await this.page.locator(bp.link_events).click()
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Events")
     }
 
-    async create_event(){
+    async create_element(){
         // Create New Event
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -72,7 +72,7 @@ exports.EventsPage = class EventsPage {
         await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
     }
 
-    async read_event(){
+    async read_element(){
         // Find Any Event
         const bp = new BasePage()
         
@@ -98,7 +98,7 @@ exports.EventsPage = class EventsPage {
 
     }
 
-    async update_event(){
+    async update_element(){
         // Get Last Event Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(this.last_id_in_grid).textContent();
