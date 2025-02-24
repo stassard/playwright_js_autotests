@@ -102,7 +102,11 @@ exports.BasePage = class BasePage {
     // Assertions
 
     async create_el_assertion(count_after, count_before){
-        return expect.soft(Number(count_after), "Element is not created or created more than 1 product").toEqual(Number(count_before) + 1)
+        return expect.soft(Number(count_after), "Element is not created or created more than 1 element").toEqual(Number(count_before) + 1)
+    }
+
+    async delete_el_assertion(count_after, count_before){
+        return expect.soft(Number(count_after), "Element is not deleted or deleted more than 1 element").toEqual(Number(count_before) - 1)
     }
 
 
@@ -123,7 +127,7 @@ exports.BasePage = class BasePage {
         }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 
@@ -142,7 +146,7 @@ exports.BasePage = class BasePage {
         }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 
@@ -162,7 +166,7 @@ exports.BasePage = class BasePage {
         }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+        await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 
