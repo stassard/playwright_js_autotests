@@ -59,49 +59,6 @@ exports.ClientProductsPage = class ClientProductsPage {
         const grid_product_sku_name = await this.page.locator(this.last_product_sku_name_in_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
-        // TODO: Integration for E2E
-        // // Get ID of the Chosen Client in the Clients Dictionary
-        // await this.page.locator(bp.side_button_modules).click()
-        // await this.page.locator(bp.link_clients).click()
-        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Clients")
-        // await this.page.fill(bp.input_search_grid, card_client_name)
-        // await this.page.keyboard.press("Enter");
-        //
-        // let count_1 = 0;
-        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-        //     await this.page.waitForTimeout(1000)
-        //     count_1++;
-        //     if (count_1 === 50){
-        //         let res = undefined;
-        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
-        //         await browserContext.close();
-        //     }
-        // }
-        //
-        // await this.page.locator(bp.last_item_name).click()
-        // const expected_client_id = await this.page.locator(bp.item_id).textContent();
-        //
-        // // Get ID of the Chosen Product in the Clients Dictionary
-        // await this.page.locator(bp.side_button_modules).click()
-        // await this.page.locator(bp.link_products).click()
-        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        // await this.page.fill(bp.input_search_grid, card_product_name)
-        // await this.page.keyboard.press("Enter");
-        //
-        // let count_2 = 0;
-        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-        //     await this.page.waitForTimeout(1000)
-        //     count_2++;
-        //     if (count_2 === 50){
-        //         let res = undefined;
-        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
-        //         await browserContext.close();
-        //     }
-        // }
-        //
-        // await this.page.locator(bp.last_item_name).click()
-        // const expected_product_id = await this.page.locator(bp.item_id).textContent();
-
         // Check that created Client Products is correct
         await expect.soft(card_client_name, "Client Name is not match").toBe(grid_client_name)
         await expect.soft(card_product_name, "Product Name is not match").toBe(grid_product_sku_name)

@@ -305,7 +305,25 @@ exports.BasePage = class BasePage {
         }
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
+    }
 
+    async find_el_in_the_dict(el, dict){
+        // Find Chosen Element
+        await this.page.locator(this.side_button_modules).click()
+        await this.page.locator(dict).click()
+        await this.page.fill(this.input_search_grid, el);
+        await this.page.keyboard.press("Enter");
+
+        let count_1 = 0;
+        while (await this.page.locator(this.count_items_in_footer_grid).textContent() !== "1") {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 50){
+                let res = undefined;
+                await expect.soft(res, "Element is not find").not.toBeUndefined()
+                await browserContext.close();
+            }
+        }
     }
 }
 

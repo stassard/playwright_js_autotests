@@ -6,6 +6,7 @@ import { UserClientsPage } from "../../pages/UserClientsPage";
 
 test.describe("Smoke Suite for User Clients Page", () => {
 
+    // https://prospace-team.atlassian.net/browse/PSPR-3952
     test('Create User Client', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
@@ -25,7 +26,7 @@ test.describe("Smoke Suite for User Clients Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete User Client Using 3 Dots Grid', async ({ page }) => {
+    test('Delete User Client Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const userClientsPage = new UserClientsPage(page)
         const bp = new BasePage(page)
@@ -35,7 +36,7 @@ test.describe("Smoke Suite for User Clients Page", () => {
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-3853
-    test.skip('Delete User Client Using Checkbox Grid', async ({ page }) => {
+    test('Delete User Client Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const userClientsPage = new UserClientsPage(page)
         const bp = new BasePage(page)
@@ -45,7 +46,7 @@ test.describe("Smoke Suite for User Clients Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete User Client Using Card", async ({ page }) => {
+    test("Delete User Client Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const userClientsPage = new UserClientsPage(page)
         const bp = new BasePage(page)
@@ -66,7 +67,8 @@ test.describe("Smoke Suite for User Clients Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Restore User Client Using 3 Dots Grid', async ({ page }) => {
+    // https://prospace-team.atlassian.net/browse/PSPR-3951
+    test('Restore User Client Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const userClientsPage = new UserClientsPage(page)
         const bp = new BasePage(page)

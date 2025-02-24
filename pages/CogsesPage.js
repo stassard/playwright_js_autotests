@@ -103,29 +103,6 @@ exports.CogsesPage = class CogsesPage {
         const card_start_date = await this.page.locator(this.input_start_date_card).inputValue()
         const card_end_date = await this.page.locator(this.input_end_date_card).inputValue()
 
-
-        // TODO: Integration for E2E
-        // // Find Chosen Product
-        // await this.page.locator(bp.side_button_modules).click()
-        // await this.page.locator(bp.link_products).click()
-        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        // await this.page.fill(bp.input_search_grid, grid_sku_name);
-        // await this.page.keyboard.press("Enter");
-        //
-        // let count_2 = 0;
-        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-        //     await this.page.waitForTimeout(1000)
-        //     count_2++;
-        //     if (count_2 === 50){
-        //         let res = undefined;
-        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
-        //         await browserContext.close();
-        //     }
-        // }
-        //
-        // // Get Info About Product From Grid
-        // const product_name = await this.page.locator(bp.last_item_name).textContent();
-
         // Check Matching of Grid and Card Info
         await expect.soft(card_id, "Cogs ID [Grid and Card] is not match").toBe(grid_id)
         await expect.soft(grid_sku_name, "Product Name [Grid and Card] is not match").toBe(card_product)
