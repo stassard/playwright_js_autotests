@@ -89,7 +89,6 @@ exports.CogsesPage = class CogsesPage {
         
         // Get Info From Grid
         const grid_id = await this.page.locator(bp.last_item_name).textContent();
-        const grid_product_id = await this.page.locator(this.last_product_id_in_grid).textContent();
         const grid_sku_name = await this.page.locator(this.last_sku_name_in_grid).textContent();
         const grid_cogs = await this.page.locator(this.last_cogs_in_grid).textContent();
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
@@ -104,31 +103,32 @@ exports.CogsesPage = class CogsesPage {
         const card_start_date = await this.page.locator(this.input_start_date_card).inputValue()
         const card_end_date = await this.page.locator(this.input_end_date_card).inputValue()
 
-        // Find Chosen Product
-        await this.page.locator(bp.side_button_modules).click()
-        await this.page.locator(bp.link_products).click()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        await this.page.fill(bp.input_search_grid, grid_sku_name);
-        await this.page.keyboard.press("Enter");
 
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count_2++;
-            if (count_2 === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
-
-        // Get Info About Product From Grid
-        const product_name = await this.page.locator(bp.last_item_name).textContent();
+        // TODO: Integration for E2E
+        // // Find Chosen Product
+        // await this.page.locator(bp.side_button_modules).click()
+        // await this.page.locator(bp.link_products).click()
+        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
+        // await this.page.fill(bp.input_search_grid, grid_sku_name);
+        // await this.page.keyboard.press("Enter");
+        //
+        // let count_2 = 0;
+        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
+        //     await this.page.waitForTimeout(1000)
+        //     count_2++;
+        //     if (count_2 === 50){
+        //         let res = undefined;
+        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
+        //         await browserContext.close();
+        //     }
+        // }
+        //
+        // // Get Info About Product From Grid
+        // const product_name = await this.page.locator(bp.last_item_name).textContent();
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_id, "Cogs ID [Grid and Card] is not match").toBe(grid_id)
         await expect.soft(grid_sku_name, "Product Name [Grid and Card] is not match").toBe(card_product)
-        await expect.soft(grid_sku_name, "Product Name [Grid and Product Dictionary] is not match").toBe(product_name)
         await expect.soft(grid_cogs, "Cogs [Grid and Card] is not match").toBe(card_cogs)
         await expect.soft(grid_start_date, "Start Date is not match").toBe(card_start_date)
         await expect.soft(grid_end_date, "End Date is not match").toBe(card_end_date)

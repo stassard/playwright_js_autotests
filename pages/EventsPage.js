@@ -108,7 +108,7 @@ exports.EventsPage = class EventsPage {
 
         await this.page.locator(bp.last_item_name).click();
 
-        // Update Last Cogs
+        // Update Last Event
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.fill(this.input_name_card, faker.location.city())

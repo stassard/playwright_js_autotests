@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { BasePage } from "../pages/BasePage";
-import { TechnologiesPage } from "../pages/TechnologiesPage";
+import { LoginPage } from '../../pages/LoginPage';
+import { BasePage } from "../../pages/BasePage";
+import { TechnologiesPage } from "../../pages/TechnologiesPage";
 
 
 test.describe("Smoke Suite for Technologies Page", () => {

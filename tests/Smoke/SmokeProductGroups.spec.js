@@ -1,7 +1,7 @@
 import {test} from "@playwright/test";
-import {LoginPage} from "../pages/LoginPage";
-import {ProductGroupsPage} from "../pages/ProductGroupsPage";
-import {BasePage} from "../pages/BasePage";
+import {LoginPage} from "../../pages/LoginPage";
+import {ProductGroupsPage} from "../../pages/ProductGroupsPage";
+import {BasePage} from "../../pages/BasePage";
 
 test.describe("Smoke Suite for Product Groups Page", () => {
     test('Create Auto Product Group', async ({page}) => {

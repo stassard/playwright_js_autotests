@@ -29,6 +29,7 @@ exports.BasePage = class BasePage {
         this.link_rules = "//a[text()='Rules']"  // Link Rules in the Side Menu
         this.link_roles = "//a[text()='Roles']"  // Link Roles in the Side Menu
         this.link_promo_portfolio = "//a[text()='Promo Portfolio']"  // Link Promo Portfolio in the Side Menu
+        this.link_user_clients = "//a[text()='User clients']"  // Link User clients in the Side Menu
 
         // Creation Cards
         this.button_create_card = "//button[@aria-label='Create']"  // Button Create
@@ -97,6 +98,15 @@ exports.BasePage = class BasePage {
         this.x_icon_filters = "(//button[@type='icon-secondary'])[3]"  // X Icons in the All Filters
         this.x_icons_input_filters = "//div[@class='header']/div[contains(@class,'items-center')]"  // Individuals X Icons for every fields in the All Filters
     }
+
+    // Assertions
+
+    async create_el_assertion(count_after, count_before){
+        return expect.soft(Number(count_after), "Element is not created or created more than 1 product").toEqual(Number(count_before) + 1)
+    }
+
+
+    // Methods
 
     async delete_using_3_dots_grid(){
         const bp = new BasePage();

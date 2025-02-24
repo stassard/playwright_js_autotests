@@ -1,7 +1,7 @@
 import {test} from "@playwright/test";
-import {LoginPage} from "../pages/LoginPage";
-import {BasePage} from "../pages/BasePage";
-import {BaseTisPage} from "../pages/BaseTIsPage";
+import {LoginPage} from "../../pages/LoginPage";
+import {BasePage} from "../../pages/BasePage";
+import {BaseTisPage} from "../../pages/BaseTIsPage";
 
 test.describe("Smoke Suite for BaseTis Page", () => {
     test('Create BaseTi', async ({page}) => {

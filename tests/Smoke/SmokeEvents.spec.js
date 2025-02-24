@@ -1,7 +1,7 @@
 import {test} from "@playwright/test";
-import {LoginPage} from "../pages/LoginPage";
-import {EventsPage} from "../pages/EventsPage";
-import {BasePage} from "../pages/BasePage";
+import {LoginPage} from "../../pages/LoginPage";
+import {EventsPage} from "../../pages/EventsPage";
+import {BasePage} from "../../pages/BasePage";
 
 test.describe("Smoke Suite for Events Page", () => {
 

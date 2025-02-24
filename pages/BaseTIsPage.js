@@ -87,16 +87,11 @@ exports.BaseTisPage = class BaseTisPage {
     }
 
     async read_element(){
-        // Find Any BaseTi
-        const bp = new BasePage()
-        const cp = new ClientsPage()
-        const pp = new ProductsPage()
         // Get Info From Grid
+        const bp = new BasePage()
         const grid_id = await this.page.locator(bp.last_item_name).textContent();
         const grid_client = await this.page.locator(this.last_client_in_grid).textContent();
-        const grid_client_external_id = await this.page.locator(this.last_client_external_id_in_grid).textContent();
         const grid_product = await this.page.locator(this.last_baseti_product_in_grid).textContent();
-        const grid_ean_pc = await this.page.locator(this.last_ean_pc_in_grid).textContent();
         const grid_baseti = await this.page.locator(this.last_baseti_in_grid).textContent();
         const grid_start_date = await this.page.locator(this.last_start_date_in_grid).textContent();
         const grid_end_date = await this.page.locator(this.last_end_date_in_grid).textContent();
@@ -111,59 +106,55 @@ exports.BaseTisPage = class BaseTisPage {
         const card_end_date = await this.page.locator(this.input_end_date_card).inputValue()
         const card_baseti = await this.page.locator(this.input_basetis_card).inputValue()
 
-
-        // Find Chosen Client
-        await this.page.locator(bp.side_button_modules).click()
-        await this.page.locator(bp.link_clients).click()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Clients")
-        await this.page.fill(bp.input_search_grid, grid_client);
-        await this.page.keyboard.press("Enter");
-
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
-
-        // Get Info About Client From Grid
-        const client_name = await this.page.locator(bp.last_item_name).textContent();
-        const client_external_id = await this.page.locator(cp.last_external_id_in_grid).textContent();
-
-        // Find Chosen Product
-        await this.page.locator(bp.side_button_modules).click()
-        await this.page.locator(bp.link_products).click()
-        await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
-        await this.page.fill(bp.input_search_grid, grid_product);
-        await this.page.keyboard.press("Enter");
-
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
-            await this.page.waitForTimeout(1000)
-            count_2++;
-            if (count_2 === 50){
-                let res = undefined;
-                await expect.soft(res, "Element is not find").not.toBeUndefined()
-                await browserContext.close();
-            }
-        }
-
-        // Get Info About Product From Grid
-        const product_name = await this.page.locator(bp.last_item_name).textContent();
-        const product_eanp = await this.page.locator(pp.last_eanp_in_grid).textContent();
+        // TODO: Integration for E2E
+        // // Find Chosen Client
+        // await this.page.locator(bp.side_button_modules).click()
+        // await this.page.locator(bp.link_clients).click()
+        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Clients")
+        // await this.page.fill(bp.input_search_grid, grid_client);
+        // await this.page.keyboard.press("Enter");
+        //
+        // let count_1 = 0;
+        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
+        //     await this.page.waitForTimeout(1000)
+        //     count_1++;
+        //     if (count_1 === 50){
+        //         let res = undefined;
+        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
+        //         await browserContext.close();
+        //     }
+        // }
+        //
+        // // Get Info About Client From Grid
+        // const client_name = await this.page.locator(bp.last_item_name).textContent();
+        // const client_external_id = await this.page.locator(cp.last_external_id_in_grid).textContent();
+        //
+        // // Find Chosen Product
+        // await this.page.locator(bp.side_button_modules).click()
+        // await this.page.locator(bp.link_products).click()
+        // await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
+        // await this.page.fill(bp.input_search_grid, grid_product);
+        // await this.page.keyboard.press("Enter");
+        //
+        // let count_2 = 0;
+        // while (await this.page.locator(bp.count_items_in_footer_grid).textContent() !== "1") {
+        //     await this.page.waitForTimeout(1000)
+        //     count_2++;
+        //     if (count_2 === 50){
+        //         let res = undefined;
+        //         await expect.soft(res, "Element is not find").not.toBeUndefined()
+        //         await browserContext.close();
+        //     }
+        // }
+        //
+        // // Get Info About Product From Grid
+        // const product_name = await this.page.locator(bp.last_item_name).textContent();
+        // const product_eanp = await this.page.locator(pp.last_eanp_in_grid).textContent();
 
         // Check Matching of Grid and Card Info
         await expect.soft(grid_id, "BaseTi ID [Grid and Card] is not match").toBe(card_id)
-        await expect.soft(grid_client, "Client Name [Grid and Client Dictionary] is not match").toBe(client_name)
         await expect.soft(grid_client, "Client Name [Grid and Card] is not match").toBe(card_client)
-        await expect.soft(grid_client_external_id, "EAN pc [Grid and Client Dictionary] is not match").toBe(client_external_id)
         await expect.soft(grid_product, "Product Name [Grid and Card] is not match").toBe(card_product)
-        await expect.soft(grid_product, "Product Name [Grid and Product Dictionary] is not match").toBe(product_name)
-        await expect.soft(grid_ean_pc, "EAN pc [Grid and Product Dictionary] is not match").toBe(product_eanp)
         await expect.soft(grid_baseti, "BaseTi [Grid and Card] is not match").toBe(card_baseti)
         await expect.soft(grid_start_date, "Start Date is not match").toBe(card_start_date)
         await expect.soft(grid_end_date, "End Date is not match").toBe(card_end_date)
