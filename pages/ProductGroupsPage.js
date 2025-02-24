@@ -92,7 +92,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await expect.soft(grid_type, "Type is not match").toBe("Auto")
         await expect.soft(card_description, "Description is not match").toBe(grid_description)
         await expect.soft(card_count_products, "Count of Products is not match").toBe(grid_count_products)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 
@@ -143,7 +143,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await expect.soft(grid_type, "Type is not match").toBe("Manual")
         await expect.soft(card_description, "Description is not match").toBe(grid_description)
         await expect.soft(card_count_products, "Count of Products is not match").toBe(grid_count_products)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 

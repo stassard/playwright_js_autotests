@@ -70,7 +70,7 @@ exports.RolesPage = class RolesPage {
         await expect.soft(card_name, "Rule Name is not match").toBe(grid_name)
         await expect.soft(card_roles_count, "Count of roles is not match").toBe(grid_roles_count)
         await expect.soft(card_description, "Actions Type is not match").toBe(grid_description)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

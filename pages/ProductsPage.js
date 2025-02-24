@@ -114,7 +114,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(card_brand, "Brand is not match").toEqual(grid_brand)
         await expect.soft(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
         await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
-        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 

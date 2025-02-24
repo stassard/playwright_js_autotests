@@ -134,7 +134,7 @@ exports.ClientsPage = class ClientsPage {
         await expect.soft(card_dispatch_start_day, "Dispatch Start Before Day is not match").toEqual(String(this.random_start_day))
         await expect.soft(card_dispatch_end_day, "Dispatch End Before Day is not match").toEqual(String(this.random_end_day))
         await expect.soft(card_file_name, "File Name is not match").toEqual("магнит.jpg")
-        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

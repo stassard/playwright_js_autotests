@@ -47,7 +47,7 @@ exports.SFATypesPage = class SFATypesPage {
 
         // Check Matching of Grid and Card Info
         await expect.soft(card_sfa_type, "SFA type is not match").toBe(grid_sfa_type)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

@@ -65,7 +65,7 @@ exports.PLUsPage = class PLUsPage {
         await expect.soft(card_client_name, "Client Name is not match").toBe(grid_client_name)
         await expect.soft(card_eanpc, "EAN Pc is not match").toBe(grid_eanpc)
         await expect.soft(card_plu, "PLU is not match").toBe(grid_plu)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

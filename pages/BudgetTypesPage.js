@@ -54,7 +54,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         // Check Matching of Grid and Card Info
         await expect.soft(card_name, "Budget Types Name is not match").toEqual(grid_name)
         await expect.soft(card_default_pnl_line, "Default P&L Line is not match").toEqual(grid_default_pnl_line)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

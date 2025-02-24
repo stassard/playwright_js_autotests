@@ -182,7 +182,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             await expect.soft(card_pnl_line_before, "P&L Line is not match [Card Before Saving - Card After Saving]").toBe(card_pnl_line_after)
             await expect.soft(card_allocation_type_before, "Allocation type is not match [Card Before Saving - Card After Saving]").toBe(card_allocation_type_after)
             await expect.soft(card_comment_before, "Comment is not match [Card Before Saving - Card After Saving]").toBe(card_comment_after)
-            await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+            await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
             // Check The Matching of Grid and Card Info
             await expect.soft(card_id, "Marketing Budget ID is not match [Card - Grid]").toBe(grid_id)
@@ -319,7 +319,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
             await expect.soft(card_pnl_line_before, "P&L Line is not match [Card Before Saving - Card After Saving]").toBe(card_pnl_line_after)
             await expect.soft(card_allocation_type_before, "Allocation type is not match [Card Before Saving - Card After Saving]").toBe(card_allocation_type_after)
             await expect.soft(card_comment_before, "Comment is not match [Card Before Saving - Card After Saving]").toBe(card_comment_after)
-            await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+            await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
             // Check The Matching of Grid and Card Info
             await expect.soft(card_id, "Marketing Budget ID is not match [Card - Grid]").toBe(grid_id)

@@ -105,7 +105,7 @@ exports.ClientProductsPage = class ClientProductsPage {
         // Check that created Client Products is correct
         await expect.soft(card_client_name, "Client Name is not match").toBe(grid_client_name)
         await expect.soft(card_product_name, "Product Name is not match").toBe(grid_product_sku_name)
-        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 

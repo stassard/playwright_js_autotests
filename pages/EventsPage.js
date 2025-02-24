@@ -69,7 +69,7 @@ exports.EventsPage = class EventsPage {
         await expect.soft(card_name, "Event Name is not match").toBe(grid_name)
         await expect.soft(card_start_date, "Start Date is not match").toBe(grid_start_date)
         await expect.soft(card_end_date, "End Date is not match").toBe(grid_end_date)
-        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

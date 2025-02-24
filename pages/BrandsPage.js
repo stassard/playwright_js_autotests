@@ -59,7 +59,7 @@ exports.BrandPage = class BrandPage {
         await expect.soft(card_brand_code, "Brand Code is not match").toBe(grid_brand_code)
         await expect.soft(card_segment_code, "Segment Code is not match").toBe(grid_segment_code)
         await expect.soft(card_segment_name, "Segment Name is not match").toBe(grid_segment_name)
-        await expect.soft(Number(count_of_items_after), "Element is not created").toEqual(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
     async read_element(){

@@ -136,7 +136,7 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
         await expect.soft(card_uplift_before, "Uplift is not match [Card Before Saving - Card After Saving]").toBe(card_uplift_after)
         await expect.soft(card_file_name_before, "File Name is not match [Card Before Saving - Card After Saving]").toBe(card_file_name_after)
         await expect.soft(card_comment_before, "Comment is not match [Card Before Saving - Card After Saving]").toBe(card_comment_after)
-        await expect.soft(Number(count_of_items_after), "Element is not created or created more than 1 product").toBe(Number(count_of_items_before) + 1)
+        await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
         // Check The Matching of Grid and Card Info
         await expect.soft(card_id, "Promo ID is not match [Card - Grid]").toBe(grid_id)
