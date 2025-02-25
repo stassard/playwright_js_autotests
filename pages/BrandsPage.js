@@ -28,14 +28,14 @@ exports.BrandPage = class BrandPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Brands")
     }
 
-    async create_element(){
+    async create_element(brand_code, segment_code, segment_name) {
         // Create New Brand
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_brand_code_card, String(faker.number.int(1000)))
-        await this.page.fill(this.input_segment_code_card, String(faker.number.int(1000)))
-        await this.page.fill(this.input_segment_name_card, faker.commerce.department())
+        await this.page.fill(this.input_brand_code_card, brand_code)
+        await this.page.fill(this.input_segment_code_card, segment_code)
+        await this.page.fill(this.input_segment_name_card, segment_name)
 
         // Get Info From Card
         const card_brand_code = await this.page.locator(this.input_brand_code_card).inputValue()
@@ -86,7 +86,7 @@ exports.BrandPage = class BrandPage {
 
     }
 
-    async update_element(){
+    async update_element(brand_code, segment_code, segment_name){
         // Get Last Brand Info from Grid Before Update
         const bp = new BasePage()
         const brand_code_before = await this.page.locator(bp.last_item_name).textContent();
@@ -97,11 +97,11 @@ exports.BrandPage = class BrandPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_brand_code_card).clear();
-        await this.page.fill(this.input_brand_code_card, String(faker.number.int(1000)));
+        await this.page.fill(this.input_brand_code_card, brand_code);
         await this.page.locator(this.input_segment_code_card).clear();
-        await this.page.fill(this.input_segment_code_card, String(faker.number.int(1000)));
+        await this.page.fill(this.input_segment_code_card, segment_code);
         await this.page.locator(this.input_segment_name_card).clear();
-        await this.page.fill(this.input_segment_name_card, faker.commerce.department());
+        await this.page.fill(this.input_segment_name_card, segment_name);
         await this.page.locator(bp.button_save).click()
 
         // Check Success Toast Message

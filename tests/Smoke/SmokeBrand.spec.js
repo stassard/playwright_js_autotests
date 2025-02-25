@@ -2,6 +2,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { BasePage } from "../../pages/BasePage";
 import { BrandPage } from "../../pages/BrandsPage";
+import {GeneratorForSmoke} from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Brands Page", () => {
@@ -10,9 +11,10 @@ test.describe("Smoke Suite for Brands Page", () => {
     test.skip('Create Brand', async ({page}) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await brandPage.open_dict()
-        await brandPage.create_element()
+        await brandPage.create_element(fakeData.brand_code, fakeData.segment_code, fakeData.segment_name);
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3460
@@ -28,9 +30,10 @@ test.describe("Smoke Suite for Brands Page", () => {
     test.skip('Update Brand', async ({page}) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await brandPage.open_dict()
-        await brandPage.update_element()
+        await brandPage.update_element(fakeData.brand_code, fakeData.segment_code, fakeData.segment_name)
     });
 
     // BUG: Confirmation window is not appeared
