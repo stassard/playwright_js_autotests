@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from "../../pages/ProductsPage";
 import { BasePage } from "../../pages/BasePage";
-import { GeneratorForSmoke } from "../../Fake_data_generator";
+import { DataGeneratorForSmoke } from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Product Page", () => {

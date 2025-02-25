@@ -2,7 +2,7 @@ import {test} from "@playwright/test";
 import {LoginPage} from "../../pages/LoginPage";
 import {BasePage} from "../../pages/BasePage";
 import {BaseTisPage} from "../../pages/BaseTIsPage";
-import {GeneratorForSmoke} from "../../Fake_data_generator";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for BaseTis Page", () => {
     test('Create BaseTi', async ({page}) => {

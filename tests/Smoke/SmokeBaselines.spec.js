@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { BasePage } from "../../pages/BasePage";
 import { BaselinesPage } from "../../pages/BaselinesPage";
-import {GeneratorForSmoke} from "../../Fake_data_generator";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 import {fa} from "@faker-js/faker";
 
 
