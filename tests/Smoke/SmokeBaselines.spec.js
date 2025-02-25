@@ -15,7 +15,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
-        await baselinesPage.create_element(bp.random_dropdown_element, fakeData.qty, fakeData.start_date, fakeData.end_date)
+        await baselinesPage.create_element(bp.random_dropdown_element, fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -35,7 +35,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
-        await baselinesPage.update_element(fakeData.qty, fakeData.start_date, fakeData.end_date)
+        await baselinesPage.update_element(fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
     });
 
     // BUG: Confirmation window is not appeared

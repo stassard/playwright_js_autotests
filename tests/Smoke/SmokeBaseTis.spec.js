@@ -2,15 +2,18 @@ import {test} from "@playwright/test";
 import {LoginPage} from "../../pages/LoginPage";
 import {BasePage} from "../../pages/BasePage";
 import {BaseTisPage} from "../../pages/BaseTIsPage";
+import {GeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for BaseTis Page", () => {
     test('Create BaseTi', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baseTisPage.open_dict()
-        await baseTisPage.create_element()
+        await baseTisPage.create_element(bp.random_dropdown_element, fakeData.current_start_date, fakeData.random_end_date, fakeData.basetis)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -27,9 +30,11 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baseTisPage.open_dict()
-        await baseTisPage.update_element()
+        await baseTisPage.update_element(fakeData.random_start_date, fakeData.random_end_date, fakeData.basetis)
     });
 
     test('Delete BaseTi Using 3 Dots Grid', async ({ page }) => {
