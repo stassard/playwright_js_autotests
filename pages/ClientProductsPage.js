@@ -6,10 +6,7 @@ exports.ClientProductsPage = class ClientProductsPage {
         this.page = page;
         // Creation form
         this.selector_client_id_card = "(//div[contains(@data-pc-name,'select')])[1]"   // Selector Client ID
-        this.list_client_id_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']  `       // List of Client ID
         this.selector_product_card = "(//div[contains(@data-pc-name,'select')])[2]"     // Selector Product
-        this.list_product_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`           // List of Product
-        this.placeholders = "//span[contains(@class,'p-placeholder')]"  // Selector's placeholder
 
         // Grid
         this.last_client_id_in_grid = "(//span[text()='Client ID']/following-sibling::div[contains(@class,'relative inline-block')])[1]"    // Grid last Cient ID
@@ -33,15 +30,15 @@ exports.ClientProductsPage = class ClientProductsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Client Products")
     }
 
-    async create_element(){
+    async create_element(dropdown_element_1, dropdown_element_2){
         // Create New Client Products
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
-        await this.page.locator(this.list_client_id_card).click()
+        await this.page.locator(dropdown_element_1).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(this.list_product_card).click()
+        await this.page.locator(dropdown_element_2).click()
 
         // Get Info From Card
         const card_client_name = await this.page.locator(this.selector_client_id_card).getAttribute("model-value-prop");

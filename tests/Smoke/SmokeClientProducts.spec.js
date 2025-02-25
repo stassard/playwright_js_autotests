@@ -5,13 +5,14 @@ import { BasePage } from "../../pages/BasePage";
 
 
 test.describe("Smoke Suite for Client Products Page", () => {
-    test.skip('Create Client Products', async ({ page }) => {
+    test('Create Client Products', async ({ page }) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
+        const bp = new BasePage(page)
         await lp.authorization();
         await cpp.open_dict()
-        await cpp.create_element()
+        await cpp.create_element(bp.random_dropdown_element, bp.random_dropdown_element)
     });
 
     test('Read Client Products', async ({ page }) => {
