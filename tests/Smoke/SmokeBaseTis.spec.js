@@ -10,7 +10,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baseTisPage.open_dict()
         await baseTisPage.create_element(bp.random_dropdown_element, fakeData.current_start_date, fakeData.random_end_date, fakeData.basetis)
@@ -30,8 +30,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
-        const bp = new BasePage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baseTisPage.open_dict()
         await baseTisPage.update_element(fakeData.random_start_date, fakeData.random_end_date, fakeData.basetis)

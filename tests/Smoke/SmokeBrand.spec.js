@@ -11,7 +11,7 @@ test.describe("Smoke Suite for Brands Page", () => {
     test.skip('Create Brand', async ({page}) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await brandPage.open_dict()
         await brandPage.create_element(fakeData.brand_code, fakeData.segment_code, fakeData.segment_name);
@@ -30,7 +30,7 @@ test.describe("Smoke Suite for Brands Page", () => {
     test.skip('Update Brand', async ({page}) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await brandPage.open_dict()
         await brandPage.update_element(fakeData.brand_code, fakeData.segment_code, fakeData.segment_name)

@@ -9,7 +9,6 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         // Creation form
         this.input_name_card = "(//input[contains(@data-pc-name,'inputtext')])[3]"  // Name input
         this.selector_default_pnl_line_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Default P&L line
-        this.list_default_pnl_line_card = `//li[@aria-posinset='${[getRandomInt(1, 1)]}']`  // List of Default P&L line
 
         // Grid
         this.last_default_pnl_line_in_grid = "(//span[text()='Default P&L line']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Default P&L line
@@ -25,14 +24,14 @@ exports.BudgetTypesPage = class BudgetTypesPage {
     }
 
 
-    async create_element(){
+    async create_element(name, dropdown_element){
         // Create New Budget Type
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_name_card, faker.location.city() + " Budget type")
+        await this.page.fill(this.input_name_card, name)
         await this.page.locator(this.selector_default_pnl_line_card).click()
-        await this.page.locator(this.list_default_pnl_line_card).click()
+        await this.page.locator(dropdown_element).click()
 
         // Get Info From Card
         const card_name = await this.page.locator(this.input_name_card).inputValue();
@@ -77,7 +76,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         await expect.soft(card_default_pnl_line, "Default P&L Line is not match").toBe(grid_default_pnl_line)
 
 }
-    async update_element(){
+    async update_element(name){
         // Get Last Budget Type Info from Grid Before Update
         const bp = new BasePage()
         const name_before = await this.page.locator(bp.last_item_name).textContent();
@@ -88,7 +87,7 @@ exports.BudgetTypesPage = class BudgetTypesPage {
         // Update Last Cogs
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
-        await this.page.fill(this.input_name_card, faker.location.city() + " Budget Type")
+        await this.page.fill(this.input_name_card, name)
         await this.page.locator(bp.button_save).click();
 
         // Check Success Toast Message

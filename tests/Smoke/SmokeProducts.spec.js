@@ -9,10 +9,10 @@ test.describe("Smoke Suite for Product Page", () => {
     test.only('Create Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await pp.open_dict()
-        await pp.create_element(fakeData.name, fakeData.ean_case, fakeData.ean_pc, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
+        await pp.create_element(fakeData.product_name, fakeData.ean_case, fakeData.ean_pc, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
     });
 
     test('Read Product', async ({ page }) => {
@@ -26,10 +26,10 @@ test.describe("Smoke Suite for Product Page", () => {
     test.only('Update Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await pp.open_dict()
-        await pp.update_element(fakeData.name, fakeData.ean_case, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
+        await pp.update_element(fakeData.product_name, fakeData.ean_case, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
     });
 
     // BUG: Confirmation window is not appeared

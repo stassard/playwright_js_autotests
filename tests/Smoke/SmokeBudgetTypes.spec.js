@@ -2,15 +2,18 @@ import {test} from "@playwright/test";
 import {LoginPage} from "../../pages/LoginPage";
 import {BudgetTypesPage} from "../../pages/BudgetTypesPage";
 import {BasePage} from "../../pages/BasePage";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Budget Types Page", () => {
 
-    test('Create Budget Type', async ({page}) => {
+    test.only('Create Budget Type', async ({page}) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await budgetTypesPage.open_dict()
-        await budgetTypesPage.create_element()
+        await budgetTypesPage.create_element(fakeData.budget_type_name, bp.first_dropdown_element)
     });
 
     test('Read Budget Type', async ({page}) => {
@@ -21,12 +24,13 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         await budgetTypesPage.read_element()
     });
 
-    test('Update Budget Type', async ({page}) => {
+    test.only('Update Budget Type', async ({page}) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await budgetTypesPage.open_dict()
-        await budgetTypesPage.update_element()
+        await budgetTypesPage.update_element(fakeData.budget_type_name)
     });
 
     // BUG: Confirmation window is not appeared

@@ -12,7 +12,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
         await baselinesPage.create_element(bp.random_dropdown_element, fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
@@ -32,7 +32,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
-        const fakeData = new GeneratorForSmoke(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
         await baselinesPage.update_element(fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
