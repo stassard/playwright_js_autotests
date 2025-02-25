@@ -8,7 +8,12 @@ exports.EventsPage = class EventsPage {
         this.page = page
         // Creation form
         this.input_name_card = "(//input[contains(@data-pc-name,'inputtext')])[3]"  // Name input
-        this.selector_color_id_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Color
+        this.input_description_card = "(//input[contains(@data-pc-name,'inputtext')])[4]"  // Description input
+        this.selector_type_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Type
+        this.list_of_type_card = `//li[@aria-posinset='${[getRandomInt(1, 2)]}']`  // List of Types
+        this.customer_type_selector = "//li[@aria-posinset='1']"  // Customer Type Selector
+        this.national_type_selector = "//li[@aria-posinset='2']"  // National Type Selector
+        this.selector_color_id_card = "(//div[contains(@data-pc-name,'select')])[2]"  // Selector Color
         this.list_color_id_card = `//li[@aria-posinset='${[getRandomInt(1, 9)]}']`  // List of Color
         this.input_start_date_card = "(//span[contains(@data-pc-name,'datepicker')]/input[contains(@data-pc-name,'pcinput')])[1]"  // Start Date input
         this.input_end_date_card = "(//span[contains(@data-pc-name,'datepicker')]/input[contains(@data-pc-name,'pcinput')])[2]"  // End Date input
@@ -33,17 +38,20 @@ exports.EventsPage = class EventsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Events")
     }
 
-    async create_element(){
+    async create_element(name, description, start_date, end_date){
         // Create New Event
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_name_card, faker.location.city())
+        await this.page.fill(this.input_name_card, name)
+        await this.page.fill(this.input_description_card, description)
+        await this.page.locator(this.selector_type_card).click()
+        await this.page.locator(this.list_of_type_card).click()
         await this.page.locator(this.selector_color_id_card).click()
         await this.page.locator(this.list_color_id_card).click()
-        await this.page.fill(this.input_start_date_card, currentDate)
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
 
         // Get Info From Card
@@ -98,7 +106,7 @@ exports.EventsPage = class EventsPage {
 
     }
 
-    async update_element(){
+    async update_element(name, description, start_date, end_date){
         // Get Last Event Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(this.last_id_in_grid).textContent();
@@ -111,7 +119,18 @@ exports.EventsPage = class EventsPage {
         // Update Last Event
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
-        await this.page.fill(this.input_name_card, faker.location.city())
+        await this.page.locator(this.input_name_card).clear()
+        await this.page.fill(this.input_name_card, name)
+        await this.page.locator(this.input_description_card).clear()
+        await this.page.fill(this.input_description_card, description)
+        if (await this.page.locator(this.selector_type_card).getAttribute("model-value-prop") === "Customer") {
+            await this.page.locator(this.selector_type_card).click();
+            await this.page.locator(this.national_type_selector).click();
+        }
+        else {
+            await this.page.locator(this.selector_type_card).click();
+            await this.page.locator(this.customer_type_selector).click();
+        }
         await this.page.locator(this.selector_color_id_card).click();
         for (const item of await this.page.locator("//li").all()){
             let el = await item.first().getAttribute("aria-selected")
@@ -121,10 +140,10 @@ exports.EventsPage = class EventsPage {
             }
         }
         await this.page.locator(this.x_icon_inside_start_date_input).click();
-        await this.page.fill(this.input_start_date_card, random_start_date())
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.x_icon_inside_end_date_input).click();
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(bp.button_save).click();
 
