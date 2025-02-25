@@ -2,18 +2,21 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { PLUsPage } from "../../pages/PLUsPage";
 import { BasePage } from "../../pages/BasePage";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for PLUs Page", () => {
 
     // https://prospace-team.atlassian.net/browse/PSPR-3829
-    test.skip('Create PLU', async ({page}) => {
+    test.only('Create PLU', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await plusPage.open_dict()
-        await plusPage.create_element()
+        await plusPage.create_element(bp.random_dropdown_element, bp.random_dropdown_element, fakeData.plu)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3829
@@ -26,12 +29,13 @@ test.describe("Smoke Suite for PLUs Page", () => {
         await plusPage.read_element()
     });
 
-    test('Update PLU', async ({page}) => {
+    test.only('Update PLU', async ({page}) => {
         const lp = new LoginPage(page);
         const plusPage = new PLUsPage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await plusPage.open_dict()
-        await plusPage.update_element()
+        await plusPage.update_element(fakeData.plu)
     });
 
     // Confirmation window is not appeared

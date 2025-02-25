@@ -32,16 +32,16 @@ exports.PLUsPage = class PLUsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("PLUs")
     }
 
-    async create_element() {
+    async create_element(client_dropdown, eanpc_dropdown, plu) {
         // Create New PLU
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_card).click()
-        await this.page.locator(this.list_client_card).click()
+        await this.page.locator(client_dropdown).click()
         await this.page.locator(this.selector_eanpc_card).click()
-        await this.page.locator(this.list_eanpc_card).click()
-        await this.page.fill(this.input_plu_card, String(getRandomInt(100, 999)))
+        await this.page.locator(eanpc_dropdown).click()
+        await this.page.fill(this.input_plu_card, plu)
 
         // Get Info From Card
         const card_client_name = await this.page.locator(this.selector_client_card).getAttribute("model-value-prop");
@@ -118,7 +118,7 @@ exports.PLUsPage = class PLUsPage {
         await expect.soft(grid_client_name, "Client Name [Grid and Client Dictionary] is not match").toBe(client_name)
     }
 
-    async update_element(){
+    async update_element(plu){
         // Get Last PLU Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();
@@ -133,7 +133,7 @@ exports.PLUsPage = class PLUsPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_plu_card).clear();
-        await this.page.fill(this.input_plu_card, String(getRandomInt(100, 999)));
+        await this.page.fill(this.input_plu_card, plu);
         await this.page.locator(bp.button_save).click();
 
         // Check Success Toast Message
