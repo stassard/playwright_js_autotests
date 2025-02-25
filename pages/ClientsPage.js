@@ -52,15 +52,6 @@ exports.ClientsPage = class ClientsPage {
         // this.input_dispatch_start_before_day_to_filters = "(//input[@data-pc-name='pcinput'])[2]"  # Поле Dispatch Start Before Day(To)
         // this.input_dispatch_end_before_day_from_filters = "(//input[@data-pc-name='pcinput'])[3]"  # Поле Dispatch End Before Day(From)
         // this.input_dispatch_end_before_day_to_filters = "(//input[@data-pc-name='pcinput'])[4]"  # Поле Dispatch End Before Day(To)
-
-        // Fake Data
-        this.random_name = faker.commerce.department() + String(getRandomInt(10000, 99999))
-        this.random_external_id = faker.string.numeric({length: { min: 7, max: 10}})
-        this.random_parent= faker.food.adjective() + String(getRandomInt(10000, 99999))
-        this.random_type= faker.food.fruit() + String(getRandomInt(10000, 99999))
-        this.random_start_day= String(getRandomInt(20, 40))
-        this.random_end_day= String(getRandomInt(1, 19))
-
     }
 
     async open_dict(){
@@ -70,21 +61,21 @@ exports.ClientsPage = class ClientsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Clients")
     }
 
-    async create_element(){
+    async create_element(name, external_id, parent, type, dispatch_start, dispatch_end){
         // Create New Client
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_name_card, this.random_name)
-        await this.page.fill(this.input_external_id_card, this.random_external_id)
-        await this.page.fill(this.input_parent_card, this.random_parent)
-        await this.page.fill(this.input_type_card, this.random_type)
+        await this.page.fill(this.input_name_card, name)
+        await this.page.fill(this.input_external_id_card, external_id)
+        await this.page.fill(this.input_parent_card, parent)
+        await this.page.fill(this.input_type_card, type)
         await this.page.locator(this.selector_invoice_type_card).click()
         await this.page.locator(this.list_of_invoice_types_card).click()
         await this.page.locator(this.selector_affiliation_card).click()
         await this.page.locator(this.list_of_affiliations_card).click()
-        await this.page.fill(this.input_dispatch_start_before_day, this.random_start_day)
-        await this.page.fill(this.input_dispatch_end_before_day, this.random_end_day)
+        await this.page.fill(this.input_dispatch_start_before_day, dispatch_start)
+        await this.page.fill(this.input_dispatch_end_before_day, dispatch_end)
         await this.page.locator(bp.button_upload_file).setInputFiles('./uploadFiles/магнит.jpg')
         await this.page.locator(bp.button_create_card).click()
 
@@ -131,8 +122,8 @@ exports.ClientsPage = class ClientsPage {
         await expect.soft(card_affiliation, "Affiliation is not match").toEqual(grid_affiliation)
         // TODO: Inconsistent Data
         // await expect.soft(card_invoice_type, "Invoice Type is not match").toEqual(grid_invoice_type)
-        await expect.soft(card_dispatch_start_day, "Dispatch Start Before Day is not match").toEqual(String(this.random_start_day))
-        await expect.soft(card_dispatch_end_day, "Dispatch End Before Day is not match").toEqual(String(this.random_end_day))
+        await expect.soft(card_dispatch_start_day, "Dispatch Start Before Day is not match").toEqual(dispatch_start)
+        await expect.soft(card_dispatch_end_day, "Dispatch End Before Day is not match").toEqual(dispatch_end)
         await expect.soft(card_file_name, "File Name is not match").toEqual("магнит.jpg")
         await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
@@ -176,7 +167,7 @@ exports.ClientsPage = class ClientsPage {
 
     }
 
-    async update_element(){
+    async update_element(name, parent, type, dispatch_start, dispatch_end){
         // Get Last Client Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(this.last_id_in_grid).textContent();
@@ -191,11 +182,11 @@ exports.ClientsPage = class ClientsPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_name_card).clear();
-        await this.page.fill(this.input_name_card, this.random_name);
+        await this.page.fill(this.input_name_card, name);
         await this.page.locator(this.input_parent_card).clear();
-        await this.page.fill(this.input_parent_card, this.random_parent);
+        await this.page.fill(this.input_parent_card, parent);
         await this.page.locator(this.input_type_card).clear();
-        await this.page.fill(this.input_type_card, this.random_type);
+        await this.page.fill(this.input_type_card, type);
 
         if (await this.page.locator(this.selector_invoice_type_card).getAttribute("model-value-prop") === "On Invoice") {
             await this.page.locator(this.selector_invoice_type_card).click();
@@ -215,9 +206,9 @@ exports.ClientsPage = class ClientsPage {
             await this.page.locator(this.local_affiliation_selector).click();
         }
         await this.page.locator(this.input_dispatch_start_before_day).clear();
-        await this.page.fill(this.input_dispatch_start_before_day, this.random_start_day);
+        await this.page.fill(this.input_dispatch_start_before_day, dispatch_start);
         await this.page.locator(this.input_dispatch_end_before_day).clear();
-        await this.page.fill(this.input_dispatch_end_before_day, this.random_end_day);
+        await this.page.fill(this.input_dispatch_end_before_day, dispatch_end);
         await this.page.locator(bp.button_save).click()
 
         // Check Success Toast Message
