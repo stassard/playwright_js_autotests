@@ -2,15 +2,17 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from "../../pages/ProductsPage";
 import { BasePage } from "../../pages/BasePage";
+import { GeneratorForSmoke } from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Product Page", () => {
-    test('Create Product', async ({ page }) => {
+    test.only('Create Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await pp.open_dict()
-        await pp.create_element()
+        await pp.create_element(fakeData.name, fakeData.ean_case, fakeData.ean_pc, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
     });
 
     test('Read Product', async ({ page }) => {
@@ -21,12 +23,13 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.read_element()
     });
 
-    test('Update Product', async ({ page }) => {
+    test.only('Update Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await pp.open_dict()
-        await pp.update_element()
+        await pp.update_element(fakeData.name, fakeData.ean_case, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
     });
 
     // BUG: Confirmation window is not appeared

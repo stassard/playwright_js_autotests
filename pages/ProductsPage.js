@@ -61,20 +61,20 @@ exports.ProductsPage = class ProductsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Products")
     }
 
-    async create_element(){
+    async create_element(name, ean_case, ean_pc, category, technology, brand, unit){
         // Creating Product
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click();
-        await this.page.fill(this.input_name_card, this.random_name);
-        await this.page.fill(this.input_EANC_card, this.random_eanc);
-        await this.page.fill(this.input_EANP_card, this.random_eanp);
-        await this.page.fill(this.input_category_card, this.random_category);
-        await this.page.fill(this.input_technology_card, this.random_technology);
-        await this.page.fill(this.input_brand_card, this.random_brand);
+        await this.page.fill(this.input_name_card, name);
+        await this.page.fill(this.input_EANC_card, ean_case);
+        await this.page.fill(this.input_EANP_card, ean_pc);
+        await this.page.fill(this.input_category_card, category);
+        await this.page.fill(this.input_technology_card, technology);
+        await this.page.fill(this.input_brand_card, brand);
         await this.page.locator(this.unit_of_measure_card).click();
         await this.page.locator(this.units_of_measure_selector_card).click();
-        await this.page.fill(this.input_unit_card, this.random_unit);
+        await this.page.fill(this.input_unit_card, unit);
         await this.page.locator(bp.button_create_card).click();
 
         // Check Success Toast Message
@@ -154,7 +154,7 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
     }
 
-    async update_element(){
+    async update_element(name, ean_case, category, technology, brand, unit){
         // Get Last Product Info from Grid Before Update
         const bp = new BasePage();
         const name_before = await this.page.locator(bp.last_item_name).textContent();
@@ -170,15 +170,15 @@ exports.ProductsPage = class ProductsPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_name_card).clear();
-        await this.page.fill(this.input_name_card, faker.food.ethnicCategory() + faker.food.dish());
+        await this.page.fill(this.input_name_card, name);
         await this.page.locator(this.input_EANC_card).clear();
-        await this.page.fill(this.input_EANC_card, faker.string.numeric({length: { min: 7, max: 10}}))
+        await this.page.fill(this.input_EANC_card, ean_case)
         await this.page.locator(this.input_category_card).clear();
-        await this.page.fill(this.input_category_card, faker.food.ethnicCategory() + String(getRandomInt(10000, 99999)))
+        await this.page.fill(this.input_category_card, category)
         await this.page.locator(this.input_technology_card).clear();
-        await this.page.fill(this.input_technology_card, faker.food.fruit() + String(getRandomInt(10000, 99999)))
+        await this.page.fill(this.input_technology_card, technology)
         await this.page.locator(this.input_brand_card).clear();
-        await this.page.fill(this.input_brand_card, faker.company.name() + String(getRandomInt(10000, 99999)))
+        await this.page.fill(this.input_brand_card, brand)
         await this.page.locator(this.unit_of_measure_card).click()
 
         for (const item of await this.page.locator("//li").all()){
@@ -189,7 +189,7 @@ exports.ProductsPage = class ProductsPage {
             }
         }
         await this.page.locator(this.input_unit_card).clear();
-        await this.page.fill(this.input_unit_card, String(getRandomInt(1, 1000)))
+        await this.page.fill(this.input_unit_card, unit)
         await this.page.locator(bp.button_save).click();
 
         // Check Success Toast Message
