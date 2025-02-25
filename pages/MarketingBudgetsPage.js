@@ -12,9 +12,7 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         // Card
         this.input_budget_name_card = "(//input[contains(@data-pc-name,'inputtext')])[3]"  // Budget Name input
         this.selector_client_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Client
-        this.list_client_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // List of Client
         this.selector_product_card = "(//div[contains(@data-pc-name,'select')])[2]"  // Selector Product
-        this.list_product_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // List of Product
         this.selector_marketing_tool_card = "(//div[contains(@data-pc-name,'select')])[3]"  // Selector Marketing Tool
         this.list_marketing_tool_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // List of Marketing Tool
         this.input_qty = "(//span[contains(@data-pc-name,'inputnumber')]/input[contains(@data-pc-name,'pcinput')])[1]"  // Qty input
@@ -22,7 +20,6 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         this.input_start_date_card = "(//span[contains(@data-pc-name,'datepicker')]/input[contains(@data-pc-name,'pcinput')])[1]"  // Start Date input
         this.input_end_date_card = "(//span[contains(@data-pc-name,'datepicker')]/input[contains(@data-pc-name,'pcinput')])[2]"  // End Date input
         this.selector_budget_type_card = "(//div[contains(@data-pc-name,'select')])[4]"  // Selector Budget Type
-        this.list_budget_type_card = `//li[@aria-posinset='${[getRandomInt(1, 2)]}']`  // List of Budget Type
         this.selector_pnl_line_card = "(//div[contains(@data-pc-name,'select')])[5]"  // Selector P&L Line
         this.list_pnl_card = `//li[@aria-posinset='1']`  // List of P&L Line
         this.selector_allocation_type_card = "(//div[contains(@data-pc-name,'select')])[6]"  // Selector Allocation Type
@@ -66,28 +63,28 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Marketing budgets")
     }
 
-    async create_manual_type_budget(){
+    async create_manual_type_budget(name, client_dropdown, product_dropdown, budget_type_dropdown, qty, budget, start_date, end_date) {
         // Create New Manual Marketing Budget
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.input_budget_name_card).clear()
-        await this.page.fill(this.input_budget_name_card, faker.location.city())
+        await this.page.fill(this.input_budget_name_card, name)
         await this.page.locator(this.selector_client_card).click()
-        await this.page.locator(this.list_client_card).click()
+        await this.page.locator(client_dropdown).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(this.list_product_card).click()
+        await this.page.locator(product_dropdown).click()
         await this.page.locator(bp.button_add).click()
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
-        await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
-        await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
-        await this.page.fill(this.input_start_date_card, currentDate)
+        await this.page.fill(this.input_qty, qty)
+        await this.page.fill(this.input_budget, budget)
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.selector_budget_type_card).click()
-        await this.page.locator(this.list_budget_type_card).click()
+        await this.page.locator(budget_type_dropdown).click()
         await this.page.locator(this.selector_pnl_line_card).click()
         await this.page.locator(this.list_pnl_card).click()
         await this.page.locator(this.selector_allocation_type_card).click()
@@ -203,28 +200,28 @@ exports.MarketingBudgetsPage = class MarketingBudgetsPage {
         }
     }
 
-    async create_auto_type_budget() {
+    async create_auto_type_budget(name, client_dropdown, product_dropdown, budget_type_dropdown, qty, budget, start_date, end_date) {
         // Create New Auto Marketing Budget
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.input_budget_name_card).clear()
-        await this.page.fill(this.input_budget_name_card, faker.location.city())
+        await this.page.fill(this.input_budget_name_card, name)
         await this.page.locator(this.selector_client_card).click()
-        await this.page.locator(this.list_client_card).click()
+        await this.page.locator(client_dropdown).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(this.list_product_card).click()
+        await this.page.locator(product_dropdown).click()
         await this.page.locator(bp.button_add).click()
         await this.page.locator(bp.checkbox_dialog).click()
         await this.page.locator(bp.button_select_dialog).click()
-        await this.page.fill(this.input_qty, String(getRandomInt(1, 20)))
-        await this.page.fill(this.input_budget, String(getRandomInt(10, 999)))
-        await this.page.fill(this.input_start_date_card, currentDate)
+        await this.page.fill(this.input_qty, qty)
+        await this.page.fill(this.input_budget, budget)
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.selector_budget_type_card).click()
-        await this.page.locator(this.list_budget_type_card).click()
+        await this.page.locator(budget_type_dropdown).click()
         await this.page.locator(this.selector_pnl_line_card).click()
         await this.page.locator(this.list_pnl_card).click()
         await this.page.locator(this.selector_allocation_type_card).click()

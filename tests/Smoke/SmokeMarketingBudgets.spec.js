@@ -2,6 +2,7 @@ import {test} from "@playwright/test";
 import {LoginPage} from "../../pages/LoginPage";
 import {MarketingBudgetsPage} from "../../pages/MarketingBudgetsPage";
 import {BasePage} from "../../pages/BasePage";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Marketing Budgets Page", () => {
 
@@ -12,9 +13,11 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await marketingBudgetPage.open_dict()
-        await marketingBudgetPage.create_manual_type_budget()
+        await marketingBudgetPage.create_manual_type_budget(fakeData.marketing_budget_name, bp.random_dropdown_element, bp.random_dropdown_element, bp.first_dropdown_element, fakeData.qty, fakeData.budget, fakeData.current_start_date, fakeData.random_end_date)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3514
@@ -24,9 +27,11 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await marketingBudgetPage.open_dict()
-        await marketingBudgetPage.create_auto_type_budget()
+        await marketingBudgetPage.create_auto_type_budget(fakeData.marketing_budget_name, bp.random_dropdown_element, bp.random_dropdown_element, bp.first_dropdown_element, fakeData.qty, fakeData.budget, fakeData.current_start_date, fakeData.random_end_date)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3514
@@ -37,9 +42,11 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
             const marketingBudgetPage = new MarketingBudgetsPage(page)
+            const bp = new BasePage(page)
+            const fakeData = new DataGeneratorForSmoke(page)
             await lp.authorization();
             await marketingBudgetPage.open_dict()
-            await marketingBudgetPage.create_manual_type_budget()
+            await marketingBudgetPage.create_manual_type_budget(fakeData.marketing_budget_name, bp.random_dropdown_element, bp.random_dropdown_element, bp.first_dropdown_element, fakeData.qty, fakeData.budget, fakeData.current_start_date, fakeData.random_end_date)
         });
         test('Add Promo to Manual Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
@@ -56,9 +63,11 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
             const marketingBudgetPage = new MarketingBudgetsPage(page)
+            const bp = new BasePage(page)
+            const fakeData = new DataGeneratorForSmoke(page)
             await lp.authorization();
             await marketingBudgetPage.open_dict()
-            await marketingBudgetPage.create_auto_type_budget()
+            await marketingBudgetPage.create_auto_type_budget(fakeData.marketing_budget_name, bp.random_dropdown_element, bp.random_dropdown_element, bp.first_dropdown_element, fakeData.qty, fakeData.budget, fakeData.current_start_date, fakeData.random_end_date)
         });
         test('Add Promo to Auto Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
