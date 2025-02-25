@@ -43,15 +43,6 @@ exports.ProductsPage = class ProductsPage {
         this.input_unit_of_measure_filters = "(//input[contains(@data-pc-name,'inputtext')])[6]"          // Input Unit of Measure
         this.input_unit_from_filters = "(//input[@data-pc-name='pcinput'])[1]"                            // Input Unit(From)
         this.input_unit_to_filters = "(//input[@data-pc-name='pcinput'])[2]"                              // Input Unit(To)
-
-        // Fake Data
-        this.random_name = faker.food.ethnicCategory() + faker.food.dish()
-        this.random_eanc = faker.string.numeric({length: { min: 7, max: 10}})
-        this.random_eanp = faker.string.numeric({length: { min: 7, max: 10}})
-        this.random_category= faker.food.ethnicCategory()
-        this.random_technology= faker.food.fruit()
-        this.random_brand= faker.company.name()
-        this.random_unit = String(getRandomInt(1, 1000))
     }
 
     async open_dict(){
