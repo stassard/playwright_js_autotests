@@ -30,15 +30,15 @@ exports.ClientProductsPage = class ClientProductsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Client Products")
     }
 
-    async create_element(dropdown_element_1, dropdown_element_2){
+    async create_element(client_id_dropdown, product_dropdown){
         // Create New Client Products
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
-        await this.page.locator(dropdown_element_1).click()
+        await this.page.locator(client_id_dropdown).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(dropdown_element_2).click()
+        await this.page.locator(product_dropdown).click()
 
         // Get Info From Card
         const card_client_name = await this.page.locator(this.selector_client_id_card).getAttribute("model-value-prop");

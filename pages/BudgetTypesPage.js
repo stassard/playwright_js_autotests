@@ -24,14 +24,14 @@ exports.BudgetTypesPage = class BudgetTypesPage {
     }
 
 
-    async create_element(name, dropdown_element){
+    async create_element(name, default_pnl_line_dropdown){
         // Create New Budget Type
         const bp = new BasePage()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_name_card, name)
         await this.page.locator(this.selector_default_pnl_line_card).click()
-        await this.page.locator(dropdown_element).click()
+        await this.page.locator(default_pnl_line_dropdown).click()
 
         // Get Info From Card
         const card_name = await this.page.locator(this.input_name_card).inputValue();

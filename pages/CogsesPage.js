@@ -39,13 +39,13 @@ exports.CogsesPage = class CogsesPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("COGS")
     }
 
-    async create_element(dropdown_element, start_date, end_date, cogs){
+    async create_element(product_dropdown, start_date, end_date, cogs){
         // Create New Cogs
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(dropdown_element).click()
+        await this.page.locator(product_dropdown).click()
         await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
         await this.page.fill(this.input_end_date_card, end_date)

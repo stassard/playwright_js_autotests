@@ -38,13 +38,13 @@ exports.ClientProductPricesPage = class ClientProductPricesPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Price lists")
     }
 
-    async create_element(dropdown_element, price, start_date, end_date){
+    async create_element(client_product_id_dropdown, price, start_date, end_date){
         // Create New Client Product Price
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_product_id_card).click()
-        await this.page.locator(dropdown_element).click()
+        await this.page.locator(client_product_id_dropdown).click()
         await this.page.fill(this.input_price_card, price)
         await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
