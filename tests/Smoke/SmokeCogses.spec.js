@@ -2,6 +2,7 @@ import {test} from "@playwright/test";
 import {LoginPage} from "../../pages/LoginPage";
 import {CogsesPage} from "../../pages/CogsesPage";
 import {BasePage} from "../../pages/BasePage";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Cogses Page", () => {
 
@@ -10,9 +11,11 @@ test.describe("Smoke Suite for Cogses Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await cogsesPage.open_dict()
-        await cogsesPage.create_element()
+        await cogsesPage.create_element(bp.random_dropdown_element, fakeData.current_start_date, fakeData.random_end_date, fakeData.cogs)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -28,9 +31,10 @@ test.describe("Smoke Suite for Cogses Page", () => {
     test('Update Cogs', async ({page}) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await cogsesPage.open_dict()
-        await cogsesPage.update_element()
+        await cogsesPage.update_element(fakeData.random_start_date, fakeData.random_end_date, fakeData.cogs)
     });
 
     // BUG: Confirmation window is not appeared
