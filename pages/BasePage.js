@@ -5,6 +5,7 @@ exports.BasePage = class BasePage {
 
     constructor(page) {
         this.page = page;
+        // General
         this.toast_message_success = "//div[contains(@data-pc-section,'messagetext')]"  // Success toast message
         this.head_of_page = "//div[@class='ps-font-TopHeader text-indigo-950']"  //  Head of page
 
@@ -38,6 +39,8 @@ exports.BasePage = class BasePage {
         this.first_chips_event = "//div[@class='collection-editor']/div[@data-test='chips-items']/div[contains(@class, 'event')][1]"  // First event chips
         this.x_icon_chips_event = "(//div[contains(@class,'remove')])[1]"  // First X Icon Chips Event
         this.button_upload_file = "//input[@type='file']"  // Button Upload File
+        this.random_dropdown_element = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // Random dropdown element
+        this.first_dropdown_element = `//li[@aria-posinset='1']`  // First dropdown element
 
         // Dialog
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events

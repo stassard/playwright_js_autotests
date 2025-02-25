@@ -2,16 +2,20 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { BasePage } from "../../pages/BasePage";
 import { BaselinesPage } from "../../pages/BaselinesPage";
+import {GeneratorForSmoke} from "../../Fake_data_generator";
+import {fa} from "@faker-js/faker";
 
 
 test.describe("Smoke Suite for Baselines Page", () => {
-    test('Create Baseline', async ({page}) => {
+    test.only('Create Baseline', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
-        await baselinesPage.create_element()
+        await baselinesPage.create_element(bp.random_dropdown_element, fakeData.qty, fakeData.start_date, fakeData.end_date)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -24,13 +28,14 @@ test.describe("Smoke Suite for Baselines Page", () => {
         await baselinesPage.read_element()
     });
 
-    test('Update Baseline', async ({page}) => {
+    test.only('Update Baseline', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
+        const fakeData = new GeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
-        await baselinesPage.update_element()
+        await baselinesPage.update_element(fakeData.qty, fakeData.start_date, fakeData.end_date)
     });
 
     // BUG: Confirmation window is not appeared

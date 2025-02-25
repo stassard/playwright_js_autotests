@@ -9,9 +9,7 @@ exports.BaselinesPage = class BaselinesPage {
         this.page = page
         // Creation form
         this.selector_client_card = "(//div[contains(@data-pc-name,'select')])[1]"  // Selector Client
-        this.list_client_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // List of Client
         this.selector_product_card = "(//div[contains(@data-pc-name,'select')])[2]"  // Selector Product
-        this.list_product_card = `//li[@aria-posinset='${[getRandomInt(1, 5)]}']`  // List of Product
         this.input_qty = "(//input[contains(@data-pc-name,'pcinput')])[1]"  // Qty input
         this.input_start_date_card = "(//input[contains(@data-pc-name,'pcinput')])[2]"  // Start Date input
         this.input_end_date_card = "(//input[contains(@data-pc-name,'pcinput')])[3]"  // End Date input
@@ -50,19 +48,19 @@ exports.BaselinesPage = class BaselinesPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Baselines")
     }
 
-    async create_element(){
+    async create_element(dropdown_element, qty, start_date, end_date){
         // Create New Baseline
         const bp = new BasePage();
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_card).click()
-        await this.page.locator(this.list_client_card).click()
+        await this.page.locator(dropdown_element).click()
         await this.page.locator(this.selector_product_card).click()
-        await this.page.locator(this.list_product_card).click()
-        await this.page.fill(this.input_qty, String(faker.number.int({min: 100, max: 999})))
-        await this.page.fill(this.input_start_date_card, currentDate)
+        await this.page.locator(dropdown_element).click()
+        await this.page.fill(this.input_qty, qty)
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
 
         // Get Info From Card
@@ -126,7 +124,7 @@ exports.BaselinesPage = class BaselinesPage {
 
     }
 
-    async update_element(){
+    async update_element(qty, start_date, end_date){
         // Get Last Baseline Info from Grid Before Update
         const bp = new BasePage()
         const id_before = await this.page.locator(bp.last_item_name).textContent();
@@ -146,12 +144,12 @@ exports.BaselinesPage = class BaselinesPage {
         await this.page.locator(bp.last_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_qty).clear();
-        await this.page.fill(this.input_qty, String(faker.number.int({min: 100, max: 999})));
+        await this.page.fill(this.input_qty, qty);
         await this.page.locator(this.x_icon_inside_start_date_input).click();
-        await this.page.fill(this.input_start_date_card, random_start_date())
+        await this.page.fill(this.input_start_date_card, start_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(this.x_icon_inside_end_date_input).click();
-        await this.page.fill(this.input_end_date_card, random_end_date())
+        await this.page.fill(this.input_end_date_card, end_date)
         await this.page.keyboard.press("Enter");
         await this.page.locator(bp.button_save).click();
 
