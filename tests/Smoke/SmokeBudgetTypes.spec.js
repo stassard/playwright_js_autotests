@@ -5,8 +5,7 @@ import {BasePage} from "../../pages/BasePage";
 import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Budget Types Page", () => {
-
-    test.only('Create Budget Type', async ({page}) => {
+    test.beforeEach('Create Budget Type', async ({page}) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
@@ -16,30 +15,40 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         await budgetTypesPage.create_element(fakeData.budget_type_name, bp.first_dropdown_element)
     });
 
-    test('Read Budget Type', async ({page}) => {
+    test('Create Budget Type', async ({page}) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
+        await budgetTypesPage.create_element(fakeData.budget_type_name, bp.first_dropdown_element)
+    });
+
+    test.skip('Read Budget Type', async ({page}) => {
+        const lp = new LoginPage(page);
+        const budgetTypesPage = new BudgetTypesPage(page)
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await budgetTypesPage.read_element()
     });
 
-    test.only('Update Budget Type', async ({page}) => {
+    test('Update Budget Type', async ({page}) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await budgetTypesPage.update_element(fakeData.budget_type_name)
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Budget Type Using 3 Dots Grid', async ({ page }) => {
+    test.fail('Delete Budget Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -47,18 +56,18 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Budget Type Using Card", async ({ page }) => {
+    test.fail("Delete Budget Type Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -67,26 +76,26 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_events_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.select_all_delete()
     });
 
-    test('Restore Budget Type Using 3 Dots Grid', async ({ page }) => {
+    test.fail('Restore Budget Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 
-    test.skip('Restore Budget Type Using Checkbox Grid', async ({ page }) => {
+    test.skip(' Restore Budget Type Using Checkbox Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.restore_using_checkbox_grid()
     });
 
@@ -94,8 +103,8 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await budgetTypesPage.open_dict()
+        // await lp.authorization();
+        // await budgetTypesPage.open_dict()
         await bp.restore_using_card()
     });
 });
