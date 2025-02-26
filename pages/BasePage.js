@@ -68,7 +68,7 @@ exports.BasePage = class BasePage {
         // Grid Dictionary
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
         this.button_restore_item = "//button[contains(@aria-label,'Restore item')]"  // Button Restore Item in the Modal Window
-        this.first_3_dots_grid = `(//tr[1]/td[@data-pc-section='bodycell']/div)[12]`  // First grid 3 dots
+        this.first_3_dots_grid = `(//tr[1]//td[@data-p-frozen-column='true'])[2]`  // First grid 3 dots
         this.random_3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[${[getRandomInt(1, 10)]}]`  // Random grid 3 dots
         this.link_delete_in_3_dots = "(//li[contains(@aria-label, 'Delete')])"  // Button Delete in the grid 3 dots
         this.link_restore_in_3_dots = "(//li[contains(@aria-label, 'Restore')])"  // Button Restore in the grid 3 dots

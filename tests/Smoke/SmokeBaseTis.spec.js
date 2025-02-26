@@ -13,7 +13,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
         const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baseTisPage.open_dict()
-        await baseTisPage.create_element(bp.random_dropdown_element, fakeData.current_start_date, fakeData.random_end_date, fakeData.basetis)
+        await baseTisPage.create_element(bp.random_dropdown_element, bp.random_dropdown_element, fakeData.current_start_date, fakeData.random_end_date, fakeData.basetis)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -55,7 +55,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete BaseTi Using Card", async ({ page }) => {
+    test.fail("Delete BaseTi Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
@@ -75,7 +75,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
+    test.fail('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
