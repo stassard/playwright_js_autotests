@@ -121,13 +121,7 @@ exports.BasePage = class BasePage {
     async delete_using_3_dots_grid(){
         const bp = new BasePage();
         let count = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_3_dots_grid).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
@@ -140,14 +134,7 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
-        let count_1 = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -155,14 +142,7 @@ exports.BasePage = class BasePage {
 
     async delete_using_checkbox_grid(){
         const bp = new BasePage();
-        let count = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_checkbox_grid).click()
         await this.page.locator(bp.delete_button_upper_panel).click()
@@ -175,14 +155,7 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
-        let count_1 = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -190,14 +163,7 @@ exports.BasePage = class BasePage {
 
     async delete_using_card(){
         const bp = new BasePage();
-        let count = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count++;
-            if (count === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
@@ -211,14 +177,7 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
-        let count_1 = 0
-        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -287,14 +246,7 @@ exports.BasePage = class BasePage {
         const bp = new BasePage();
         await this.page.locator(bp.deleted_tab_grid).click()
 
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_checkbox_grid).click()
         await this.page.locator(bp.restore_button_upper_panel).click()
@@ -309,14 +261,7 @@ exports.BasePage = class BasePage {
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
 
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(100)
-            count_2++;
-            if (count_2 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not restored").toEqual(Number(count_of_items_before) - 1)
 
@@ -325,15 +270,7 @@ exports.BasePage = class BasePage {
     async restore_using_card(){
         const bp = new BasePage();
         await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_item_name).click()
         await this.page.locator(this._3_dots_card).click()
@@ -348,15 +285,7 @@ exports.BasePage = class BasePage {
         }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
-
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(100)
-            count_2++;
-            if (count_2 === 10) {
-                break;
-            }
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await expect.soft(Number(count_of_items_after), "Element is not deleted").toEqual(Number(count_of_items_before) - 1)
     }

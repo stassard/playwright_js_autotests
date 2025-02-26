@@ -40,6 +40,7 @@ exports.BaseTisPage = class BaseTisPage {
     async create_element(client_id_dropdown, product_dropdown, start_date, end_date, basetis){
         // Create New BaseTis
         const bp = new BasePage();
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
@@ -65,6 +66,7 @@ exports.BaseTisPage = class BaseTisPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
         await this.page.reload()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Get Info From Grid
         // const grid_client = await this.page.locator(this.last_client_in_grid).textContent();
