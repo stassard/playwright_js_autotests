@@ -3,19 +3,18 @@ import { LoginPage } from '../../pages/LoginPage';
 import { BasePage } from "../../pages/BasePage";
 import { BaselinesPage } from "../../pages/BaselinesPage";
 import {DataGeneratorForSmoke} from "../../Fake_data_generator";
-import {fa} from "@faker-js/faker";
 
 
 test.describe("Smoke Suite for Baselines Page", () => {
-    test.only('Create Baseline', async ({page}) => {
-        test.setTimeout(120_000)
+    test('Create Baseline', async ({page}) => {
+        test.setTimeout(180_000)
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
         const fakeData = new DataGeneratorForSmoke(page)
         await lp.authorization();
         await baselinesPage.open_dict()
-        await baselinesPage.create_element(bp.random_dropdown_element, fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
+        await baselinesPage.create_element(bp.random_dropdown_element, bp.random_dropdown_element, fakeData.qty, fakeData.current_start_date, fakeData.random_end_date)
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3583
@@ -28,7 +27,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         await baselinesPage.read_element()
     });
 
-    test.only('Update Baseline', async ({page}) => {
+    test('Update Baseline', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
@@ -39,7 +38,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
+    test.fail('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
@@ -58,7 +57,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Baseline Using Card", async ({ page }) => {
+    test.fail("Delete Baseline Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
@@ -67,7 +66,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Baselines', async ({ page }) => {
+    test.skip('Select All Delete Baselines', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
@@ -77,7 +76,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Restore Baseline Using 3 Dots Grid', async ({ page }) => {
+    test.fail('Restore Baseline Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)

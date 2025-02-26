@@ -62,17 +62,18 @@ exports.BasePage = class BasePage {
         this.x_icon = "(//div[@data-test='prospace-header']/div[@data-test='header-right']/div/button[@type='icon-secondary'])[3]"  // X icon in the created card
         this.name_of_added_file = "//span[contains(@class,'text-purple-800')]"     // Name of Uploaded file
         this.input_name_card = "//div[@data-test='header-left']//input[contains(@data-pc-name,'inputtext')]" // Name of the Element in the Card
-        this.pen_icon_card = "(//div[@data-test='prospace-header']//button[@type='icon-secondary'])[1]" // Pen Icon in the Card
+        this.pen_icon_card = "(//div[@data-test='prospace-header']//div/div/following-sibling::div/div)[1]" // Pen Icon in the Card
         this.text_input_card = "//div[@data-test='block-main']//textarea[@type='text']" // Text input in the Card
 
         // Grid Dictionary
         this.button_delete_item = "//button[contains(@aria-label,'Delete item')]"  // Button Delete Item in the Modal Window
         this.button_restore_item = "//button[contains(@aria-label,'Restore item')]"  // Button Restore Item in the Modal Window
-        this._3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[1]`  // Grid 3 dots
+        this.first_3_dots_grid = `(//tr[1]/td[@data-pc-section='bodycell']/div)[12]`  // First grid 3 dots
+        this.random_3_dots_grid = `(//div[contains(@class,'flex justify-center')]/div[contains(@class,'flex')])[${[getRandomInt(1, 10)]}]`  // Random grid 3 dots
         this.link_delete_in_3_dots = "(//li[contains(@aria-label, 'Delete')])"  // Button Delete in the grid 3 dots
         this.link_restore_in_3_dots = "(//li[contains(@aria-label, 'Restore')])"  // Button Restore in the grid 3 dots
         this.any_item_name = `(//div[contains(@class, 'border-dotted')])[${[getRandomInt(1, 10)]}]`  // Grid Any Name of Items
-        this.last_item_name = "(//div[contains(@class, 'border-dotted')])[1]"  // Grid Last Name of Items
+        this.first_item_name = "(//div[contains(@class, 'border-dotted')])[1]"  // Grid Last Name of Items
         this.button_create_new = " //button[@aria-label='Create new']"  // Button Create New
         this.input_search_grid = "//input[contains(@data-pc-name,'inputtext')]"  // Grid Search field
         this.deleted_tab_grid = "(//span[contains(text(), 'Deleted')]//ancestor::div[contains(@class, 'h-8')])"  // Deleted Tab
@@ -82,7 +83,8 @@ exports.BasePage = class BasePage {
         this.all_tab_grid = "(//span[contains(text(), 'All')]//ancestor::div[contains(@class, 'h-8')])" // All Tab
         // this.all_tab_grid_is_active = "//div[contains(@class, 'active')]/span[text()='All']"  # Кнопка-вкладка All активна
         this.count_items_in_footer_grid = "(//span[@class='text-indigo-950'])[2]"  // Count of items in the footer
-        this.unselected_checkbox_grid = `(//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]`  // Unselected checkbox
+        this.random_checkbox_grid = `(//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]`  // Random Unselected checkbox
+        this.first_checkbox_grid = `(//tr[1]/td[@data-pc-section='bodycell']/div[1])[1]`  // Random Unselected checkbox
         // this.selected_checkbox = `(//div[contains(@class,'p-highlight')])${[Math.random() * 10]}`  # Выбранный чекбокс в гриде
         this.select_all_checkbox = "(//div[@class='p-checkbox p-component'])[1]"  // Select All checkbox
         this.delete_button_upper_panel = "//button[@aria-label='Delete']"  // Button Delete in the top panel
@@ -90,6 +92,7 @@ exports.BasePage = class BasePage {
         this.counter_checked_checkboxes_upper_panel = "//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']"  // Counter checked checkboxes in the top panel
         this.button_all_fiters = "//div[contains(@class, 'all-filters')]"  // Button All filters
         this.counter_all_filters = "//div[contains(@class,'all-filters')]/span[@class='prospace-counter-box']"  // Counter in the All Filters
+        this.spinner = "//div[contains(@class,'animate-spin')]" // Spinner
 
         // Grid Promo
         this.button_new_promo = "//button[@aria-label='New Promo']"  // Button New Promo
@@ -117,8 +120,16 @@ exports.BasePage = class BasePage {
 
     async delete_using_3_dots_grid(){
         const bp = new BasePage();
+        let count = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count++;
+            if (count === 10) {
+                break;
+            }
+        }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp._3_dots_grid).click()
+        await this.page.locator(bp.first_3_dots_grid).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
         if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
             await this.page.locator(bp.button_delete_item).click()
@@ -129,6 +140,14 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
+        let count_1 = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
+                break;
+            }
+        }
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -136,8 +155,16 @@ exports.BasePage = class BasePage {
 
     async delete_using_checkbox_grid(){
         const bp = new BasePage();
+        let count = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count++;
+            if (count === 10) {
+                break;
+            }
+        }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.unselected_checkbox_grid).click()
+        await this.page.locator(bp.first_checkbox_grid).click()
         await this.page.locator(bp.delete_button_upper_panel).click()
         if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
             await this.page.locator(bp.button_delete_item).click()
@@ -148,6 +175,14 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
+        let count_1 = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
+                break;
+            }
+        }
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -155,8 +190,16 @@ exports.BasePage = class BasePage {
 
     async delete_using_card(){
         const bp = new BasePage();
+        let count = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count++;
+            if (count === 10) {
+                break;
+            }
+        }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.last_item_name).click()
+        await this.page.locator(bp.first_item_name).click()
         await this.page.locator(bp._3_dots_card).click()
         await this.page.locator(bp.link_delete_in_3_dots).click()
         if (await this.page.locator(this.button_delete_item).isVisible({timeout: 1000}) === true) {
@@ -168,6 +211,14 @@ exports.BasePage = class BasePage {
             await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
+        let count_1 = 0
+        while (await this.page.locator(bp.count_items_in_footer_grid).isVisible() === false) {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
+                break;
+            }
+        }
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await bp.delete_el_assertion(count_of_items_after, count_of_items_before);
 
@@ -197,16 +248,16 @@ exports.BasePage = class BasePage {
         const bp = new BasePage();
         await this.page.locator(bp.deleted_tab_grid).click()
 
-        let count_1 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
+        let count = 0
+        while (await this.page.locator(bp.spinner).isVisible() === true) {
             await this.page.waitForTimeout(1000)
-            count_1++;
-            if (count_1 === 10) {
+            count++;
+            if (count === 10) {
                 break;
             }
         }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp._3_dots_grid).click()
+        await this.page.locator(bp.first_3_dots_grid).click()
         await this.page.locator(bp.link_restore_in_3_dots).click()
         if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
             await this.page.locator(bp.button_restore_item).click()
@@ -219,11 +270,11 @@ exports.BasePage = class BasePage {
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
 
-        let count_2 = 0;
-        while (await this.page.locator(bp.count_items_in_footer_grid).textContent() === "0") {
-            await this.page.waitForTimeout(100)
-            count_2++;
-            if (count_2 === 10) {
+        let count_1 = 0
+        while (await this.page.locator(bp.spinner).isVisible() === true) {
+            await this.page.waitForTimeout(1000)
+            count_1++;
+            if (count_1 === 10) {
                 break;
             }
         }
@@ -245,7 +296,7 @@ exports.BasePage = class BasePage {
             }
         }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.unselected_checkbox_grid).click()
+        await this.page.locator(bp.first_checkbox_grid).click()
         await this.page.locator(bp.restore_button_upper_panel).click()
         if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
             await this.page.locator(bp.button_restore_item).click()
@@ -284,7 +335,7 @@ exports.BasePage = class BasePage {
             }
         }
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.last_item_name).click()
+        await this.page.locator(bp.first_item_name).click()
         await this.page.locator(this._3_dots_card).click()
         await this.page.locator(bp.link_restore_in_3_dots).click()
         if (await this.page.locator(this.button_restore_item).isVisible({timeout: 1000}) === true) {
