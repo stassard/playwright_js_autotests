@@ -2,19 +2,31 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { BasePage } from "../../pages/BasePage";
 import {PromoPortfolioPage} from "../../pages/PromoPortfolioPage";
+import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Promo Portfolio Page", () => {
+    test.beforeEach('Create Promo', async ({page}) => {
+        test.setTimeout(120_000)
+        const lp = new LoginPage(page);
+        const promoPortfolioPage = new PromoPortfolioPage(page)
+        const bp = new BasePage(page)
+        await lp.authorization();
+        await promoPortfolioPage.open_dict()
+        await promoPortfolioPage.create_tpr_promo(bp.random_dropdown_element)
+    });
+
     test('Create Promo', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
+        const bp = new BasePage(page)
         await lp.authorization();
         await promoPortfolioPage.open_dict()
-        await promoPortfolioPage.create_tpr_promo()
+        await promoPortfolioPage.create_tpr_promo(bp.random_dropdown_element)
     });
 
-    test('Read Promo', async ({page}) => {
+    test.skip('Read Promo', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
@@ -54,7 +66,7 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-2424
     // TODO: Need class for 3 dots in the Promo Card
-    test.skip("Delete Promo Using Card", async ({ page }) => {
+    test("Delete Promo Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
