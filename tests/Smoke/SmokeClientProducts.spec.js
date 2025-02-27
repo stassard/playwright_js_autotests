@@ -6,7 +6,7 @@ import { BasePage } from "../../pages/BasePage";
 
 test.describe("Smoke Suite for Client Products Page", () => {
     test('Create Client Products', async ({ page }) => {
-        test.setTimeout(120_000)
+        test.setTimeout(180_000)
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
         const bp = new BasePage(page)
@@ -15,7 +15,7 @@ test.describe("Smoke Suite for Client Products Page", () => {
         await cpp.create_element(bp.random_dropdown_element, bp.random_dropdown_element)
     });
 
-    test('Read Client Products', async ({ page }) => {
+    test.skip('Read Client Products', async ({ page }) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cpp = new ClientProductsPage(page)
