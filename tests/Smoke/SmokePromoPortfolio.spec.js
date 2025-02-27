@@ -21,8 +21,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await promoPortfolioPage.create_tpr_promo(bp.random_dropdown_element)
     });
 
@@ -30,8 +30,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await promoPortfolioPage.read_element()
     });
 
@@ -39,8 +39,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await promoPortfolioPage.update_element()
     });
 
@@ -49,8 +49,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -59,8 +59,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
@@ -70,8 +70,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -80,8 +80,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await bp.select_all_delete()
     });
 
@@ -90,8 +90,8 @@ test.describe("Smoke Suite for Promo Portfolio Page", () => {
         const lp = new LoginPage(page);
         const promoPortfolioPage = new PromoPortfolioPage(page)
         const bp = new BasePage(page)
-        await lp.authorization();
-        await promoPortfolioPage.open_dict()
+        // await lp.authorization();
+        // await promoPortfolioPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });
