@@ -37,9 +37,14 @@ exports.TechnologiesPage = class TechnologiesPage {
     async create_element(name, tech_code, technology_ru) {
         // Create New Technology
         const bp = new BasePage();
-        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.button_create_new).click()
+        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
+            var count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+            await this.page.locator(bp.button_create_new).click()
+        } else if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
+            await this.page.locator(bp.button_create_new).click()
+            var count_of_items_before = "0"
+        }
+
         await this.page.fill(this.input_technology_card, name)
         await this.page.fill(this.input_technology_ru_card, technology_ru)
         await this.page.fill(this.input_tech_code_card, tech_code)
