@@ -8,6 +8,7 @@ exports.BasePage = class BasePage {
         // General
         this.toast_message_success = "//div[contains(@data-pc-section,'messagetext')]"  // Success toast message
         this.head_of_page = "//div[@class='ps-font-TopHeader text-indigo-950']"  //  Head of page
+        this.nothing_to_show_icon = "//div/p[text()='Nothing to show']" // Nothing to show icon
 
         // Menu
         this.side_button_modules = "(//div[contains(@data-test,'prospace-sidebar-item')])[2]" // Side Menu

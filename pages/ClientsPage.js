@@ -64,9 +64,15 @@ exports.ClientsPage = class ClientsPage {
     async create_element(name, external_id, parent, type, dispatch_start, dispatch_end){
         // Create New Client
         const bp = new BasePage()
-        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.button_create_new).click()
+        let count_of_items_before
+        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
+            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+            await this.page.locator(bp.button_create_new).click()
+        }
+        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
+            await this.page.locator(bp.button_create_new).click()
+            count_of_items_before = "0"
+        }
         await this.page.fill(this.input_name_card, name)
         await this.page.fill(this.input_external_id_card, external_id)
         await this.page.fill(this.input_parent_card, parent)

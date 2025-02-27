@@ -50,9 +50,15 @@ exports.PromoPortfolioPage = class PromoPortfolioPage {
     async create_tpr_promo(dropdown_client) {
         // Create New TPR Promo
         const bp = new BasePage()
-        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.button_new_promo).click()
+        let count_of_items_before
+        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
+            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+            await this.page.locator(bp.button_create_new).click()
+        }
+        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
+            await this.page.locator(bp.button_create_new).click()
+            count_of_items_before = "0"
+        }
         await this.page.locator(this.selector_client_dialog).click()
         await this.page.locator(dropdown_client).click()
         await this.page.locator(bp.button_apply).click()
