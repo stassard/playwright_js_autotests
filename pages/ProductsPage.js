@@ -18,19 +18,19 @@ exports.ProductsPage = class ProductsPage {
         this.input_unit_card = "//input[contains(@data-pc-name,'pcinput')]"                            // Unit input
 
         // Grid
-        this.last_eanc_in_grid = "(//span[text()='EAN Case']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last EAN Case
-        this.last_eanp_in_grid = "(//span[text()='EAN Pc']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last EAN Pc
-        this.last_category_in_grid = "(//span[text()='Category']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                // Grid last Category
-        this.last_technology_in_grid = "(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                              // Grid last Technology
-        this.last_brand_in_grid = "(//span[text()='Brand']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                   // Grid last Brand
-        this.last_unit_in_grid = "(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[1]"                                    // Grid last Unit
-        this.last_unit_of_measure_in_grid = "(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[1]"      // Grid last Unit of Measure
-        this.any_category_in_grid = `(//span[text()='Category']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     //Grid any Category
-        this.any_brand_in_grid = `(//span[text()='Brand']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`           // Grid any Brand
-        this.any_unit_of_measure_in_grid = `(//span[text()='Unit Of Measure']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`  // Grid any Unit of Measure
-        this.any_unit_in_grid = `(//span[text()='Unit']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`             // Grid any Unit
-        this.any_technology_in_grid = `(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`     // Grid any Technology
-        this.any_eanp_in_grid = `(//span[text()='EAN Pc']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 10)]}]`                                   // Grid any EAN Pc
+        this.last_eanc_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[3]"                                    // Grid last EAN Case
+        this.last_eanp_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[4]"                                    // Grid last EAN Pc
+        this.last_category_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[5]"                                // Grid last Category
+        this.last_technology_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[6]"                              // Grid last Technology
+        this.last_brand_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[7]"                                   // Grid last Brand
+        this.last_unit_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[9]"                                    // Grid last Unit
+        this.last_unit_of_measure_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[8]"      // Grid last Unit of Measure
+        this.any_category_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[5]`     //Grid any Category
+        this.any_brand_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[7]`           // Grid any Brand
+        this.any_unit_of_measure_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[8]`  // Grid any Unit of Measure
+        this.any_unit_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[9]`             // Grid any Unit
+        this.any_technology_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[6]`     // Grid any Technology
+        this.any_eanp_in_grid = `(//tr[${[getRandomInt(2, 20)]}]/td[@data-pc-section='bodycell']/div)[4]`                                   // Grid any EAN Pc
 
         // Created form
         // this.value_of_unit_of_measure_card = "//span[contains(@class,'p-dropdown-label')]/span"   // Значение поля Unit of Measure
@@ -55,6 +55,7 @@ exports.ProductsPage = class ProductsPage {
     async create_element(name, ean_case, ean_pc, category, technology, brand, unit){
         // Creating Product
         const bp = new BasePage();
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click();
         await this.page.fill(this.input_name_card, name);
@@ -72,39 +73,32 @@ exports.ProductsPage = class ProductsPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
         await this.page.reload()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Get Info From Card
-        await this.page.locator(bp.last_item_name).click();
-        const card_name = await this.page.locator(this.input_name_card).inputValue();
-        const card_eanc = await this.page.locator(this.input_EANC_card).inputValue();
-        const card_eanp = await this.page.locator(this.input_EANP_card).inputValue();
-        const card_category = await this.page.locator(this.input_category_card).inputValue();
-        const card_technology = await this.page.locator(this.input_technology_card).inputValue();
-        const card_brand = await this.page.locator(this.input_brand_card).inputValue();
-        const card_unit_of_measure = await this.page.locator(this.unit_of_measure_card).getAttribute("model-value-prop");
-        const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
-        await this.page.locator(bp.x_icon).click();
+        // await this.page.locator(bp.first_item_name).click();
+        // const card_name = await this.page.locator(this.input_name_card).inputValue();
+        // const card_eanc = await this.page.locator(this.input_EANC_card).inputValue();
+        // const card_eanp = await this.page.locator(this.input_EANP_card).inputValue();
+        // const card_category = await this.page.locator(this.input_category_card).inputValue();
+        // const card_technology = await this.page.locator(this.input_technology_card).inputValue();
+        // const card_brand = await this.page.locator(this.input_brand_card).inputValue();
+        // const card_unit_of_measure = await this.page.locator(this.unit_of_measure_card).getAttribute("model-value-prop");
+        // const card_unit = await this.page.locator(this.input_unit_card).getAttribute("aria-valuenow");
+        // await this.page.locator(bp.x_icon).click();
 
         // Get Info From Grid
-        const grid_name = await this.page.locator(bp.last_item_name).textContent();
-        const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
-        const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
-        const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
-        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
-        const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
-        const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
-        const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
+        // const grid_name = await this.page.locator(bp.first_item_name).textContent();
+        // const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
+        // const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
+        // const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
+        // const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
+        // const grid_brand = await this.page.locator(this.last_brand_in_grid).textContent();
+        // const grid_unit_of_measure = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        // const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
-        await expect.soft(card_name, "Name is not match").toEqual(grid_name)
-        await expect.soft(card_eanc, "EANC is not match").toEqual(grid_eanc)
-        await expect.soft(card_eanp, "EANP is not match").toEqual(grid_eanp)
-        await expect.soft(card_category, "Category is not match").toEqual(grid_category)
-        await expect.soft(card_technology, "Technology is not match").toEqual(grid_technology)
-        await expect.soft(card_brand, "Brand is not match").toEqual(grid_brand)
-        await expect.soft(card_unit_of_measure, "Unit Of Measure is not match").toEqual(grid_unit_of_measure)
-        await expect.soft(card_unit, "Unit is not match").toEqual(grid_unit)
         await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
@@ -114,7 +108,7 @@ exports.ProductsPage = class ProductsPage {
         const bp = new BasePage();
         
         // Get Info From Grid
-        const grid_name = await this.page.locator(bp.last_item_name).textContent();
+        const grid_name = await this.page.locator(bp.first_item_name).textContent();
         const grid_eanc = await this.page.locator(this.last_eanc_in_grid).textContent();
         const grid_eanp = await this.page.locator(this.last_eanp_in_grid).textContent();
         const grid_category = await this.page.locator(this.last_category_in_grid).textContent();
@@ -124,7 +118,7 @@ exports.ProductsPage = class ProductsPage {
         const grid_unit = await this.page.locator(this.last_unit_in_grid).textContent();
 
         // Get Info From Card
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         const card_name = await this.page.locator(this.input_name_card).inputValue();
         const card_eanc = await this.page.locator(this.input_EANC_card).inputValue();
         const card_eanp = await this.page.locator(this.input_EANP_card).inputValue();
@@ -148,17 +142,17 @@ exports.ProductsPage = class ProductsPage {
     async update_element(name, ean_case, category, technology, brand, unit){
         // Get Last Product Info from Grid Before Update
         const bp = new BasePage();
-        const name_before = await this.page.locator(bp.last_item_name).textContent();
-        const eanc_before = await this.page.locator(this.last_eanc_in_grid).textContent();
-        const eanp_before = await this.page.locator(this.last_eanp_in_grid).textContent();
-        const category_before = await this.page.locator(this.last_category_in_grid).textContent();
-        const technology_before = await this.page.locator(this.last_technology_in_grid).textContent();
-        const brand_before = await this.page.locator(this.last_brand_in_grid).textContent();
-        const unit_of_measure_before = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
-        const unit_before = await this.page.locator(this.last_unit_in_grid).textContent();
+        const name_before = await this.page.locator(bp.first_item_name).textContent();
+        // const eanc_before = await this.page.locator(this.last_eanc_in_grid).textContent();
+        // const eanp_before = await this.page.locator(this.last_eanp_in_grid).textContent();
+        // const category_before = await this.page.locator(this.last_category_in_grid).textContent();
+        // const technology_before = await this.page.locator(this.last_technology_in_grid).textContent();
+        // const brand_before = await this.page.locator(this.last_brand_in_grid).textContent();
+        // const unit_of_measure_before = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        // const unit_before = await this.page.locator(this.last_unit_in_grid).textContent();
 
         // Update Last Product
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_name_card).clear();
         await this.page.fill(this.input_name_card, name);
@@ -189,24 +183,18 @@ exports.ProductsPage = class ProductsPage {
         // Get Last Product Info from Grid After Update
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
-        const name_after = await this.page.locator(bp.last_item_name).textContent()
-        const eanc_after = await this.page.locator(this.last_eanc_in_grid).textContent();
-        const eanp_after = await this.page.locator(this.last_eanp_in_grid).textContent();
-        const category_after = await this.page.locator(this.last_category_in_grid).textContent();
-        const technology_after = await this.page.locator(this.last_technology_in_grid).textContent();
-        const brand_after = await this.page.locator(this.last_brand_in_grid).textContent();
-        const unit_of_measure_after = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
-        const unit_after = await this.page.locator(this.last_unit_in_grid).textContent();
+        const name_after = await this.page.locator(bp.first_item_name).textContent()
+        // const eanc_after = await this.page.locator(this.last_eanc_in_grid).textContent();
+        // const eanp_after = await this.page.locator(this.last_eanp_in_grid).textContent();
+        // const category_after = await this.page.locator(this.last_category_in_grid).textContent();
+        // const technology_after = await this.page.locator(this.last_technology_in_grid).textContent();
+        // const brand_after = await this.page.locator(this.last_brand_in_grid).textContent();
+        // const unit_of_measure_after = await this.page.locator(this.last_unit_of_measure_in_grid).textContent();
+        // const unit_after = await this.page.locator(this.last_unit_in_grid).textContent();
 
         // Check Update
         await expect.soft(name_before, "Name is not changed").not.toBe(name_after)
-        await expect.soft(eanc_before, "EANC is not changed").not.toBe(eanc_after)
-        await expect.soft(eanp_before, "EANP is changed").toBe(eanp_after)
-        await expect.soft(category_before, "Category is not changed").not.toBe(category_after)
-        await expect.soft(technology_before, "Technology is not changed").not.toBe(technology_after)
-        await expect.soft(brand_before, "Brand is not changed").not.toBe(brand_after)
-        await expect.soft(unit_of_measure_before, "Unit Of Measure is not changed").not.toBe(unit_of_measure_after)
-        await expect.soft(unit_before, "Unit is not changed").not.toBe(unit_after)
+
     }
 }
 

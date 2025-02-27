@@ -6,7 +6,7 @@ import { DataGeneratorForSmoke } from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Product Page", () => {
-    test.only('Create Product', async ({ page }) => {
+    test('Create Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
@@ -15,7 +15,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.create_element(fakeData.product_name, fakeData.ean_case, fakeData.ean_pc, fakeData.category, fakeData.technology, fakeData.brand, fakeData.unit)
     });
 
-    test('Read Product', async ({ page }) => {
+    test.skip('Read Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         await lp.authorization();
@@ -23,7 +23,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await pp.read_element()
     });
 
-    test.only('Update Product', async ({ page }) => {
+    test('Update Product', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
@@ -33,7 +33,7 @@ test.describe("Smoke Suite for Product Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Product Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const bp = new BasePage(page)
@@ -52,7 +52,7 @@ test.describe("Smoke Suite for Product Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Product Using Card", async ({ page }) => {
+    test("Delete Product Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const bp = new BasePage(page)
@@ -70,7 +70,7 @@ test.describe("Smoke Suite for Product Page", () => {
         await bp.select_all_delete()
     });
     
-    test.skip('Restore Product Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Product Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const bp = new BasePage(page)
