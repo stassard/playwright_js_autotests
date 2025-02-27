@@ -121,7 +121,6 @@ exports.BasePage = class BasePage {
 
     async delete_using_3_dots_grid(){
         const bp = new BasePage();
-        let count = 0
         await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.first_3_dots_grid).click()
