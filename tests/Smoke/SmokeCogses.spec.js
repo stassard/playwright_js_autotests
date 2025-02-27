@@ -38,7 +38,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Cogs Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
@@ -57,7 +57,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Cogs Using Card", async ({ page }) => {
+    test("Delete Cogs Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
@@ -78,7 +78,7 @@ test.describe("Smoke Suite for Cogses Page", () => {
 
     // https://prospace-team.atlassian.net/browse/PSPR-3614
     // BUG: Confirmation window is not appeared
-    test.skip('Restore Cogs Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Cogs Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cogsesPage = new CogsesPage(page)
         const bp = new BasePage(page)
