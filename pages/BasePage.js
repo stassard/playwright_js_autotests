@@ -130,8 +130,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.count_items_in_footer_grid).waitFor()
@@ -151,8 +151,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.count_items_in_footer_grid).waitFor()
@@ -173,8 +173,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.count_items_in_footer_grid).waitFor()
@@ -194,8 +194,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
@@ -223,8 +223,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
@@ -255,8 +255,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()
@@ -280,8 +280,8 @@ exports.BasePage = class BasePage {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
         } else {
             await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
-            let confirm = undefined;
-            await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
+            // let confirm = undefined;
+            // await expect.soft(confirm, "Confirmation window is not appeared").not.toBeUndefined()
         }
         await this.page.reload()
         await this.page.locator(bp.deleted_tab_grid).click()

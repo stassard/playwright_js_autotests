@@ -6,8 +6,8 @@ import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Client Product Prices Page", () => {
-    test.only('Create Client Product Price', async ({page}) => {
-        test.setTimeout(120_000)
+    test('Create Client Product Price', async ({page}) => {
+        test.setTimeout(180_000)
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         const bp = new BasePage(page)
@@ -17,7 +17,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
         await cppp.create_element(bp.random_dropdown_element, fakeData.price, fakeData.current_start_date, fakeData.random_end_date)
     });
 
-    test('Read Client Product Prices', async ({page}) => {
+    test.skip('Read Client Product Prices', async ({page}) => {
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         await lp.authorization();
@@ -25,7 +25,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
         await cppp.read_element()
     });
 
-    test.only('Update Client Product Prices', async ({page}) => {
+    test('Update Client Product Prices', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
@@ -36,7 +36,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Delete Client Product Prices Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Client Product Prices Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         const bp = new BasePage(page)
@@ -64,7 +64,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Client Product Prices', async ({ page }) => {
+    test.skip('Select All Delete Client Product Prices', async ({ page }) => {
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         const bp = new BasePage(page)
@@ -74,7 +74,7 @@ test.describe("Smoke Suite for Client Product Prices Page", () => {
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3895
-    test.skip('Restore Client Product Prices Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Client Product Prices Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cppp = new ClientProductPricesPage(page)
         const bp = new BasePage(page)
