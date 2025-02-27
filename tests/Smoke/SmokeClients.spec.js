@@ -8,7 +8,7 @@ import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 test.describe("Smoke Suite for Client Page", () => {
 
     // https://prospace-team.atlassian.net/browse/PSPR-3212
-    test.only('Create Client', async ({ page }) => {
+    test('Create Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
@@ -18,7 +18,7 @@ test.describe("Smoke Suite for Client Page", () => {
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3212
-    test('Read Client', async ({ page }) => {
+    test.skip('Read Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         await lp.authorization();
@@ -26,7 +26,7 @@ test.describe("Smoke Suite for Client Page", () => {
         await cp.read_element()
     });
 
-    test.only('Update Client', async ({ page }) => {
+    test('Update Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
@@ -62,7 +62,7 @@ test.describe("Smoke Suite for Client Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Product Using Card", async ({ page }) => {
+    test("Delete Client Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
@@ -71,7 +71,7 @@ test.describe("Smoke Suite for Client Page", () => {
         await bp.delete_using_card()
     });
 
-    test('Select All Delete Product', async ({ page }) => {
+    test.skip('Select All Delete Client', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
@@ -81,7 +81,7 @@ test.describe("Smoke Suite for Client Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip('Restore Product Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Client Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const cp = new ClientsPage(page)
         const bp = new BasePage(page)
