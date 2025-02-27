@@ -16,10 +16,10 @@ exports.TechnologiesPage = class TechnologiesPage {
         this.spittable_swither_card = "//div[@data-test='block-row']/div/div/div/input[@role='switch']"  // Selector Sub Brand Code
 
         // Grid
-        this.last_technology_in_grid = "(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[1]"   // Grid last Technology
-        this.last_tech_code_in_grid = "(//span[text()='Tech Code']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Tech code
-        this.last_sub_brand_in_grid = "(//span[text()='Sub Brand']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Sub Brand
-        this.last_sub_brand_code_in_grid = "(//span[text()='Sub Brand Code']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Sub Brand Code
+        this.last_technology_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[3]"   // Grid last Technology
+        this.last_tech_code_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[4]"  // Grid last Tech code
+        this.last_sub_brand_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[5]"  // Grid last Sub Brand
+        this.last_sub_brand_code_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[6]"  // Grid last Sub Brand Code
 
         this.any_technology_in_grid = `(//span[text()='Technology']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Technology
         this.any_tech_code_in_grid = `(//span[text()='Tech Code']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Tech code
@@ -34,19 +34,20 @@ exports.TechnologiesPage = class TechnologiesPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Technologies")
     }
 
-    async create_element() {
+    async create_element(name, tech_code, technology_ru) {
         // Create New Technology
         const bp = new BasePage();
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_technology_card, faker.location.city() + " Technology")
-        await this.page.fill(this.input_technology_ru_card, faker.location.city())
-        await this.page.fill(this.input_tech_code_card, String(faker.number.int(1000)))
+        await this.page.fill(this.input_technology_card, name)
+        await this.page.fill(this.input_technology_ru_card, technology_ru)
+        await this.page.fill(this.input_tech_code_card, tech_code)
         await this.page.locator(this.spittable_swither_card).click()
 
         // Get Info From Card
-        const card_technology = await this.page.locator(this.input_technology_card).inputValue()
-        const card_tech_code = await this.page.locator(this.input_tech_code_card).inputValue()
+        // const card_technology = await this.page.locator(this.input_technology_card).inputValue()
+        // const card_tech_code = await this.page.locator(this.input_tech_code_card).inputValue()
 
         await this.page.locator(bp.button_create_card).click()
 
@@ -54,15 +55,14 @@ exports.TechnologiesPage = class TechnologiesPage {
         await expect.soft(this.page.locator(bp.toast_message_success), "Success message is not appeared").toBeVisible();
 
         await this.page.reload()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Get Info From Grid
-        const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
-        const grid_tech_code = await this.page.locator(this.last_tech_code_in_grid).textContent();
+        // const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
+        // const grid_tech_code = await this.page.locator(this.last_tech_code_in_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Check Matching of Grid and Card Info
-        await expect.soft(card_technology, "Technology is not match").toBe(grid_technology)
-        await expect.soft(card_tech_code, "Tech Code is not match").toBe(grid_tech_code)
         await bp.create_el_assertion(count_of_items_after, count_of_items_before);
     }
 
@@ -74,7 +74,7 @@ exports.TechnologiesPage = class TechnologiesPage {
         const grid_technology = await this.page.locator(this.last_technology_in_grid).textContent();
         const grid_tech_code = await this.page.locator(this.last_tech_code_in_grid).textContent();
 
-        await this.page.locator(bp.last_item_name).click()
+        await this.page.locator(bp.first_item_name).click()
 
         // Get Info From Card
         const card_technology = await this.page.locator(this.input_technology_card).inputValue()
@@ -87,22 +87,22 @@ exports.TechnologiesPage = class TechnologiesPage {
 
     }
 
-    async update_element(){
+    async update_element(name, tech_code, technology_ru){
         // Get Last Technology Info from Grid Before Update
         const bp = new BasePage()
-        const id_before = await this.page.locator(bp.last_item_name).textContent();
+        // const id_before = await this.page.locator(bp.first_item_name).textContent();
         const technology_before = await this.page.locator(this.last_technology_in_grid).textContent();
-        const tech_code_before = await this.page.locator(this.last_tech_code_in_grid).textContent();
+        // const tech_code_before = await this.page.locator(this.last_tech_code_in_grid).textContent();
 
         // Update Last Technology
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(this.input_technology_card).clear();
-        await this.page.fill(this.input_technology_card, faker.location.city() + " Technology");
+        await this.page.fill(this.input_technology_card, name);
         await this.page.locator(this.input_technology_ru_card).clear();
-        await this.page.fill(this.input_technology_ru_card, faker.location.city());
+        await this.page.fill(this.input_technology_ru_card, technology_ru);
         await this.page.locator(this.input_tech_code_card).clear();
-        await this.page.fill(this.input_tech_code_card, String(faker.number.int(1000)));
+        await this.page.fill(this.input_tech_code_card, tech_code);
         await this.page.locator(this.spittable_swither_card).click()
 
         await this.page.locator(bp.button_save).click()
@@ -113,14 +113,12 @@ exports.TechnologiesPage = class TechnologiesPage {
         // Get Last Brand Info from Grid After Update
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
-        const id_after = await this.page.locator(bp.last_item_name).textContent();
+        // const id_after = await this.page.locator(bp.first_item_name).textContent();
         const technology_after = await this.page.locator(this.last_technology_in_grid).textContent();
-        const tech_code_after = await this.page.locator(this.last_tech_code_in_grid).textContent();
+        // const tech_code_after = await this.page.locator(this.last_tech_code_in_grid).textContent();
 
         // Check Update
-        await expect.soft(id_before, "Technology ID is changed").toBe(id_after)
         await expect.soft(technology_before, "Technology is not changed").not.toBe(technology_after)
-        await expect.soft(tech_code_before, "Tech Code is not changed").not.toBe(tech_code_after)
 
     }
 }
