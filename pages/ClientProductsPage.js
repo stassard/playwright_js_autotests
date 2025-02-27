@@ -33,15 +33,9 @@ exports.ClientProductsPage = class ClientProductsPage {
     async create_element(client_id_dropdown, product_dropdown){
         // Create New Client Products
         const bp = new BasePage()
-        let count_of_items_before
-        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
-            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-            await this.page.locator(bp.button_create_new).click()
-        }
-        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
-            await this.page.locator(bp.button_create_new).click()
-            count_of_items_before = "0"
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.button_create_new).click()
         await this.page.locator(this.selector_client_id_card).click()
         await this.page.locator(client_id_dropdown).click()
         await this.page.locator(this.selector_product_card).click()
