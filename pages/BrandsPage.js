@@ -30,15 +30,9 @@ exports.BrandPage = class BrandPage {
     async create_element(brand_code, segment_code, segment_name) {
         // Create New Brand
         const bp = new BasePage();
-        let count_of_items_before
-        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
-            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-            await this.page.locator(bp.button_create_new).click()
-        }
-        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
-            await this.page.locator(bp.button_create_new).click()
-            count_of_items_before = "0"
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_brand_code_card, brand_code)
         await this.page.fill(this.input_segment_code_card, segment_code)
         await this.page.fill(this.input_segment_name_card, segment_name)
