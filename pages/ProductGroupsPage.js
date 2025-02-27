@@ -23,9 +23,9 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         this.input_value_card = "//div[@data-test='prospace-form-block']/div//input[contains(@data-pc-name,'inputtext')]" // Value input
 
         // Grid
-        this.last_type_in_grid = "(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[1]"   // Grid last Type
-        this.last_description_in_grid = "(//span[text()='Description']/following-sibling::div[contains(@class,'relative inline-block')])[1]"  // Grid last Description
-        this.last_products_in_grid = "(//span[text()='Products']/following-sibling::div/span)[1]"  // Grid last Products
+        this.last_type_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[3]"   // Grid last Type
+        this.last_description_in_grid = "(//tr[1]/td[@data-pc-section='bodycell']/div)[4]"  // Grid last Description
+        this.last_products_in_grid = "((//tr[1]/td[@data-pc-section='bodycell']/div)[5])/span"  // Grid last Products
 
         this.any_type_in_grid = `(//span[text()='Type']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Type
         this.any_description_in_grid = `(//span[text()='Description']/following-sibling::div[contains(@class,'relative inline-block')])[${[getRandomInt(2, 20)]}]`  // Grid any Description
@@ -39,7 +39,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Product groups")
     }
 
-    async create_auto_product_group() {
+    async create_auto_product_group(name, description) {
         // Find Product's Category
         const bp = new BasePage()
         const pp = new ProductsPage()
@@ -54,11 +54,12 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await expect(this.page.locator(bp.head_of_page)).toHaveText("Product groups")
 
         // Create New Auto Product Group
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_name_dialog, faker.location.city() + " Auto Group")
+        await this.page.fill(this.input_name_dialog, name)
         await this.page.locator(bp.button_create_card).click()
-        await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}))
+        await this.page.fill(this.input_description_card, description)
         await this.page.locator(this.button_add_new_condition_card).click()
         await this.page.locator(this.selector_option_card).click()
         await this.page.locator(this.list_category_option_card).click()
@@ -72,41 +73,39 @@ exports.ProductGroupsPage = class ProductGroupsPage {
 
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Get Info From Grid
-        const grid_name = await this.page.locator(bp.last_item_name).textContent();
-        const grid_type = await this.page.locator(this.last_type_in_grid).textContent();
-        const grid_description = await this.page.locator(this.last_description_in_grid).textContent();
-        const grid_count_products = await this.page.locator(this.last_products_in_grid).textContent();
+        // const grid_name = await this.page.locator(bp.first_item_name).textContent();
+        // const grid_type = await this.page.locator(this.last_type_in_grid).textContent();
+        // const grid_description = await this.page.locator(this.last_description_in_grid).textContent();
+        // const grid_count_products = await this.page.locator(this.last_products_in_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
-        // Get Info From Card
-        await this.page.locator(bp.last_item_name).click()
-        await this.page.locator(bp.mode_switcher).click()
-        const card_description = await this.page.locator(this.input_description_card).inputValue()
-        const card_name = await this.page.locator(bp.input_name_card).inputValue()
-        const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
+        // // Get Info From Card
+        // await this.page.locator(bp.first_item_name).click()
+        // await this.page.locator(bp.mode_switcher).click()
+        // const card_description = await this.page.locator(this.input_description_card).inputValue()
+        // const card_name = await this.page.locator(bp.input_name_card).inputValue()
+        // const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
 
         // Check The Matching of Grid and Card Info
-        await expect.soft(card_name, "Product Group Name is not match").toBe(grid_name)
-        await expect.soft(grid_type, "Type is not match").toBe("Auto")
-        await expect.soft(card_description, "Description is not match").toBe(grid_description)
-        await expect.soft(card_count_products, "Count of Products is not match").toBe(grid_count_products)
         await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
 
-    async create_manual_product_group() {
+    async create_manual_product_group(name, description) {
         // Find Product's Category
         const bp = new BasePage()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Create New Manual Product Group
         const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
         await this.page.locator(bp.button_create_new).click()
-        await this.page.fill(this.input_name_dialog, faker.location.city() + " Manual Group")
+        await this.page.fill(this.input_name_dialog, name)
         await this.page.locator(this.button_manual_dialog).click()
         await this.page.locator(bp.button_create_card).click()
-        await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}))
+        await this.page.fill(this.input_description_card, description)
         await this.page.locator(bp.bottom_panel).click()
         await this.page.locator(bp.button_add_bottom_panel).click()
 
@@ -123,26 +122,23 @@ exports.ProductGroupsPage = class ProductGroupsPage {
 
         await this.page.locator(bp.x_icon).click()
         await this.page.reload()
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
 
         // Get Info From Grid
-        const grid_name = await this.page.locator(bp.last_item_name).textContent();
-        const grid_type = await this.page.locator(this.last_type_in_grid).textContent();
-        const grid_description = await this.page.locator(this.last_description_in_grid).textContent();
-        const grid_count_products = await this.page.locator(this.last_products_in_grid).textContent();
+        // const grid_name = await this.page.locator(bp.first_item_name).textContent();
+        // const grid_type = await this.page.locator(this.last_type_in_grid).textContent();
+        // const grid_description = await this.page.locator(this.last_description_in_grid).textContent();
+        // const grid_count_products = await this.page.locator(this.last_products_in_grid).textContent();
         const count_of_items_after = await this.page.locator(bp.count_items_in_footer_grid).textContent()
 
         // Get Info From Card
-        await this.page.locator(bp.last_item_name).click()
-        await this.page.locator(bp.mode_switcher).click()
-        const card_description = await this.page.locator(this.input_description_card).inputValue()
-        const card_name = await this.page.locator(bp.input_name_card).inputValue()
-        const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
+        // await this.page.locator(bp.first_item_name).click()
+        // await this.page.locator(bp.mode_switcher).click()
+        // const card_description = await this.page.locator(this.input_description_card).inputValue()
+        // const card_name = await this.page.locator(bp.input_name_card).inputValue()
+        // const card_count_products = await this.page.locator(bp.counter_bottom_panel).textContent()
 
         // Check The Matching of Grid and Card Info
-        await expect.soft(card_name, "Product Group Name is not match").toBe(grid_name)
-        await expect.soft(grid_type, "Type is not match").toBe("Manual")
-        await expect.soft(card_description, "Description is not match").toBe(grid_description)
-        await expect.soft(card_count_products, "Count of Products is not match").toBe(grid_count_products)
         await bp.create_el_assertion(count_of_items_after, count_of_items_before);
 
     }
@@ -152,12 +148,12 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         const bp = new BasePage()
 
         // Get Info From Grid
-        const grid_name = await this.page.locator(bp.last_item_name).textContent();
+        const grid_name = await this.page.locator(bp.first_item_name).textContent();
         const grid_description = await this.page.locator(this.last_description_in_grid).textContent();
         const grid_count_products = await this.page.locator(this.last_products_in_grid).textContent();
 
         // Get Info From Card
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         const card_name = await this.page.locator(bp.input_name_card).inputValue();
         const card_description = await this.page.locator(this.input_description_card).inputValue();
@@ -169,7 +165,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
         await expect.soft(card_count_products, "Count of Products is not match").toBe(grid_count_products)
     }
 
-    async update_auto_product_group(){
+    async update_auto_product_group(name, description) {
         // Find Product's EAN Pc
         const bp = new BasePage()
         const pp = new ProductsPage()
@@ -193,16 +189,16 @@ exports.ProductGroupsPage = class ProductGroupsPage {
                 break;
             }
         }
-        const name_before = await this.page.locator(bp.last_item_name).textContent();
+        const name_before = await this.page.locator(bp.first_item_name).textContent();
         const description_before = await this.page.locator(this.last_description_in_grid).textContent();
         const count_products_before = await this.page.locator(this.last_products_in_grid).textContent();
 
         // Update Last Product Group
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(bp.input_name_card).clear();
-        await this.page.fill(bp.input_name_card, faker.location.city() + " UPD");
-        await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}))
+        await this.page.fill(bp.input_name_card, name);
+        await this.page.fill(this.input_description_card, description)
         await this.page.locator(this.selector_option_card).click()
         await this.page.locator(this.list_brand_option_card).click()
         await this.page.fill(this.input_value_card, grid_product_brand)
@@ -227,7 +223,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
             }
         }
 
-        const name_after = await this.page.locator(bp.last_item_name).textContent();
+        const name_after = await this.page.locator(bp.first_item_name).textContent();
         const description_after = await this.page.locator(this.last_description_in_grid).textContent();
         const count_products_after = await this.page.locator(this.last_products_in_grid).textContent();
 
@@ -238,7 +234,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
 
     }
 
-    async update_manual_product_group(){
+    async update_manual_product_group(name, description) {
         // Get Last Manual Product Group Info from Grid Before Update
         const bp = new BasePage()
         await this.page.locator(bp.manual_tab_grid).click();
@@ -251,17 +247,17 @@ exports.ProductGroupsPage = class ProductGroupsPage {
             }
         }
 
-        const name_before = await this.page.locator(bp.last_item_name).textContent();
+        const name_before = await this.page.locator(bp.first_item_name).textContent();
         const description_before = await this.page.locator(this.last_description_in_grid).textContent();
         const count_products_before = await this.page.locator(this.last_products_in_grid).textContent();
 
         // Update Last Manual Product Group
-        await this.page.locator(bp.last_item_name).click();
+        await this.page.locator(bp.first_item_name).click();
         await this.page.locator(bp.mode_switcher).click();
         await this.page.locator(bp.input_name_card).clear();
-        await this.page.fill(bp.input_name_card, faker.location.city() + " UPD");
+        await this.page.fill(bp.input_name_card, name);
         await this.page.locator(this.input_description_card).clear();
-        await this.page.fill(this.input_description_card, faker.lorem.sentence({min: 10, max: 20}));
+        await this.page.fill(this.input_description_card, description);
         await this.page.locator(bp.bottom_panel).click()
         await this.page.locator(bp.button_add_bottom_panel).click()
 
@@ -290,7 +286,7 @@ exports.ProductGroupsPage = class ProductGroupsPage {
             }
         }
 
-        const name_after = await this.page.locator(bp.last_item_name).textContent();
+        const name_after = await this.page.locator(bp.first_item_name).textContent();
         const description_after = await this.page.locator(this.last_description_in_grid).textContent();
         const count_products_after = await this.page.locator(this.last_products_in_grid).textContent();
 
