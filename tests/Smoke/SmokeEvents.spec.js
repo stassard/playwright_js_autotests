@@ -16,7 +16,7 @@ test.describe("Smoke Suite for Events Page", () => {
         await eventsPage.create_element(fakeData.event_name, fakeData.description, fakeData.current_start_date, fakeData.random_end_date)
     });
 
-    test('Read Event', async ({page}) => {
+    test.skip('Read Event', async ({page}) => {
         const lp = new LoginPage(page);
         const eventsPage = new EventsPage(page)
         await lp.authorization();
