@@ -44,14 +44,14 @@ exports.BasePage = class BasePage {
 
         // Dialog
         this.button_select_dialog = "//button[contains(@aria-label, 'Select')]" // Button Select events
-        this.checkbox_dialog = `(//td[contains(@class,'hide-selection-shadow')]/div[contains(@class,'p-checkbox p-component')]/div[2]/span[@class='p-checkbox-icon'])[${[getRandomInt(1, 5)]}]`  // Checkboxes in the popovers
+        this.checkbox_dialog = `(//div[@class='popover-add']//tr[@data-pc-section='bodyrow']/td[1]/div/input)[${[getRandomInt(1, 5)]}]`  // Checkboxes in the popovers
 
         // Bottom Panel
         this.bottom_panel = "//div[@class='panel']"  // Bottom panel
         this.counter_bottom_panel = "//div[@class='bottom-panel']//span[@class='prospace-counter-box']" // Counter in the Bottom Panel
         this.button_add_bottom_panel = "//button[@aria-label='Add']" // Button Add in the Bottom Panel
         this.button_delete_bottom_panel = "//div[@class='bottom-panel']//button[@aria-label='Delete']" // Button Delete in the Bottom Panel
-        this.unselected_checkbox_bottom_panel = `((//tbody[@class=\"p-datatable-tbody\"])[2]//input[@type='checkbox' and @aria-label='Row Unselected']/ancestor::div[@class='p-checkbox p-component'])[${[getRandomInt(1, 10)]}]` // Unselected checkbox in the Bottom Panel
+        this.unselected_checkbox_bottom_panel = `(//div[@class='bottom-panel']//tr[@data-pc-section='bodyrow']/td[1]/div/input[@aria-label='Row Unselected'])[${[getRandomInt(1, 10)]}]` // Unselected checkbox in the Bottom Panel
         this.counter_checked_checkboxes_bottom_panel = `//div[@class='bottom-panel']//span[text()='Selected']/following-sibling::span[@class='prospace-counter-box']` // Counter checked checkboxes in the Bottom Panel
 
         // Created Cards
