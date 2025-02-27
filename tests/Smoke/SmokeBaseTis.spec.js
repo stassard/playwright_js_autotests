@@ -55,7 +55,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail("Delete BaseTi Using Card", async ({ page }) => {
+    test("Delete BaseTi Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)
@@ -75,7 +75,7 @@ test.describe("Smoke Suite for BaseTis Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
+    test('Restore BaseTi Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baseTisPage = new BaseTisPage(page)
         const bp = new BasePage(page)

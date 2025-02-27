@@ -38,7 +38,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Baseline Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
@@ -57,7 +57,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail("Delete Baseline Using Card", async ({ page }) => {
+    test("Delete Baseline Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)
@@ -76,7 +76,7 @@ test.describe("Smoke Suite for Baselines Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Restore Baseline Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Baseline Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const baselinesPage = new BaselinesPage(page)
         const bp = new BasePage(page)

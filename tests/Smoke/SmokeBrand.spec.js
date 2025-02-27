@@ -46,7 +46,7 @@ test.describe("Smoke Suite for Brands Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Delete Brand Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Brand Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
         const bp = new BasePage(page)
@@ -65,7 +65,7 @@ test.describe("Smoke Suite for Brands Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail("Delete Brand Using Card", async ({ page }) => {
+    test("Delete Brand Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
         const bp = new BasePage(page)
@@ -85,7 +85,7 @@ test.describe("Smoke Suite for Brands Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Restore Brand Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Brand Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const brandPage = new BrandPage(page)
         const bp = new BasePage(page)

@@ -43,7 +43,7 @@ test.describe("Smoke Suite for Budget Types Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail('Delete Budget Type Using 3 Dots Grid', async ({ page }) => {
+    test('Delete Budget Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
@@ -62,7 +62,7 @@ test.describe("Smoke Suite for Budget Types Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.fail("Delete Budget Type Using Card", async ({ page }) => {
+    test("Delete Budget Type Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
@@ -81,7 +81,7 @@ test.describe("Smoke Suite for Budget Types Page", () => {
         await bp.select_all_delete()
     });
 
-    test.fail('Restore Budget Type Using 3 Dots Grid', async ({ page }) => {
+    test('Restore Budget Type Using 3 Dots Grid', async ({ page }) => {
         const lp = new LoginPage(page);
         const budgetTypesPage = new BudgetTypesPage(page)
         const bp = new BasePage(page)
