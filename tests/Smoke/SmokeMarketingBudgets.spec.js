@@ -6,10 +6,20 @@ import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Marketing Budgets Page", () => {
 
+    test.beforeEach('Create Manual Marketing Budget', async ({page}) => {
+        test.setTimeout(120_000)
+        const lp = new LoginPage(page);
+        const marketingBudgetPage = new MarketingBudgetsPage(page)
+        const bp = new BasePage(page)
+        const fakeData = new DataGeneratorForSmoke(page)
+        await lp.authorization();
+        await marketingBudgetPage.open_dict()
+        await marketingBudgetPage.create_manual_type_budget(fakeData.marketing_budget_name, bp.random_dropdown_element, bp.random_dropdown_element, bp.first_dropdown_element, fakeData.qty, fakeData.budget, fakeData.current_start_date, fakeData.random_end_date)
+    });
     // https://prospace-team.atlassian.net/browse/PSPR-3514
     // https://prospace-team.atlassian.net/browse/PSPR-3488
     // https://prospace-team.atlassian.net/browse/PSPR-3583
-    test.skip('Create Manual Marketing Budget', async ({page}) => {
+    test('Create Manual Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
@@ -23,7 +33,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
     // https://prospace-team.atlassian.net/browse/PSPR-3514
     // https://prospace-team.atlassian.net/browse/PSPR-3488
     // https://prospace-team.atlassian.net/browse/PSPR-3583
-    test.skip('Create Auto Marketing Budget', async ({page}) => {
+    test('Create Auto Marketing Budget', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
@@ -37,7 +47,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
     // https://prospace-team.atlassian.net/browse/PSPR-3514
     // https://prospace-team.atlassian.net/browse/PSPR-3488
     // https://prospace-team.atlassian.net/browse/PSPR-3583
-    test.describe.skip('Add Promo to Manual Marketing Budget',() => {
+    test.describe('Add Promo to Manual Marketing Budget',() => {
         test.beforeEach('Create Manual Marketing Budget',async ({ page }) => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
@@ -58,7 +68,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
     // https://prospace-team.atlassian.net/browse/PSPR-3514
     // https://prospace-team.atlassian.net/browse/PSPR-3488
     // https://prospace-team.atlassian.net/browse/PSPR-3583
-    test.describe.skip('Add Promo to Auto Marketing Budget',() => {
+    test.describe('Add Promo to Auto Marketing Budget',() => {
         test.beforeEach('Create Auto Marketing Budget', async ({page}) => {
             test.setTimeout(120_000)
             const lp = new LoginPage(page);
@@ -105,7 +115,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
     });
 
     // BUG: Confirmation window is not appeared
-    test.skip("Delete Marketing Budget Using Card", async ({ page }) => {
+    test("Delete Marketing Budget Using Card", async ({ page }) => {
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
@@ -143,7 +153,7 @@ test.describe("Smoke Suite for Marketing Budgets Page", () => {
     });
 
     // https://prospace-team.atlassian.net/browse/PSPR-3768
-    test.skip('Restore Marketing Budget Using Card', async ({page}) => {
+    test('Restore Marketing Budget Using Card', async ({page}) => {
         const lp = new LoginPage(page);
         const marketingBudgetPage = new MarketingBudgetsPage(page)
         const bp = new BasePage(page)
