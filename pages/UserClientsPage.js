@@ -33,10 +33,16 @@ exports.UserClientsPage = class UserClientsPage {
 
     async create_element() {
         // Create New Technology
-        const bp = new BasePage();
-        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
-        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-        await this.page.locator(bp.button_create_new).click()
+        const bp = new BasePage()
+        let count_of_items_before
+        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
+            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+            await this.page.locator(bp.button_create_new).click()
+        }
+        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
+            await this.page.locator(bp.button_create_new).click()
+            count_of_items_before = "0"
+        }
         await this.page.locator(this.selector_user_email_card).click()
         await this.page.locator(this.list_user_email_card).click()
         await this.page.locator(this.selector_client_id_card).click()
