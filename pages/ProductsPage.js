@@ -55,15 +55,9 @@ exports.ProductsPage = class ProductsPage {
     async create_element(name, ean_case, ean_pc, category, technology, brand, unit){
         // Creating Product
         const bp = new BasePage();
-        let count_of_items_before
-        if (await this.page.locator(bp.count_items_in_footer_grid).isVisible()){
-            count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
-            await this.page.locator(bp.button_create_new).click()
-        }
-        if (await this.page.locator(bp.nothing_to_show_icon).isVisible()){
-            await this.page.locator(bp.button_create_new).click()
-            count_of_items_before = "0"
-        }
+        await this.page.locator(bp.count_items_in_footer_grid).waitFor()
+        const count_of_items_before = await this.page.locator(bp.count_items_in_footer_grid).textContent()
+        await this.page.locator(bp.button_create_new).click()
         await this.page.fill(this.input_name_card, name);
         await this.page.fill(this.input_EANC_card, ean_case);
         await this.page.fill(this.input_EANP_card, ean_pc);

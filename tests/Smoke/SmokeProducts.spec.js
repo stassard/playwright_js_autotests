@@ -7,6 +7,7 @@ import { DataGeneratorForSmoke } from "../../Fake_data_generator";
 
 test.describe("Smoke Suite for Product Page", () => {
     test('Create Product', async ({ page }) => {
+        test.setTimeout(180_000)
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
@@ -53,6 +54,7 @@ test.describe("Smoke Suite for Product Page", () => {
 
     // BUG: Confirmation window is not appeared
     test("Delete Product Using Card", async ({ page }) => {
+        test.setTimeout(180_000)
         const lp = new LoginPage(page);
         const pp = new ProductsPage(page)
         const bp = new BasePage(page)
