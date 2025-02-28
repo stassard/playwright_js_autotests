@@ -6,7 +6,10 @@ import {DataGeneratorForSmoke} from "../../Fake_data_generator";
 
 
 test.describe("Smoke Suite for Roles Page", () => {
-    test.beforeEach('Create Role', async ({page}) => {
+
+    // Требуется сид c большим количеством данных,для корректного тестирования
+    // All deletion operation is off because of superadmin role deletion possibility
+    test('Create Role', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
@@ -16,34 +19,22 @@ test.describe("Smoke Suite for Roles Page", () => {
         await rolesPage.create_element(fakeData.role_name, fakeData.description)
     });
 
-    // Требуется сид c большим количеством данных,для корректного тестирования
-    // All deletion operation is off because of superadmin role deletion possibility
-    test('Create Role', async ({page}) => {
-        test.setTimeout(120_000)
-        const lp = new LoginPage(page);
-        const rolesPage = new RolesPage(page)
-        const fakeData = new DataGeneratorForSmoke(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
-        await rolesPage.create_element(fakeData.role_name, fakeData.description)
-    });
-
     test.skip('Read Role', async ({page}) => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await rolesPage.read_element()
     });
 
     // BUG: https://prospace-team.atlassian.net/browse/PSPR-3884
-    test.only('Update Role', async ({page}) => {
+    test('Update Role', async ({page}) => {
         test.setTimeout(120_000)
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const fakeData = new DataGeneratorForSmoke(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await rolesPage.update_element(fakeData.role_name, fakeData.description)
     });
 
@@ -52,8 +43,8 @@ test.describe("Smoke Suite for Roles Page", () => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await bp.delete_using_3_dots_grid()
     });
 
@@ -62,8 +53,8 @@ test.describe("Smoke Suite for Roles Page", () => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await bp.delete_using_checkbox_grid()
     });
 
@@ -71,8 +62,8 @@ test.describe("Smoke Suite for Roles Page", () => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await bp.delete_using_card()
     });
 
@@ -81,8 +72,8 @@ test.describe("Smoke Suite for Roles Page", () => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await bp.select_all_delete()
     });
 
@@ -91,8 +82,8 @@ test.describe("Smoke Suite for Roles Page", () => {
         const lp = new LoginPage(page);
         const rolesPage = new RolesPage(page)
         const bp = new BasePage(page)
-        // await lp.authorization();
-        // await rolesPage.open_dict()
+        await lp.authorization();
+        await rolesPage.open_dict()
         await bp.restore_using_3_dots_grid()
     });
 });
